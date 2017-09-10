@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "HRMS",
+  "name": "人力资源管理系统",
   "icons": [
     {
       "src": "favicon.ico",
