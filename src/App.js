@@ -6,12 +6,12 @@ import {
 } from 'react-router-dom'
 import './App.css';
 import Login from './components/Login/Login';
-
+import Home from './components/Home/Home';
 
 const HRMSUIApp = () => (
   <Router>
     <div className="App">
-      <Route path="/" component={Login} />
+      <Route path="/" component={Home} />
 
       {/* <Link to="/Home">
         <ul>
@@ -30,11 +30,7 @@ const HRMSUIApp = () => (
   </Router >
 )
 
-const Home = () => (
-  <div>
-    <h2>Home</h2>
-  </div>
-)
+
 
 const Topics = ({ match }) => (
   <div>

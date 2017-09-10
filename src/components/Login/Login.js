@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
-import logo from '../../images/htmlogo1.png';
 import './Login.css';
 import { Button, Input, Checkbox } from 'element-react';
 import 'element-theme-default';
-import FontAwesome from 'react-fontawesome';
 import '../../font-awesome/css/font-awesome.min.css'
 
 class Login extends Component {
@@ -13,11 +11,11 @@ class Login extends Component {
                 <div className="formContainer">
                     <div className="loginHeaderContainer">
                         <div className="logoContainer">
-                            <img className="logoIcon" src={require("../../images/hrmlogo2.png")} />
+                            <img className="logoIcon" src={require("../../images/hrmlogo2.png")} alt=""/>
                         </div>
                         <div className="titleContainer">
-                            <img className="sysTitle" src={require("../../images/hrsys.PNG")} />
-                            <img className="companyTitle" src={require("../../images/guangdacompany.PNG")} />
+                            <img className="sysTitle" src={require("../../images/hrsys.PNG")} alt=""/>
+                            <img className="companyTitle" src={require("../../images/guangdacompany.PNG")} alt=""/>
                         </div>
                     </div>
                     <div className="loginFormInput">
