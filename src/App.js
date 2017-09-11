@@ -1,69 +1,41 @@
-import React from 'react'
+import React from 'react';
 import {
-  BrowserRouter as Router,
+  BrowserRouter,
   Route,
-  Link
-} from 'react-router-dom'
+  Link,
+  Redirect
+} from 'react-router-dom';
 import './App.css';
 import Login from './components/Login/Login';
 import Home from './components/Home/Home';
+import AppStore from './share/AppStore';
 
-const HRMSUIApp = () => (
-  <Router>
-    <div className="App">
-      <Route path="/" component={Home} />
-
-      {/* <Link to="/Home">
-        <ul>
-          <li><Link to="/">Home</Link></li>
-          <li><Link to="/login">Login</Link></li>
-          <li><Link to="/topics">Topics</Link></li>
-        </ul>
-
-        <hr />
-
-        <Route exact path="/" component={Home} />
-        <Route path="/login" component={Login} />
-        <Route path="/topics" component={Topics} />
-      </Link> */}
-    </div >
-  </Router >
-)
-
-
-
-const Topics = ({ match }) => (
-  <div>
-    <h2>Topics</h2>
-    <ul>
-      <li>
-        <Link to={`${match.url}/rendering`}>
-          Rendering with React
-        </Link>
-      </li>
-      <li>
-        <Link to={`${match.url}/components`}>
-          Components
-        </Link>
-      </li>
-      <li>
-        <Link to={`${match.url}/props-v-state`}>
-          Props v. State
-        </Link>
-      </li>
-    </ul>
-
-    <Route path={`${match.url}/:topicId`} component={Topic} />
-    <Route exact path={match.url} render={() => (
-      <h3>Please select a topic.</h3>
-    )} />
-  </div>
-)
-
-const Topic = ({ match }) => (
-  <div>
-    <h3>{match.params.topicId}</h3>
-  </div>
-)
+const HRMSUIApp = () => {
+  console.log("hi this is home");
+  console.log(AppStore.loggedIn);
+  AppStore.loggedIn = true;
+  let loggedIn = AppStore.loggedIn;
+  return (
+    <BrowserRouter>
+      <div className="App">
+        <Route exact path="/login" component={Login} />
+        <Route path="/home" render={() => (
+          loggedIn ? (
+            <Home />
+          ) : (
+              <Redirect to="/login" />
+            )
+        )} />
+        <Route exact path="/" render={() => (
+          loggedIn ? (
+            <Redirect to="/home" />
+          ) : (
+              <Redirect to="/login" />
+            )
+        )} />
+      </div >
+    </BrowserRouter>
+  )
+}
 
 export default HRMSUIApp

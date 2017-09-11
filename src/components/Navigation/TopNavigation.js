@@ -1,0 +1,41 @@
+import React, { Component } from 'react';
+import './TopNavigation.css';
+import { Menu } from 'element-react';
+import 'element-theme-default';
+import '../../font-awesome/css/font-awesome.min.css'
+
+class Home extends Component {
+    render() {
+        return (
+            <div className="NavContainer">
+                <div className="logoContainer">
+                    <img className="logoIcon" src={require("../../images/hrmlogo2.png")} alt="" />
+                </div>
+                <div className="menuContainer">
+                    <Menu defaultActive="EmpBasicInfo" className="el-menu-demo" mode="horizontal" onSelect={((val) => { console.log(val) }).bind(this)}>
+                        <Menu.SubMenu index="Emp" title="员工信息管理">
+                            <Menu.Item index="EmpBasicInfo">员工基本信息</Menu.Item>
+                            <Menu.Item index="EmpSensitiveInfo">员工敏感信息</Menu.Item>
+                        </Menu.SubMenu>
+                        <Menu.Item index="PayrollConfig">工资配置管理</Menu.Item>
+                        <Menu.Item index="OTManagement">加班申报管理</Menu.Item>
+                        <Menu.Item index="PayrollCalculation">当期工资计算</Menu.Item>
+                        <Menu.SubMenu index="Query" title="查询汇总">
+                            <Menu.Item index="2-1">按月查询</Menu.Item>
+                            <Menu.Item index="2-2">选项2</Menu.Item>
+                            <Menu.Item index="2-3">选项3</Menu.Item>
+                        </Menu.SubMenu>
+                        <Menu.Item index="AccessManagement">访问权限管理</Menu.Item>
+                    </Menu>
+                </div>
+                <div className="rightContainer">
+                    <Menu  className="el-menu-demo" mode="horizontal" onSelect={((val) => { console.log(val) }).bind(this)}>
+                        <Menu.Item index="Logout">退出登陆</Menu.Item>
+                    </Menu>
+                </div>
+            </div>
+        );
+    }
+}
+
+export default Home;
