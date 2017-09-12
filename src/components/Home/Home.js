@@ -16,8 +16,6 @@ import {
 
 class Home extends Component {
     render() {
-        console.log("hiiiii")
-        console.log(AppStore.loggedIn);
         return (
             <div className="HomeContainer">
                 <div className="TopNavContainer">
@@ -27,6 +25,7 @@ class Home extends Component {
                     <BrowserRouter
                         basename={"/home"}>
                         <div>
+                            <Route path="/" render={() => <div>Emp INfo</div>} />
                             <Route path="/empInfo" render={() => <div>Emp INfo</div>} />
                             <Route path="/ot" render={() => <div>OT</div>} />
                         </div>

@@ -73,3 +73,9 @@
     padding-bottom: 30px;
     width: 60%;
 }
+.errorDiv{
+    margin: 20px;
+}
+.errorMsg {
+    color: red;
+}
