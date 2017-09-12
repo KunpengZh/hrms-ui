@@ -1,40 +1,53 @@
 import React, { Component } from 'react';
 import './Home.css';
-import { Button } from 'element-react';
-import 'element-theme-default';
 import '../../font-awesome/css/font-awesome.min.css'
-import TopNavigation from '../Navigation/TopNavigation';
-import Login from '../Login/Login';
-
 import AppStore from '../../share/AppStore';
+
+import TopNavigation from '../Navigation/TopNavigation';
+import EmpBasicInfo from '../EmpInfo/EmpBasicInfo'
+import EmpSensitiveInfo from '../EmpInfo/EmpSensitiveInfo';
+import AccessManagement from '../AccessManagement/AccessManagement'
+import OTManagement from '../OTManagement/OTManagement'
+import PayrollConfig from '../Payroll/PayrollConfig'
+import PayrollCalculation from '../Payroll/PayrollCalculation'
+
+
 
 import {
     BrowserRouter,
-    Route,
-    Link
+    Route
 } from 'react-router-dom'
 
 class Home extends Component {
+    componentDidMount() {
+        if (!AppStore.isUserLoggedIn()) {
+            this.props.history.push("/login");
+        }
+    }
     render() {
         return (
-            <div className="HomeContainer">
-                <div className="TopNavContainer">
-                    <TopNavigation />
-                </div>
-                <div className="BodyContainer">
-                    <BrowserRouter
-                        basename={"/home"}>
+            <BrowserRouter basename={"/home"}>
+                <div className="HomeContainer">
+                    <div className="TopNavContainer">
+                        <Route component={TopNavigation} />
+                    </div>
+                    <div className="BodyContainer">
                         <div>
-                            <Route path="/" render={() => <div>Emp INfo</div>} />
-                            <Route path="/empInfo" render={() => <div>Emp INfo</div>} />
-                            <Route path="/ot" render={() => <div>OT</div>} />
+                            <Route exact path="/" component={EmpBasicInfo} />
+                            <Route exact path="/EmpBasicInfo" component={EmpBasicInfo} />
+                            <Route exact path="/EmpSensitiveInfo" component={EmpSensitiveInfo} />
+                            <Route exact path="/AccessManagement" component={AccessManagement} />
+                            <Route exact path="/OTManagement" component={OTManagement} />
+                            <Route exact path="/PayrollConfig" component={PayrollConfig} />
+                            <Route exact path="/PayrollCalculation" component={PayrollCalculation} />
                         </div>
-                    </BrowserRouter>
-                </div>
-                <div className="BottomNavContainer">
 
+                    </div>
+                    <div className="BottomNavContainer">
+
+                    </div>
                 </div>
-            </div>
+            </BrowserRouter>
         );
     }
 }

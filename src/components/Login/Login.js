@@ -3,7 +3,6 @@ import './Login.css';
 import { Button, Input, Checkbox } from 'element-react';
 import 'element-theme-default';
 import '../../font-awesome/css/font-awesome.min.css'
-import { Redirect } from 'react-router-dom';
 import AppStore from '../../share/AppStore';
 
 class Login extends Component {
@@ -20,12 +19,10 @@ class Login extends Component {
         this.setState({ password: value });
     }
     doAppLogin = () => {
-        // let self = this;
-        // console.log("hi to redirect");
-        // this.props.history.push("/home");
+    
         AppStore.doAppLogin(this.state.username, this.state.password).then((res) => {
             if (res.isAuthenticated) {
-                this.props.history.push("/home");
+                this.props.history.push("/home/empInfo");
             } else {
                 let errState = {
                     showError: true,

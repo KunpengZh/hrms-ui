@@ -2,7 +2,6 @@ import React from 'react';
 import {
   BrowserRouter,
   Route,
-  Link,
   Redirect
 } from 'react-router-dom';
 import './App.css';
@@ -16,12 +15,7 @@ const HRMSUIApp = () => {
     <BrowserRouter>
       <div className="App">
         <Route exact path="/login" component={Login} />
-        <Route path="/home" render={() => {
-          let loggedIn = AppStore.isUserLoggedIn();
-          return (
-            loggedIn ? (<Home />) : (<Redirect to="/login" />)
-          )
-        }} />
+        <Route path="/home" component={Home} />
         <Route exact path="/" render={() => {
           let loggedIn = AppStore.isUserLoggedIn()
           return (
