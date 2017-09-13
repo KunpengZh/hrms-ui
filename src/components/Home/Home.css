@@ -20,5 +20,11 @@
 }
 .BottomNavContainer{
     height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     background-color: gainsboro;
+}
+.bottomReminder{
+    height: 25px;
 }

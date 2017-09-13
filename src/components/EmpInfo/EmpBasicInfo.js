@@ -3,21 +3,35 @@ import './Employee.css';
 import { Button } from 'element-react';
 import 'element-theme-default';
 import '../../font-awesome/css/font-awesome.min.css'
+import {
+    BrowserRouter,
+    Route,
+    Switch,
+    Redirect
+} from 'react-router-dom'
 
 import AppStore from '../../share/AppStore';
 
 
+import EmpBasicInfoTable from './EmpBasicInfoTable';
+import EmpBasicNew from './EmpBasicNew';
+
+
 class EmpBasicInfo extends Component {
-    handchange() {
-        console.log(this.props);
-        this.props.history.push('/empSensitiveInfo')
+    constructor(props) {
+        super(props);
     }
     render() {
         return (
-            <div className="EmpContainer">
-                EmpBasicInfo
-                <Button type="primary" onClick={this.handchange.bind(this)} />
-            </div>
+            <BrowserRouter basename={"/home/EmpBasicInfo"}>
+                <div className="EmpContainer">
+                    <Switch>
+                        <Route exact path="/" render={() => <Redirect to="/EmpBasicInfoTable" />} />
+                        <Route exact path="/EmpBasicInfoTable" component={EmpBasicInfoTable} />
+                        <Route exact path="/EmpBasicNew" component={EmpBasicNew} />
+                    </Switch>
+                </div>
+            </BrowserRouter>
         );
     }
 }

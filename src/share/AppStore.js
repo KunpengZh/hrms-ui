@@ -65,13 +65,52 @@ var AppStore = (function () {
             });
         })
     }
+
+    /**
+     * 
+     */
+
+    var DataOptions = {
+        EmpInfo: {
+            CascaderMenu: [
+                {
+                    value: "Dept",
+                    label: "部门",
+                    children: [
+                        {
+                            value: "dept1",
+                            label: "dept1"
+                        },
+                        {
+                            value: "dept2",
+                            label: "dept2"
+                        },
+                        {
+                            value: "dept3",
+                            label: "dept4"
+                        },
+                    ]
+                }
+            ]
+        }
+    }
+
+    var setDataOptions = (key, val) => {
+        DataOptions[key] = val;
+    }
+    var getDataOptions = (key) => {
+        return DataOptions[key];
+    }
+
     /**
      * Return the object will be export from App Utils
      */
     return {
         getAppUser: getAppUser,
         isUserLoggedIn: isUserLoggedIn,
-        doAppLogin: doAppLogin
+        doAppLogin: doAppLogin,
+        setDataOptions: setDataOptions,
+        getDataOptions: getDataOptions
     }
 
 })()

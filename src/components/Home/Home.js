@@ -15,7 +15,9 @@ import PayrollCalculation from '../Payroll/PayrollCalculation'
 
 import {
     BrowserRouter,
-    Route
+    Route,
+    Switch,
+    Redirect
 } from 'react-router-dom'
 
 class Home extends Component {
@@ -32,20 +34,19 @@ class Home extends Component {
                         <Route component={TopNavigation} />
                     </div>
                     <div className="BodyContainer">
-                        <div>
-                            <Route exact path="/" component={EmpBasicInfo} />
-                            <Route exact path="/EmpBasicInfo" component={EmpBasicInfo} />
+                        <Switch>
+                            <Route exact path="/" render={()=><Redirect to="/EmpBasicInfo" />} />
+                            <Route path="/EmpBasicInfo" component={EmpBasicInfo} />
                             <Route exact path="/EmpSensitiveInfo" component={EmpSensitiveInfo} />
                             <Route exact path="/AccessManagement" component={AccessManagement} />
                             <Route exact path="/OTManagement" component={OTManagement} />
                             <Route exact path="/PayrollConfig" component={PayrollConfig} />
                             <Route exact path="/PayrollCalculation" component={PayrollCalculation} />
-                        </div>
-
+                        </Switch>
                     </div>
-                    <div className="BottomNavContainer">
-
-                    </div>
+                    {/* <div className="BottomNavContainer">
+                        <img className="bottomReminder" src={require("../../images/reminder.PNG")} alt="" />
+                    </div> */}
                 </div>
             </BrowserRouter>
         );
