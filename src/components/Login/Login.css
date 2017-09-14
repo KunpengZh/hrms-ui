@@ -28,11 +28,7 @@
     margin-bottom: 50px;
     margin-top: 10px;
 }
-.logoContainer{
-    display: flex;
-    flex:1;
-    justify-content: flex-end;
-}
+
 .titleContainer{
     display: flex;
     flex:4;
@@ -60,9 +56,16 @@
 .checkBox {
     color: white;
 }
-.logoIcon {
-    width: 100px;
-    height: 100px;
+.logoContainer{
+    display: flex;
+    flex:1;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: flex-end;
+}
+.hrLoginIcon {
+    width: 120px;
+    height: 120px;
 }
 .loginButton{
     width: 80%;

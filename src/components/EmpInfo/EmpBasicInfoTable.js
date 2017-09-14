@@ -17,11 +17,11 @@ class EmpBasicInfoTable extends Component {
     }
     render() {
         return (
-            <div className="EmpInfoTableContainer">
+            <div className="EmpBodyContainer">
                 <div className="topMenuContainer">
                     <TopMenu handleMenuActions={this.handleMenuActions.bind(this)}/>
                 </div>
-                <div className="EmpBodyContainer">
+                <div className="EmpInfoTableContainer">
                     Employee Basic Table
                 </div>
             </div>

@@ -10,7 +10,7 @@ import AccessManagement from '../AccessManagement/AccessManagement'
 import OTManagement from '../OTManagement/OTManagement'
 import PayrollConfig from '../Payroll/PayrollConfig'
 import PayrollCalculation from '../Payroll/PayrollCalculation'
-
+import EmpInfoConfig from '../EmpInfo/EmpInfoConfig'
 
 
 import {
@@ -39,6 +39,7 @@ class Home extends Component {
                             <Route path="/EmpBasicInfo" component={EmpBasicInfo} />
                             <Route exact path="/EmpSensitiveInfo" component={EmpSensitiveInfo} />
                             <Route exact path="/AccessManagement" component={AccessManagement} />
+                            <Route exact path="/EmpInfoConfig" component={EmpInfoConfig}/>
                             <Route exact path="/OTManagement" component={OTManagement} />
                             <Route exact path="/PayrollConfig" component={PayrollConfig} />
                             <Route exact path="/PayrollCalculation" component={PayrollCalculation} />

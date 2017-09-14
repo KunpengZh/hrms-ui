@@ -39,7 +39,7 @@ class Login extends Component {
                 <div className="formContainer">
                     <div className="loginHeaderContainer">
                         <div className="logoContainer">
-                            <img className="logoIcon" src={require("../../images/hrmlogo2.png")} alt="" />
+                            <img className="hrLoginIcon" src={require("../../images/hrmlogo2.png")} />
                         </div>
                         <div className="titleContainer">
                             <img className="sysTitle" src={require("../../images/hrsys.PNG")} alt="" />

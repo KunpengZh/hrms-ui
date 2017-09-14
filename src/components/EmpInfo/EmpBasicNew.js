@@ -10,8 +10,10 @@ import AppStore from '../../share/AppStore';
 class EmpBasicNew extends Component {
     render() {
         return (
-            <div className="EmpContainer">
-                Employee Create new
+            <div className="EmpBodyContainer">
+                <div className="EmpNewFormContainer">
+                    
+                </div>
             </div>
         );
     }

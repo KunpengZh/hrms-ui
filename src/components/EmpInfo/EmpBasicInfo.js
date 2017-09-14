@@ -17,6 +17,7 @@ import EmpBasicInfoTable from './EmpBasicInfoTable';
 import EmpBasicNew from './EmpBasicNew';
 
 
+
 class EmpBasicInfo extends Component {
     constructor(props) {
         super(props);

@@ -14,6 +14,9 @@ class Home extends Component {
             case 'EmpSensitiveInfo':
                 this.props.history.push("/EmpSensitiveInfo");
                 break;
+            case 'EmpInfoConfig':
+                this.props.history.push("/EmpInfoConfig");
+                break;
             case 'PayrollConfig':
                 this.props.history.push("/PayrollConfig");
                 break;
@@ -40,6 +43,7 @@ class Home extends Component {
                         <Menu.SubMenu index="Emp" title="员工信息管理">
                             <Menu.Item index="EmpBasicInfo">员工基本信息</Menu.Item>
                             <Menu.Item index="EmpSensitiveInfo">员工敏感信息</Menu.Item>
+                            <Menu.Item index="EmpInfoConfig">员工信息配置</Menu.Item>
                         </Menu.SubMenu>
                         <Menu.Item index="PayrollConfig">工资配置管理</Menu.Item>
                         <Menu.Item index="OTManagement">加班申报管理</Menu.Item>

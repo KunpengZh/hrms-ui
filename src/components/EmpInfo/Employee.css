@@ -5,11 +5,22 @@
     padding:10px;
     width: 100%;
 }
-.EmpInfoTableContainer{
+.EmpBodyContainer{
     display: flex;
     flex-direction: column;
     width: 100%;
     height: 100%;
+    justify-content: flex-start;
+    align-items: center;
+}
+.EmpTabContainer{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    justify-content: flex-start;
+    align-items:flex-start;
+    padding:20px;
 }
 .topMenuContainer {
     display: flex;
@@ -24,10 +35,18 @@
     height: 35px;
     width: 100%;
 }
-.EmpBodyContainer{
+.EmpInfoTableContainer{
     display: flex;
     flex: 1;
     border: 1px solid gray;
     width: 100%;
 }
+
+.EmpDataGrid{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
 
