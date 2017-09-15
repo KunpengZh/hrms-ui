@@ -68,43 +68,6 @@ var AppStore = (function () {
         })
     }
 
-    /**
-     * 
-     */
-
-    var DataOptions = {
-        EmpInfo: {
-            CascaderMenu: [
-                {
-                    value: "Dept",
-                    label: "部门",
-                    children: [
-                        {
-                            value: "dept1",
-                            label: "dept1"
-                        },
-                        {
-                            value: "dept2",
-                            label: "dept2"
-                        },
-                        {
-                            value: "dept3",
-                            label: "dept4"
-                        },
-                    ]
-                }
-            ],
-        },
-
-    }
-
-    var setDataOptions = (key, val) => {
-        DataOptions[key] = val;
-    }
-    var getDataOptions = (key) => {
-        
-        return DataOptions[key];
-    }
 
     /**
      * functions to manage configuration data
@@ -130,7 +93,6 @@ var AppStore = (function () {
             } else {
                 fetch('/AppConfig?configKey=' + 'ConfigData').then((response) => response.json()).then((res) => {
                     if (res.status === 200) {
-                        console.log(res);
                         ConfigData = res.data;
                         if (res.message !== '') AppStore.showError(res.message);
                         rel({
@@ -142,12 +104,24 @@ var AppStore = (function () {
                         rel({
                             status: res.status,
                             message: res.message,
-                            data: res.data
+                            data: {
+                                Department: [],
+                                JobRole: [],
+                                WorkerCategory: []
+                            }
                         })
                     }
                 }).catch((error) => {
                     console.error(error);
-                    rel({ status: 500, message: "Unable to connect with Server" })
+                    rel({
+                        status: 500,
+                        message: "Unable to connect with Server",
+                        data: {
+                            Department: [],
+                            JobRole: [],
+                            WorkerCategory: []
+                        }
+                    })
                 });
             }
         })
@@ -268,10 +242,79 @@ var AppStore = (function () {
         })
     }
 
+    var saveEmpBasicData = (employees) => {
+        return new Promise(function (rel, rej) {
+            fetch('/emp/update', {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.89 Safari/537.36',
+                    'Host': 'hrms.guangda.com'
+                },
+                body: JSON.stringify({
+                    data: employees,
+                })
+            }).then((response) => response.json()).then((res) => {
+                if (res.status === 200) {
+
+                    rel({
+                        status: 200,
+                        message: '保存成功'
+                    })
+                } else {
+                    rel({
+                        status: res.status,
+                        message: res.message
+                    })
+                }
+            }).catch((error) => {
+                console.error(error);
+                rel({ status: 500, message: "Unable to connect with Server" })
+            });
+        })
+    }
+
+    var deleteEmpBasicData = (empIds) => {
+        return new Promise(function (rel, rej) {
+            fetch('/emp/delete', {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.89 Safari/537.36',
+                    'Host': 'hrms.guangda.com'
+                },
+                body: JSON.stringify({
+                    data: empIds,
+                })
+            }).then((response) => response.json()).then((res) => {
+                if (res.status === 200) {
+
+                    rel({
+                        status: 200,
+                        message: '保存成功'
+                    })
+                } else {
+                    rel({
+                        status: res.status,
+                        message: res.message
+                    })
+                }
+            }).catch((error) => {
+                console.error(error);
+                rel({ status: 500, message: "Unable to connect with Server" })
+            });
+        })
+    }
+
+
     /**
      * Return the object will be export from App Utils
      */
     return {
+        deleteEmpBasicData: deleteEmpBasicData,
+        saveEmpBasicData: saveEmpBasicData,
         getAllEmpBasicInfo: getAllEmpBasicInfo,
         getUnicKey: getUnicKey,
         showError: showError,
@@ -283,9 +326,7 @@ var AppStore = (function () {
         saveConfigData: saveConfigData,
         getAppUser: getAppUser,
         isUserLoggedIn: isUserLoggedIn,
-        doAppLogin: doAppLogin,
-        setDataOptions: setDataOptions,
-        getDataOptions: getDataOptions
+        doAppLogin: doAppLogin
     }
 
 })()

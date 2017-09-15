@@ -20,28 +20,13 @@ class EmpBasicInfoTable extends Component {
             fullscreen: true,
             columns: [],
             rowKey: 'empId',
-            cascaderMenu: []
         }
     }
-    getCascaderMenu(data) {
-        return [
-            {
-                value: "Dept",
-                label: "部门",
-                children: data.map((item) => {
-                    return {
-                        value: item.value,
-                        label: item.value
-                    }
-                })
-            }
-        ]
-    }
+    
     componentDidMount() {
         let nstate = Object.assign({}, this.state);
         AppStore.getConfigData().then((configData) => {
             if (configData.status !== 200) AppStore.showError(configData.message);
-            nstate.cascaderMenu = this.getCascaderMenu(configData.data.Department);
             const departments = configData.data.Department;
             const DepartmentEditor = <DropDownEditor options={departments} />;
             const DepartmentFormatter = <DropDownFormatter options={departments} value="value" />;
@@ -64,20 +49,25 @@ class EmpBasicInfoTable extends Component {
                     key: 'name',
                     name: '员工姓名',
                     editable: true,
+                    width: 200,
+                    sortable: true,
+                    filterable: true
                 },
                 {
                     key: 'department',
                     name: '部门',
                     editable: true,
                     editor: DepartmentEditor,
-                    formatter: DepartmentFormatter
+                    formatter: DepartmentFormatter,
+                    sortable: true
                 },
                 {
                     key: 'jobRole',
                     name: '岗位',
                     editable: true,
                     editor: jobRolesEditor,
-                    formatter: jobRolesFormatter
+                    formatter: jobRolesFormatter,
+                    sortable: true
                 },
                 {
                     key: 'workAge',
@@ -101,7 +91,8 @@ class EmpBasicInfoTable extends Component {
                     name: '员工类别',
                     editable: true,
                     editor: wcategoryEditor,
-                    formatter: wcategoryFormatter
+                    formatter: wcategoryFormatter,
+                    sortable: true
                 },
                 {
                     key: 'comment',
@@ -146,8 +137,52 @@ class EmpBasicInfoTable extends Component {
 
         })
     }
-    saveData() {
+    saveData(data, keysObj) {
+        let { newcreated, deleted, updated } = keysObj;
+        let newCreatedEmpIds = [], deletedEmpIds = [], updatedEmpIds = [];
 
+        newcreated.forEach(function (empId) {
+            if (deleted.indexOf(empId) < 0) newCreatedEmpIds.push(empId);
+        });
+
+        updated.forEach(function (empId) {
+            if (deleted.indexOf(empId) < 0 && newcreated.indexOf(empId) < 0) updatedEmpIds.push(empId);
+        })
+
+        deleted.forEach(function (empId) {
+            if (newcreated.indexOf(empId) < 0) deletedEmpIds.push(empId);
+        })
+
+        let changedData = [];
+
+        data.forEach(function (employee) {
+            if (newCreatedEmpIds.indexOf(employee.empId) >= 0 || updatedEmpIds.indexOf(employee.empId) >= 0) changedData.push(employee)
+        });
+
+
+        if (changedData.length > 0) {
+            AppStore.saveEmpBasicData(changedData).then((res) => {
+                AppStore.showInfo(res.message);
+            });
+        }
+
+        if (deletedEmpIds.length > 0) {
+            AppStore.deleteEmpBasicData(deletedEmpIds).then((delres) => {
+                AppStore.showInfo(delres.message);
+            })
+        }
+    }
+    _validateOnlyNumber(text) {
+        let numbers = '0123456789.';
+        let validate = true;
+        for (var i = 0; i < text.length && validate; i++) {
+            if (numbers.indexOf(text[i]) < 0) {
+                AppStore.showError("工龄, 年龄字段只能接受数字，请检查您是否在工龄或是年龄字段里输入的非数字字符")
+                validate = false;
+                break;
+            }
+        }
+        return validate;
     }
     // handleMenuActions(menuItem) {
     //     switch (menuItem) {
@@ -157,7 +192,6 @@ class EmpBasicInfoTable extends Component {
     //     }
     // }
     render() {
-        console.log(this.state.cascaderMenu);
         return (
             <div className="EmpBodyContainer">
                 {
@@ -171,14 +205,13 @@ class EmpBasicInfoTable extends Component {
                     columns={this.state.columns}
                     rows={this.state.rows}
                     rowKey={this.state.rowKey}
-                    showConfigActionBar='none'
-                    showEmpBasicTableActionBar=''
+                    showActionBar=''
                     showDelete={true}
                     showCreateNew={true}
                     createNew={this.handleCreateNew.bind(this)}
                     showSave={true}
                     saveData={this.saveData.bind(this)}
-                    cascaderMenu={this.state.cascaderMenu}
+                    showUploader={true}
                 />
             </div>
         );

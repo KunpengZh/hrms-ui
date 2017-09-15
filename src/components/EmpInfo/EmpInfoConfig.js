@@ -108,8 +108,7 @@ class EmpInfoConfig extends Component {
                             columns={this.state.columns.Department}
                             rows={this.state.rows.Department}
                             rowKey="id"
-                            showConfigActionBar=''
-                            showEmpBasicTableActionBar='none'
+                            showActionBar=''
                             showDelete={true}
                             showCreateNew={true}
                             minWidth={700}
@@ -123,8 +122,7 @@ class EmpInfoConfig extends Component {
                             columns={this.state.columns.JobRole}
                             rows={this.state.rows.JobRole}
                             rowKey="id"
-                            showConfigActionBar=''
-                            showEmpBasicTableActionBar='none'
+                            showActionBar=''
                             showDelete={true}
                             showCreateNew={true}
                             minWidth={700}
@@ -138,8 +136,7 @@ class EmpInfoConfig extends Component {
                             columns={this.state.columns.WorkerCategory}
                             rows={this.state.rows.WorkerCategory}
                             rowKey="id"
-                            showConfigActionBar=''
-                            showEmpBasicTableActionBar='none'
+                            showActionBar=''
                             showDelete={true}
                             showCreateNew={true}
                             minWidth={700}
