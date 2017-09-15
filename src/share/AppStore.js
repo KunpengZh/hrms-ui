@@ -102,6 +102,7 @@ var AppStore = (function () {
         DataOptions[key] = val;
     }
     var getDataOptions = (key) => {
+        
         return DataOptions[key];
     }
 
@@ -126,27 +127,29 @@ var AppStore = (function () {
                     message: ''
                 });
                 return;
+            } else {
+                fetch('/AppConfig?configKey=' + 'ConfigData').then((response) => response.json()).then((res) => {
+                    if (res.status === 200) {
+                        console.log(res);
+                        ConfigData = res.data;
+                        if (res.message !== '') AppStore.showError(res.message);
+                        rel({
+                            status: 200,
+                            message: '',
+                            data: ConfigData
+                        })
+                    } else {
+                        rel({
+                            status: res.status,
+                            message: res.message,
+                            data: res.data
+                        })
+                    }
+                }).catch((error) => {
+                    console.error(error);
+                    rel({ status: 500, message: "Unable to connect with Server" })
+                });
             }
-            fetch('/AppConfig?configKey=' + 'ConfigData').then((response) => response.json()).then((res) => {
-                if (res.status === 200) {
-                    console.log
-                    ConfigData = JSON.parse(res.data.configDoc);
-                    rel({
-                        status: 200,
-                        message: '',
-                        data: ConfigData
-                    })
-                } else {
-                    rel({
-                        status: res.status,
-                        message: res.message,
-                        data: null
-                    })
-                }
-            }).catch((error) => {
-                console.error(error);
-                rel({ status: 500, message: "Unable to connect with Server" })
-            });
         })
     }
 
@@ -216,9 +219,61 @@ var AppStore = (function () {
     }
 
     /**
+     * Functions to generate Unic Key
+     */
+
+    var getUnicKey = (key) => {
+        return new Promise(function (rel, rej) {
+            fetch('/getUnicKey?key=' + key).then((response) => response.json()).then((res) => {
+                if (res.status === 200) {
+                    rel({
+                        status: 200,
+                        data: res.data
+                    })
+                } else {
+                    rel({
+                        status: res.status,
+                        message: res.message
+                    })
+                }
+            }).catch((error) => {
+                console.error(error);
+                rel({ status: 500, message: "Unable to connect with Server" })
+            });
+        })
+    }
+
+    /**
+     * Functions for Employee Basic Information
+     */
+
+    var getAllEmpBasicInfo = () => {
+        return new Promise(function (rel, rej) {
+            fetch('/emp').then((response) => response.json()).then((res) => {
+                if (res.status === 200) {
+                    rel({
+                        status: 200,
+                        data: res.data
+                    })
+                } else {
+                    rel({
+                        status: res.status,
+                        message: res.message
+                    })
+                }
+            }).catch((error) => {
+                console.error(error);
+                rel({ status: 500, message: "Unable to connect with Server" })
+            });
+        })
+    }
+
+    /**
      * Return the object will be export from App Utils
      */
     return {
+        getAllEmpBasicInfo: getAllEmpBasicInfo,
+        getUnicKey: getUnicKey,
         showError: showError,
         showInfo: showInfo,
         showWarning: showWarning,

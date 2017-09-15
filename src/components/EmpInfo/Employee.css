@@ -21,6 +21,7 @@
     justify-content: flex-start;
     align-items:flex-start;
     padding:20px;
+    
 }
 .topMenuContainer {
     display: flex;
@@ -28,6 +29,7 @@
     height: 35px;
     width: 100%;
     margin-bottom: 15px;
+    padding-right: 15px;
 }
 .TopMenu{
     display: flex;
@@ -35,18 +37,18 @@
     height: 35px;
     width: 100%;
 }
-.EmpInfoTableContainer{
-    display: flex;
-    flex: 1;
-    border: 1px solid gray;
-    width: 100%;
-}
-
 .EmpDataGrid{
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-start;
+    width: 100%;
+    height: 100%;
+}
+.EmpInfoTableContainer{
+    width: 100%;
+    height: 100%;
+    
 }
 
 

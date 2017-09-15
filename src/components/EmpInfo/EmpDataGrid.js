@@ -4,15 +4,13 @@ import { Button } from 'element-react';
 import 'element-theme-default';
 import './Employee.css';
 import 'bootstrap/dist/css/bootstrap.css';
-const { Editors, Toolbar, Formatters } = require('react-data-grid-addons');
-const { AutoComplete: AutoCompleteEditor, DropDownEditor } = Editors;
-const { ImageFormatter } = Formatters;
+import AppStore from '../../share/AppStore';
+import Cascader from '../Share/Cascader'
+
 
 class ConfigGrid extends Component {
     constructor(props) {
         super(props)
-        this.rowKey = props.rowKey ? props.rowKey : 'id';
-        this._columns = this.props.columns;
         // this._columns.push(
         //     {
         //         name: 'Actions',
@@ -27,18 +25,21 @@ class ConfigGrid extends Component {
         //       }
         // )
         this.state = {
-            rows: this.props.rows,
+            rows: [],
+            _columns: [],
             selectedIndexes: [],
-            selectedKeys: []
+            rowKey: props.rowKey ? props.rowKey : 'id',
+            cascaderMenu: null
         };
+        this.selectedKeys = [];
     }
     onRowsSelected(rows) {
-        let rowKey = this.rowKey;
+        let rowKey = this.state.rowKey;
         this.selectedKeys = this.selectedKeys.concat(rows.map(r => r.row[rowKey]));
         this.setState({ selectedIndexes: this.state.selectedIndexes.concat(rows.map(r => r.rowIdx)) });
     }
     onRowsDeselected(rows) {
-        let rowKey = this.rowKey;
+        let rowKey = this.state.rowKey;
         let rowIndexes = rows.map(r => r.rowIdx);
         let selKey = rows.map(r => r.row[rowKey]);
         this.selectedKeys = this.selectedKeys.filter(i => selKey.indexOf(i) === -1);
@@ -48,15 +49,17 @@ class ConfigGrid extends Component {
         return this.state.rows[i];
     }
     componentWillReceiveProps(newProps) {
-        this.rowKey = newProps.rowKey ? newProps.rowKey : 'id';
-        this._columns = newProps.columns;
+       
         let nstate = {
             rows: newProps.rows,
+            _columns: newProps.columns,
             selectedIndexes: [],
-            selectedKeys: []
+            selectedKeys: [],
+            rowKey: newProps.rowKey ? newProps.rowKey : 'id',
+            cascaderMenu: newProps.cascaderMenu ? newProps.cascaderMenu : null
         };
-
         this.setState(nstate);
+
     }
     handleGridRowsUpdated({ fromRow, toRow, updated }) {
         let rows = this.state.rows.slice();
@@ -75,7 +78,7 @@ class ConfigGrid extends Component {
         });
     }
     handleDelete() {
-        let rowKey = this.rowKey;
+        let rowKey = this.state.rowKey;
         let rows = this.state.rows.slice();
         this.selectedKeys.map(function (selIndex) {
             rows.forEach(function (row, rowIndex) {
@@ -90,22 +93,28 @@ class ConfigGrid extends Component {
         this.props.saveData(this.state.rows);
     }
     render() {
+        
         return (
             <div className="EmpDataGrid">
-                <div className="topMenuContainer" style={{ 'display': this.props.showActionBar }}>
+                <div className="topMenuContainer" style={{ 'display': this.props.showConfigActionBar }}>
                     {this.props.showCreateNew ? (<Button type="primary" onClick={this.handleAddRow.bind(this)}>添加</Button>) : (null)}
                     {this.props.showDelete ? (<Button type="warning" onClick={this.handleDelete.bind(this)}>删除</Button>) : (null)}
                     {this.props.showSave ? (<Button type="primary" onClick={this.handleSaveData.bind(this)}>保存</Button>) : (null)}
                 </div>
+                <div className="topMenuContainer" style={{ 'display': this.props.showEmpBasicTableActionBar }}>
+                    {this.state.cascaderMenu ? (<Cascader options={this.state.cascaderMenu} />) : (null)}
+                    <Button type="primary" icon="search">过&nbsp;滤</Button>
+                    <Button type="primary" icon="plus" onClick={this.handleAddRow.bind(this)}>新&nbsp;建</Button>
+                    <Button type="primary" icon="upload">上&nbsp;传</Button>
+                </div>
                 <div className="EmpInfoTableContainer">
                     <ReactDataGrid
-                        rowKey="id"
+                        rowKey={this.state.rowKey}
                         enableCellSelect={true}
-                        columns={this._columns}
+                        columns={this.state._columns}
                         rowGetter={this.rowGetter.bind(this)}
                         rowsCount={this.state.rows.length}
-                        minHeight={500}
-                        minWidth={500}
+                        minWidth={this.props.minWidth ? this.props.minWidth : document.body.clientWidth}
                         onGridRowsUpdated={this.handleGridRowsUpdated.bind(this)}
                         rowSelection={{
                             showCheckbox: true,
