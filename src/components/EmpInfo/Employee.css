@@ -38,17 +38,56 @@
     width: 100%;
 }
 .EmpDataGrid{
-    display: flex;
+    /* display: flex;
     flex-direction: column;
-    justify-content: flex-start;
+    justify-content: flex-start; */
     align-items: flex-start;
     width: 100%;
     height: 100%;
 }
 .EmpInfoTableContainer{
-    width: 100%;
-    height: 100%;
-    overflow: scroll;
+    /* display: block;
+    width: 600px;
+    height: 300px;
+    overflow: hidden; */
 }
+.react-grid-Main {
+    background-color: #fff;
+    color: inherit;
+    padding: 0;
+    /* outline: 1px solid #e7eaec; */
+    clear: both;
+    outline: 0!important;
+}
+.react-grid-Grid {
+    /* border: 1px solid #ddd; */
+    border:0;
+}
+.FileUPloader{
+    display: inline-block;
+    margin-left: 10px;
+}
+input[type="file"] {
+    display: none!important;
+}
+.aToButton{
+    color: #fff;
+    background-color: #20a0ff;
+    display: inline-block;
+    line-height: 1;
+    white-space: nowrap;
+    cursor: pointer;
+    border: 1px solid #20a0ff;
+    margin: 0;
+    padding: 10px 15px;
+    font-size: 14px;
+    margin-right: 10px;
+    margin-left: 10px;
+    border-radius: 5px;
+}
+.linkButton{
+    color: #fff;
+}
+
 
 

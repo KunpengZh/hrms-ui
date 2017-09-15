@@ -212,6 +212,7 @@ class EmpBasicInfoTable extends Component {
                     showSave={true}
                     saveData={this.saveData.bind(this)}
                     showUploader={true}
+                    showDownload={true}
                 />
             </div>
         );

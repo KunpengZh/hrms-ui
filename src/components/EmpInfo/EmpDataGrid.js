@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import ReactDataGrid from 'react-data-grid'
-import { Button } from 'element-react';
+import { Button, Upload } from 'element-react';
 import 'element-theme-default';
 import './Employee.css';
 import 'bootstrap/dist/css/bootstrap.css';
 import AppStore from '../../share/AppStore';
 
-
+import fileDownload from 'js-file-download';
 
 class ConfigGrid extends Component {
     constructor(props) {
@@ -78,7 +78,7 @@ class ConfigGrid extends Component {
 
         this.setState({ rows });
     }
-    
+
     handleGridRowsUpdated({ fromRow, toRow, updated }) {
         let rowKey = this.state.rowKey;
         let rows = this.state.rows.slice();
@@ -126,15 +126,29 @@ class ConfigGrid extends Component {
         }
         this.props.saveData(this.state.rows, keysObj);
     }
+    handleDownload() {
+        fileDownload('/emp/downloadempbasicinfo', 'employeebasic.xls');
+    }
     render() {
 
         return (
             <div className="EmpDataGrid">
                 <div className="topMenuContainer" style={{ 'display': this.props.showActionBar }}>
+                    {this.props.showDownload ? (<div className="aToButton"><a className="linkButton" href="http://localhost:8080/emp/downloadempbasicinfo" target="_blank"><i className="el-icon-document"></i>点击下载</a></div>) : (null)}
                     {this.props.showCreateNew ? (<Button type="primary" icon="plus" onClick={this.handleAddRow.bind(this)}>添加</Button>) : (null)}
                     {this.props.showDelete ? (<Button type="primary" icon="delete" onClick={this.handleDelete.bind(this)}>删除</Button>) : (null)}
                     {this.props.showSave ? (<Button type="primary" icon="circle-check" onClick={this.handleSaveData.bind(this)}>保存</Button>) : (null)}
-                    {this.props.showUploader ? (<Button type="primary" icon="upload">上&nbsp;传</Button>) : (null)}
+                    {this.props.showUploader ? (
+                        <Upload
+                            className="FileUPloader"
+                            action="/emp/uploadempbasicinfo"
+                            multiple={false}
+                            showFileList={false}
+                        >
+                            <Button icon="upload" type="primary">点击上传</Button>
+                        </Upload>
+                    ) : (null)}
+
                 </div>
 
                 <div className="EmpInfoTableContainer">
@@ -145,7 +159,7 @@ class ConfigGrid extends Component {
                         rowGetter={this.rowGetter.bind(this)}
                         rowsCount={this.state.rows.length}
                         minWidth={this.props.minWidth ? this.props.minWidth : (document.body.clientWidth - 50 < 1280 ? 1280 : document.body.clientWidth - 50)}
-                        minHeight={500}
+                        minHeight={this.props.minHeight ? this.props.minHeight : (document.body.clientHeight - 150)}
                         onGridRowsUpdated={this.handleGridRowsUpdated.bind(this)}
                         rowSelection={{
                             showCheckbox: true,
