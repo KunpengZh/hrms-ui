@@ -12,6 +12,9 @@ const { Editors, Formatters } = require('react-data-grid-addons');
 const { DropDownEditor } = Editors;
 const { DropDownFormatter } = Formatters;
 
+const ColumnKeysNeedValidate = ['workAge', 'age'];
+const validateFailMsg = '工龄, 年龄字段只能接受数字，请检查您是否在工龄或是年龄字段里输入的非数字字符';
+
 class EmpBasicInfoTable extends Component {
     constructor(props) {
         super(props);
@@ -43,6 +46,7 @@ class EmpBasicInfoTable extends Component {
                 {
                     key: 'empId',
                     name: '员工号',
+                    sortable: true,
                     editable: false,
                 },
                 {
@@ -198,9 +202,6 @@ class EmpBasicInfoTable extends Component {
                     {
                         this.state.fullscreen && <Loading fullscreen={true} />
                     }
-                    {/* <div className="topMenuContainer">
-                    <TopMenu handleMenuActions={this.handleMenuActions.bind(this)}/>
-                </div> */}
 
                     <EmpDataGrid
                         columns={this.state.columns}
@@ -213,7 +214,11 @@ class EmpBasicInfoTable extends Component {
                         showSave={true}
                         saveData={this.saveData.bind(this)}
                         showUploader={true}
+                        uploadLink={'/emp/uploadempbasicinfo'}
                         showDownload={true}
+                        downloadLink={'http://localhost:8080/emp/downloadempbasicinfo'}
+                        ColumnKeysNeedValidate={ColumnKeysNeedValidate}
+                        validateFailMsg={validateFailMsg}
                     />
                 </div>
             </div>

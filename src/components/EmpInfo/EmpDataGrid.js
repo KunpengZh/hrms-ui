@@ -77,17 +77,68 @@ class ConfigGrid extends Component {
         this.setState({ rows });
     }
 
+    _validateOnlyNumber(text) {
+        if (text.trim() == "") return true;
+        let numbers = '0123456789.';
+        let validate = true;
+        for (var i = 0; i < text.length && validate; i++) {
+            if (numbers.indexOf(text[i]) < 0) {
+                AppStore.showError(this.props.validateFailMsg)
+                validate = false;
+                break;
+            }
+        }
+        return validate;
+    }
+    _isDate(dateString) {
+        if (dateString.trim() == "") return true;
+        var r = dateString.match(/^(\d{1,4})(-|\/)(\d{1,2})\2(\d{1,2})$/);
+        if (r == null) {
+            AppStore.showError(this.props.validateDateFailMsg)
+            return false;
+        }
+        var d = new Date(r[1], r[3] - 1, r[4]);
+        var num = (d.getFullYear() == r[1] && (d.getMonth() + 1) == r[3] && d.getDate() == r[4]);
+        if (num == 0) {
+            AppStore.showError(this.props.validateDateFailMsg)
+            return false
+        }
+        return true;
+    }
+
     handleGridRowsUpdated({ fromRow, toRow, updated }) {
         let rowKey = this.state.rowKey;
         let rows = this.state.rows.slice();
-        for (let i = fromRow; i <= toRow; i++) {
-            let rowToUpdate = rows[i];
-            let updatedRow = Object.assign(rowToUpdate, updated);
-            rows[i] = updatedRow;
 
-            let updateKey = rows[i][rowKey];
-            if (this.updatedKey.indexOf(updateKey) < 0) this.updatedKey.push(updateKey);
+        let validationPass = true;
+        for (let key in updated) {
+            let ColumnKeysNeedValidate = this.props.ColumnKeysNeedValidate;
+            if (ColumnKeysNeedValidate && ColumnKeysNeedValidate.indexOf(key) >= 0) {
+                validationPass = this._validateOnlyNumber(updated[key]);
+            }
+            let ColumnKeyNeedDate = this.props.ColumnKeyNeedDate;
+            if (ColumnKeyNeedDate && ColumnKeyNeedDate.indexOf(key) >= 0) {
+                validationPass = this._isDate(updated[key]);
+            }
+            if (!validationPass) {
+                this.setState({ rows });
+                return;
+            }
         }
+
+        let updatedRow = Object.assign(rows[fromRow], updated);
+        rows[fromRow] = updatedRow;
+        let updateKey = rows[fromRow][rowKey];
+        if (this.updatedKey.indexOf(updateKey) < 0) this.updatedKey.push(updateKey);
+
+        // for (let i = fromRow; i <= toRow; i++) {
+        //     let rowToUpdate = rows[i];
+        //     let updatedRow = Object.assign(rowToUpdate, updated);
+        //     rows[i] = updatedRow;
+
+        //     let updateKey = rows[i][rowKey];
+        //     if (this.updatedKey.indexOf(updateKey) < 0) this.updatedKey.push(updateKey);
+        // }
         this.setState({ rows });
     }
     handleAddRow() {
@@ -127,12 +178,19 @@ class ConfigGrid extends Component {
     handleSyncEmpInfo() {
         this.props.handleSyncEmpInfo();
     }
+    onCellSelected({ rowIdx, idx }) {
+        //this.grid.openCellEditor(rowIdx, idx);
+    }
+
+    onCellDeSelected({ rowIdx, idx }) {
+
+    }
     render() {
 
         return (
             <div className="EmpDataGrid">
                 <div className="topMenuContainer" style={{ 'display': this.props.showActionBar }}>
-                    {this.props.showDownload ? (<div className="aToButton"><a className="linkButton" href="http://localhost:8080/emp/downloadempbasicinfo" target="_blank"><i className="el-icon-document"></i>点击下载</a></div>) : (null)}
+                    {this.props.showDownload ? (<div className="aToButton"><a className="linkButton" href={this.props.downloadLink} target="_blank"><i className="el-icon-document"></i>点击下载</a></div>) : (null)}
                     {this.props.showCreateNew ? (<Button type="primary" icon="plus" onClick={this.handleAddRow.bind(this)}>添加</Button>) : (null)}
                     {this.props.showDelete ? (<Button type="primary" icon="delete" onClick={this.handleDelete.bind(this)}>删除</Button>) : (null)}
                     {this.props.showSave ? (<Button type="primary" icon="circle-check" onClick={this.handleSaveData.bind(this)}>保存</Button>) : (null)}
@@ -140,7 +198,7 @@ class ConfigGrid extends Component {
                     {this.props.showUploader ? (
                         <Upload
                             className="FileUPloader"
-                            action="/emp/uploadempbasicinfo"
+                            action={this.props.uploadLink}
                             multiple={false}
                             showFileList={false}
                         >
@@ -152,6 +210,7 @@ class ConfigGrid extends Component {
 
                 <div className="EmpInfoTableContainer">
                     <ReactDataGrid
+                        ref={node => this.grid = node}
                         rowKey={this.state.rowKey}
                         enableCellSelect={true}
                         columns={this.state._columns}
@@ -170,6 +229,8 @@ class ConfigGrid extends Component {
                             }
                         }}
                         onGridSort={this.handleGridSort.bind(this)}
+                        onCellSelected={this.onCellSelected}
+                        onCellDeSelected={this.onCellDeSelected}
                     />
                 </div>
             </div>

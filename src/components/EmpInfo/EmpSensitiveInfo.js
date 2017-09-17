@@ -9,6 +9,14 @@ import EmpDataGrid from './EmpDataGrid';
 
 import ReactDataGrid from 'react-data-grid'
 
+const ColumnKeysNeedValidate = ['idCard', 'bankAccount', 'jinengGongzi', 'gangweiGongzi',
+    'jichuButie', 'xilifei', 'gonglingGongzi', 'zhiwuJintie', 'gongliBuzhu', 'kaoheJiangjin', 'tongxunButie',
+    'qitaJiangjin', 'xiaxiangBuzhu', 'yingyetingBuzhu', 'preAnnuallyIncom', 'nianjin', 'qiyeNianjin', 'yanglaobaoxian', 'shiyebaoxian',
+    'zhufanggongjijin', 'yiliaobaoxian', 'buchongyiliaobaoxian'];
+const validateFailMsg = '请检查您是否在只能接受数字的字段里输入的非数字字符';
+const ColumnKeyNeedDate = ['birthday']
+const validateDateFailMsg = '您输入的出生日期字段不合法，请输入YYYY-MM-DD格式的日期';
+
 
 class EmpSensitiveInfoTable extends Component {
     constructor(props) {
@@ -26,8 +34,8 @@ class EmpSensitiveInfoTable extends Component {
         AppStore.getConfigData().then((configData) => {
             if (configData.status !== 200) AppStore.showError(configData.message);
             nstate.columns = [
-                { key: 'empId', name: '员工号', editable: 'false', width: 150 },
-                { key: 'name', name: '姓名', editable: 'false', width: 150 },
+                { key: 'empId', name: '员工号', sortable: true, width: 150 },
+                { key: 'name', name: '姓名', sortable: true, width: 150 },
                 { key: 'idCard', name: '身份证', editable: 'true', width: 150 },
                 { key: 'birthday', name: '出生日期', editable: 'true', width: 150 },
                 { key: 'bankAccount', name: '银行帐号', editable: 'true', width: 150 },
@@ -80,10 +88,19 @@ class EmpSensitiveInfoTable extends Component {
 
     saveData(data, keysObj) {
 
-        if (data.length > 0) {
-            AppStore.saveEmpSensitiveData(data).then((res) => {
-                AppStore.showInfo(res.message);
+        let { updated } = keysObj;
+        let changedData = [];
+
+        data.forEach(function (employee) {
+            if (updated.indexOf(employee.empId) >= 0) changedData.push(employee)
+        });
+
+        if (changedData.length > 0) {
+            AppStore.saveEmpSensitiveData(changedData).then((res) => {
+                AppStore.showSuccess(res.message);
             });
+        } else {
+            AppStore.showWarning("没有数据需要更新");
         }
     }
     _validateOnlyNumber(text) {
@@ -117,9 +134,15 @@ class EmpSensitiveInfoTable extends Component {
                         showSave={true}
                         saveData={this.saveData.bind(this)}
                         showUploader={true}
+                        uploadLink={'/empsen/uploadempsensitiveinfo'}
                         showDownload={true}
+                        downloadLink={'http://localhost:8080/empsen/downloadempsensitiveinfo'}
                         showSyncEmpInfo={true}
                         handleSyncEmpInfo={this.handleSyncEmpInfo.bind(this)}
+                        ColumnKeysNeedValidate={ColumnKeysNeedValidate}
+                        validateFailMsg={validateFailMsg}
+                        ColumnKeyNeedDate={ColumnKeyNeedDate}
+                        validateDateFailMsg={validateDateFailMsg}
                     />
                 </div>
             </div>
