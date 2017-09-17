@@ -22,7 +22,7 @@ class EmpBasicInfoTable extends Component {
             rowKey: 'empId',
         }
     }
-    
+
     componentDidMount() {
         let nstate = Object.assign({}, this.state);
         AppStore.getConfigData().then((configData) => {
@@ -193,27 +193,29 @@ class EmpBasicInfoTable extends Component {
     // }
     render() {
         return (
-            <div className="EmpBodyContainer">
-                {
-                    this.state.fullscreen && <Loading fullscreen={true} />
-                }
-                {/* <div className="topMenuContainer">
+            <div className="EmpContainer">
+                <div className="EmpBodyContainer">
+                    {
+                        this.state.fullscreen && <Loading fullscreen={true} />
+                    }
+                    {/* <div className="topMenuContainer">
                     <TopMenu handleMenuActions={this.handleMenuActions.bind(this)}/>
                 </div> */}
 
-                <EmpDataGrid
-                    columns={this.state.columns}
-                    rows={this.state.rows}
-                    rowKey={this.state.rowKey}
-                    showActionBar=''
-                    showDelete={true}
-                    showCreateNew={true}
-                    createNew={this.handleCreateNew.bind(this)}
-                    showSave={true}
-                    saveData={this.saveData.bind(this)}
-                    showUploader={true}
-                    showDownload={true}
-                />
+                    <EmpDataGrid
+                        columns={this.state.columns}
+                        rows={this.state.rows}
+                        rowKey={this.state.rowKey}
+                        showActionBar=''
+                        showDelete={true}
+                        showCreateNew={true}
+                        createNew={this.handleCreateNew.bind(this)}
+                        showSave={true}
+                        saveData={this.saveData.bind(this)}
+                        showUploader={true}
+                        showDownload={true}
+                    />
+                </div>
             </div>
         );
     }

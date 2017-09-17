@@ -6,8 +6,6 @@ import './Employee.css';
 import 'bootstrap/dist/css/bootstrap.css';
 import AppStore from '../../share/AppStore';
 
-import fileDownload from 'js-file-download';
-
 class ConfigGrid extends Component {
     constructor(props) {
         super(props)
@@ -126,8 +124,8 @@ class ConfigGrid extends Component {
         }
         this.props.saveData(this.state.rows, keysObj);
     }
-    handleDownload() {
-        fileDownload('/emp/downloadempbasicinfo', 'employeebasic.xls');
+    handleSyncEmpInfo() {
+        this.props.handleSyncEmpInfo();
     }
     render() {
 
@@ -138,6 +136,7 @@ class ConfigGrid extends Component {
                     {this.props.showCreateNew ? (<Button type="primary" icon="plus" onClick={this.handleAddRow.bind(this)}>添加</Button>) : (null)}
                     {this.props.showDelete ? (<Button type="primary" icon="delete" onClick={this.handleDelete.bind(this)}>删除</Button>) : (null)}
                     {this.props.showSave ? (<Button type="primary" icon="circle-check" onClick={this.handleSaveData.bind(this)}>保存</Button>) : (null)}
+                    {this.props.showSyncEmpInfo ? (<Button type="primary" icon="circle-check" onClick={this.handleSyncEmpInfo.bind(this)}>同步</Button>) : (null)}
                     {this.props.showUploader ? (
                         <Upload
                             className="FileUPloader"

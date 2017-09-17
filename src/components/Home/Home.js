@@ -4,7 +4,7 @@ import '../../font-awesome/css/font-awesome.min.css'
 import AppStore from '../../share/AppStore';
 
 import TopNavigation from '../Navigation/TopNavigation';
-import EmpBasicInfo from '../EmpInfo/EmpBasicInfo'
+import EmpBasicInfo from '../EmpInfo/EmpBasicInfoTable';
 import EmpSensitiveInfo from '../EmpInfo/EmpSensitiveInfo';
 import AccessManagement from '../AccessManagement/AccessManagement'
 import OTManagement from '../OTManagement/OTManagement'

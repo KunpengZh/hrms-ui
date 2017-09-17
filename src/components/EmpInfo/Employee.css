@@ -46,10 +46,8 @@
     height: 100%;
 }
 .EmpInfoTableContainer{
-    /* display: block;
-    width: 600px;
-    height: 300px;
-    overflow: hidden; */
+    width: 100%;
+    overflow-x: scroll;
 }
 .react-grid-Main {
     background-color: #fff;

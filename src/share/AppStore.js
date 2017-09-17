@@ -308,11 +308,94 @@ var AppStore = (function () {
         })
     }
 
+    /**
+     * Functions for Sensitive Employee  Information
+     */
+
+    var getAllEmpSensitiveInfo = () => {
+        return new Promise(function (rel, rej) {
+            fetch('/empsen').then((response) => response.json()).then((res) => {
+                if (res.status === 200) {
+                    rel({
+                        status: 200,
+                        data: res.data
+                    })
+                } else {
+                    rel({
+                        status: res.status,
+                        message: res.message
+                    })
+                }
+            }).catch((error) => {
+                console.error(error);
+                rel({ status: 500, message: "Unable to connect with Server" })
+            });
+        })
+    }
+
+    var SyncEmpSenWithBasicTable=function(){
+        
+        return new Promise(function (rel, rej) {
+            fetch('/empsen/syncempsensitive').then((response) => response.json()).then((res) => {
+                if (res.status === 200) {
+                    rel({
+                        status: 200,
+                        data: res.data
+                    })
+                } else {
+                    rel({
+                        status: res.status,
+                        message: res.message
+                    })
+                }
+            }).catch((error) => {
+                console.error(error);
+                rel({ status: 500, message: "Unable to connect with Server" })
+            });
+        })
+    }
+
+    var saveEmpSensitiveData = (employees) => {
+        return new Promise(function (rel, rej) {
+            fetch('/empsen/update', {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.89 Safari/537.36',
+                    'Host': 'hrms.guangda.com'
+                },
+                body: JSON.stringify({
+                    data: employees,
+                })
+            }).then((response) => response.json()).then((res) => {
+                if (res.status === 200) {
+
+                    rel({
+                        status: 200,
+                        message: '保存成功'
+                    })
+                } else {
+                    rel({
+                        status: res.status,
+                        message: res.message
+                    })
+                }
+            }).catch((error) => {
+                console.error(error);
+                rel({ status: 500, message: "Unable to connect with Server" })
+            });
+        })
+    }
+
 
     /**
      * Return the object will be export from App Utils
      */
     return {
+        saveEmpSensitiveData:saveEmpSensitiveData,
+        SyncEmpSenWithBasicTable:SyncEmpSenWithBasicTable,
+        getAllEmpSensitiveInfo:getAllEmpSensitiveInfo,
         deleteEmpBasicData: deleteEmpBasicData,
         saveEmpBasicData: saveEmpBasicData,
         getAllEmpBasicInfo: getAllEmpBasicInfo,
