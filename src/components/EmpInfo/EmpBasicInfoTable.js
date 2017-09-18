@@ -219,6 +219,7 @@ class EmpBasicInfoTable extends Component {
                         downloadLink={'http://localhost:8080/emp/downloadempbasicinfo'}
                         ColumnKeysNeedValidate={ColumnKeysNeedValidate}
                         validateFailMsg={validateFailMsg}
+                        enableCheckBox={true}
                     />
                 </div>
             </div>

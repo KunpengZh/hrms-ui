@@ -36,6 +36,7 @@ var AppStore = (function () {
                     message: "UserName and Password is mandatory required"
                 });
             }
+
             fetch('/login/', {
                 method: 'POST',
                 headers: {
@@ -333,8 +334,8 @@ var AppStore = (function () {
         })
     }
 
-    var SyncEmpSenWithBasicTable=function(){
-        
+    var SyncEmpSenWithBasicTable = function () {
+
         return new Promise(function (rel, rej) {
             fetch('/empsen/syncempsensitive').then((response) => response.json()).then((res) => {
                 if (res.status === 200) {
@@ -388,14 +389,119 @@ var AppStore = (function () {
         })
     }
 
+    /**
+     * common Get and Post functions 
+     */
 
+    var doGet = function (url) {
+        return new Promise(function (rel, rej) {
+            fetch(url).then((response) => response.json()).then((res) => {
+                rel(res)
+            }).catch((error) => {
+                console.error(error);
+                rel({ status: 500, message: "Unable to connect with Server", data: '' })
+            });
+        })
+    }
+    var doPost = function (url, dataObj) {
+        return new Promise(function (rel, rej) {
+            fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.89 Safari/537.36',
+                    'Host': 'hrms.guangda.com'
+                },
+                body: JSON.stringify(dataObj)
+            }).then((response) => response.json()).then((res) => {
+                rel(res);
+            }).catch((error) => {
+                console.error(error);
+                rel({ status: 500, message: "Unable to connect with Server", data: '' })
+            });
+        })
+    }
+    /**
+     * functions related with Payroll Config
+     */
+
+    var getAllPayrollConfigs = () => {
+        return new Promise(function (rel, rej) {
+            doGet('/categoryConfig').then((res) => {
+                if (res.status === 200) {
+                    rel({
+                        status: 200,
+                        data: res.data,
+                        message: ''
+                    })
+                } else {
+                    rel({
+                        status: res.status,
+                        message: res.message
+                    })
+                }
+            })
+        })
+    }
+    var savePayrollConfigs = function (data) {
+        return new Promise(function (rel, rej) {
+            doPost('/categoryConfig/update', { data: data }).then(res => {
+                if (res.status === 200) {
+                    rel({
+                        status: 200,
+                        data: res.data,
+                        message: '保存成功'
+                    })
+                } else {
+                    rel({
+                        status: res.status,
+                        message: res.message
+                    })
+                }
+            })
+        })
+    }
+
+    var deletePayrollConfigs = function (keys) {
+
+        return new Promise(function (rel, rej) {
+
+            if (!keys || !(keys instanceof Array) || keys.length <= 0) {
+                rel({
+                    status: 700,
+                    message: '',
+                    data: ''
+                })
+                return;
+            }
+
+            doPost('/categoryConfig/delete', { data: keys }).then(res => {
+                if (res.status === 200) {
+                    rel({
+                        status: 200,
+                        data: res.data,
+                        message: "删除成功"
+                    })
+                } else {
+                    rel({
+                        status: res.status,
+                        message: res.message
+                    })
+                }
+            })
+        })
+    }
     /**
      * Return the object will be export from App Utils
      */
     return {
-        saveEmpSensitiveData:saveEmpSensitiveData,
-        SyncEmpSenWithBasicTable:SyncEmpSenWithBasicTable,
-        getAllEmpSensitiveInfo:getAllEmpSensitiveInfo,
+        deletePayrollConfigs: deletePayrollConfigs,
+        savePayrollConfigs: savePayrollConfigs,
+        getAllPayrollConfigs: getAllPayrollConfigs,
+        saveEmpSensitiveData: saveEmpSensitiveData,
+        SyncEmpSenWithBasicTable: SyncEmpSenWithBasicTable,
+        getAllEmpSensitiveInfo: getAllEmpSensitiveInfo,
         deleteEmpBasicData: deleteEmpBasicData,
         saveEmpBasicData: saveEmpBasicData,
         getAllEmpBasicInfo: getAllEmpBasicInfo,

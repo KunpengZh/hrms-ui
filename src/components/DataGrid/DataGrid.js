@@ -2,11 +2,11 @@ import React, { Component } from 'react';
 import ReactDataGrid from 'react-data-grid'
 import { Button, Upload } from 'element-react';
 import 'element-theme-default';
-import './Employee.css';
+import './DataGrid.css';
 import 'bootstrap/dist/css/bootstrap.css';
 import AppStore from '../../share/AppStore';
 
-class ConfigGrid extends Component {
+class DataGrid extends Component {
     constructor(props) {
         super(props)
         // this._columns.push(
@@ -186,9 +186,9 @@ class ConfigGrid extends Component {
 
     }
     render() {
-        let self = this;
+       
         return (
-            <div className="EmpDataGrid">
+            <div className="DataGrid">
                 <div className="topMenuContainer" style={{ 'display': this.props.showActionBar }}>
                     {this.props.showDownload ? (<div className="aToButton"><a className="linkButton" href={this.props.downloadLink} target="_blank"><i className="el-icon-document"></i>点击下载</a></div>) : (null)}
                     {this.props.showCreateNew ? (<Button type="primary" icon="plus" onClick={this.handleAddRow.bind(this)}>添加</Button>) : (null)}
@@ -208,7 +208,7 @@ class ConfigGrid extends Component {
 
                 </div>
 
-                <div className="EmpInfoTableContainer">
+                <div className="DataGridInfoTableContainer">
                     <ReactDataGrid
                         ref={node => this.grid = node}
                         rowKey={this.state.rowKey}
@@ -220,7 +220,7 @@ class ConfigGrid extends Component {
                         minHeight={this.props.minHeight ? this.props.minHeight : (document.body.clientHeight - 150)}
                         onGridRowsUpdated={this.handleGridRowsUpdated.bind(this)}
                         rowSelection={{
-                            showCheckbox: (self.props.enableCheckBox === true || self.props.enableCheckBox===undefined) ? true : false,
+                            showCheckbox: (this.props.enableCheckBox === true || this.props.enableCheckBox===undefined) ? true : false,
                             enableShiftSelect: true,
                             onRowsSelected: this.onRowsSelected.bind(this),
                             onRowsDeselected: this.onRowsDeselected.bind(this),
@@ -238,6 +238,6 @@ class ConfigGrid extends Component {
     }
 };
 
-export default ConfigGrid;
+export default DataGrid;
 
 // minHeight={this.props.minHeight ? this.props.minHeight : (document.body.clientHeight - 150)}

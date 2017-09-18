@@ -143,6 +143,7 @@ class EmpSensitiveInfoTable extends Component {
                         validateFailMsg={validateFailMsg}
                         ColumnKeyNeedDate={ColumnKeyNeedDate}
                         validateDateFailMsg={validateDateFailMsg}
+                        enableCheckBox={false}
                     />
                 </div>
             </div>
