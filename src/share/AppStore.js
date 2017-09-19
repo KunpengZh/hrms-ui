@@ -77,7 +77,8 @@ var AppStore = (function () {
     var ConfigData = {
         Department: [],
         JobRole: [],
-        WorkerCategory: []
+        WorkerCategory: [],
+        ConfigPercentage:[]
     }
     var getExistConfigData = () => {
         return ConfigData;

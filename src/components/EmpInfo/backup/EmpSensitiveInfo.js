@@ -52,6 +52,12 @@ class EmpSensitiveInfoTable extends Component {
                 { key: 'xiaxiangBuzhu', name: '下乡补助', editable: 'true', width: 150 },
                 { key: 'yingyetingBuzhu', name: '营业厅补助', editable: 'true', width: 150 },
                 { key: 'preAnnuallyIncom', name: '上年收入', editable: 'true', width: 150 },
+                { key: 'nianjin', name: '年金', editable: 'true', width: 150 },
+                { key: 'qiyeNianjin', name: '企业年金', editable: 'true', width: 150 },
+                { key: 'yanglaobaoxian', name: '养老保险', editable: 'true', width: 150 },
+                { key: 'shiyebaoxian', name: '失业保险', editable: 'true', width: 150 },
+                { key: 'zhufanggongjijin', name: '住房公积金', editable: 'true', width: 150 },
+                { key: 'yiliaobaoxian', name: '医疗报销', editable: 'true', width: 150 },
                 { key: 'buchongyiliaobaoxian', name: '补充医疗保险', editable: 'true', width: 150 },
             ]
         }).then(() => {
