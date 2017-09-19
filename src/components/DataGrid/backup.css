@@ -1,0 +1,12 @@
+.react-grid-Main {
+    background-color: #fff;
+    color: inherit;
+    padding: 0;
+    /* outline: 1px solid #e7eaec; */
+    clear: both;
+    outline: 0!important;
+}
+.react-grid-Grid {
+    /* border: 1px solid #ddd; */
+    border:0;
+}

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import ReactDataGrid from 'react-data-grid'
-import { Button, Upload } from 'element-react';
+import { Button, Upload, Select } from 'element-react';
 import 'element-theme-default';
 import './DataGrid.css';
 import 'bootstrap/dist/css/bootstrap.css';
@@ -28,7 +28,7 @@ class DataGrid extends Component {
             selectedIndexes: [],
             rowKey: props.rowKey ? props.rowKey : 'id',
             originalRows: [],
-            filters: {}
+            selectMenu: ''
         };
         this.selectedKeys = [];
         this.newCreatedKey = [];
@@ -51,7 +51,6 @@ class DataGrid extends Component {
         return this.state.rows[i];
     }
     componentWillReceiveProps(newProps) {
-
         let nstate = {
             originalRows: Object.assign([], newProps.rows),
             rows: newProps.rows,
@@ -59,6 +58,7 @@ class DataGrid extends Component {
             selectedIndexes: [],
             selectedKeys: [],
             rowKey: newProps.rowKey ? newProps.rowKey : 'id',
+            selectMenu: newProps.selectMenuSelectedItem
         };
         this.setState(nstate);
 
@@ -175,8 +175,8 @@ class DataGrid extends Component {
         }
         this.props.saveData(this.state.rows, keysObj);
     }
-    handleSyncEmpInfo() {
-        this.props.handleSyncEmpInfo();
+    handleSync() {
+        this.props.handleSync();
     }
     onCellSelected({ rowIdx, idx }) {
         //this.grid.openCellEditor(rowIdx, idx);
@@ -185,22 +185,40 @@ class DataGrid extends Component {
     onCellDeSelected({ rowIdx, idx }) {
 
     }
+    handleSelectMenuChange(value) {
+        this.props.handleSelectMenuChange(value);
+    }
+    onUploadSuccess(res) {
+        console.log(res);
+        AppStore.showSuccess(res.message);
+    }
     render() {
-       
+
         return (
             <div className="DataGrid">
                 <div className="topMenuContainer" style={{ 'display': this.props.showActionBar }}>
+                    {this.props.showSelectMenu ? (
+                        <Select value={this.state.selectMenu} onChange={this.handleSelectMenuChange.bind(this)} style={{ marginRight: "20px" }}>
+                            {
+                                this.props.selectMenuOptions.map(el => {
+                                    return <Select.Option key={el.value} label={el.label} value={el.value} />
+                                })
+                            }
+                        </Select>
+                    ) : (null)}
+                    {this.props.showLoading ? (<Button type="primary" icon="view" onClick={this.props.handleLoading}>{this.props.loadingText}</Button>) : (null)}
+                    {this.props.showSync ? (<Button type="primary" icon="circle-check" onClick={this.handleSync.bind(this)}>{this.props.syncButtonText}</Button>) : (null)}
                     {this.props.showDownload ? (<div className="aToButton"><a className="linkButton" href={this.props.downloadLink} target="_blank"><i className="el-icon-document"></i>点击下载</a></div>) : (null)}
                     {this.props.showCreateNew ? (<Button type="primary" icon="plus" onClick={this.handleAddRow.bind(this)}>添加</Button>) : (null)}
                     {this.props.showDelete ? (<Button type="primary" icon="delete" onClick={this.handleDelete.bind(this)}>删除</Button>) : (null)}
                     {this.props.showSave ? (<Button type="primary" icon="circle-check" onClick={this.handleSaveData.bind(this)}>保存</Button>) : (null)}
-                    {this.props.showSyncEmpInfo ? (<Button type="primary" icon="circle-check" onClick={this.handleSyncEmpInfo.bind(this)}>同步</Button>) : (null)}
                     {this.props.showUploader ? (
                         <Upload
                             className="FileUPloader"
                             action={this.props.uploadLink}
                             multiple={false}
                             showFileList={false}
+                            onSuccess={this.onUploadSuccess.bind(this)}
                         >
                             <Button icon="upload" type="primary">点击上传</Button>
                         </Upload>
@@ -220,7 +238,7 @@ class DataGrid extends Component {
                         minHeight={this.props.minHeight ? this.props.minHeight : (document.body.clientHeight - 150)}
                         onGridRowsUpdated={this.handleGridRowsUpdated.bind(this)}
                         rowSelection={{
-                            showCheckbox: (this.props.enableCheckBox === true || this.props.enableCheckBox===undefined) ? true : false,
+                            showCheckbox: (this.props.enableCheckBox === true || this.props.enableCheckBox === undefined) ? true : false,
                             enableShiftSelect: true,
                             onRowsSelected: this.onRowsSelected.bind(this),
                             onRowsDeselected: this.onRowsDeselected.bind(this),

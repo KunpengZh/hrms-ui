@@ -49,18 +49,6 @@
     width: 100%;
     overflow-x: scroll;
 }
-.react-grid-Main {
-    background-color: #fff;
-    color: inherit;
-    padding: 0;
-    /* outline: 1px solid #e7eaec; */
-    clear: both;
-    outline: 0!important;
-}
-.react-grid-Grid {
-    /* border: 1px solid #ddd; */
-    border:0;
-}
 .FileUPloader{
     display: inline-block;
     margin-left: 10px;
@@ -86,6 +74,3 @@ input[type="file"] {
 .linkButton{
     color: #fff;
 }
-
-
-

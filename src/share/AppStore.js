@@ -493,9 +493,164 @@ var AppStore = (function () {
         })
     }
     /**
+     * OT related functions
+     */
+
+
+    var getOTByCycle = function (OTCycle) {
+        return new Promise(function (rel, rej) {
+            if (!OTCycle || OTCycle === "") {
+                rel({
+                    status: 500,
+                    message: '必须指定加班周期',
+                    data: ''
+                })
+                return;
+            }
+            doGet('/ot?OTCycle=' + OTCycle).then((res) => {
+                if (res.status === 200) {
+                    rel({
+                        status: 200,
+                        data: res.data,
+                        message: ''
+                    })
+                } else {
+                    rel({
+                        status: res.status,
+                        message: res.message
+                    })
+                }
+            })
+        })
+    }
+
+    var initialOTByCycle = function (OTCycle) {
+        return new Promise(function (rel, rej) {
+            if (!OTCycle || OTCycle === "") {
+                rel({
+                    status: 700,
+                    message: '必须指定加班周期',
+                    data: ''
+                })
+                return;
+            }
+            doGet('/ot/initialOT?OTCycle=' + OTCycle).then((res) => {
+                if (res.status === 200) {
+                    rel({
+                        status: 200,
+                        data: res.data,
+                        message: ''
+                    })
+                } else {
+                    rel({
+                        status: res.status,
+                        message: res.message
+                    })
+                }
+            })
+        })
+    }
+
+    var deleteEmpOTData = function (keys, OTCycle) {
+        return new Promise(function (rel, rej) {
+            if (!keys || !(keys instanceof Array) || keys.length <= 0) {
+                rel({
+                    status: 700,
+                    message: '',
+                    data: ''
+                })
+                return;
+            }
+            if (!OTCycle || OTCycle === "") {
+                rel({
+                    status: 500,
+                    message: '必须指定加班周期',
+                    data: ''
+                })
+                return;
+            }
+            doPost('/ot/delete', { data: keys, OTCycle: OTCycle }).then(res => {
+                if (res.status === 200) {
+                    rel({
+                        status: 200,
+                        data: res.data,
+                        message: "删除成功"
+                    })
+                } else {
+                    rel({
+                        status: res.status,
+                        message: res.message
+                    })
+                }
+            })
+        })
+    }
+
+    var updateEmpOTData = function (data, OTCycle) {
+        return new Promise(function (rel, rej) {
+            if (!data || !(data instanceof Array) || data.length <= 0) {
+                rel({
+                    status: 700,
+                    message: '',
+                    data: ''
+                })
+                return;
+            }
+            if (!OTCycle || OTCycle === "") {
+                rel({
+                    status: 500,
+                    message: '必须指定加班周期',
+                    data: ''
+                })
+                return;
+            }
+            doPost('/ot/update', { data: data, OTCycle: OTCycle }).then(res => {
+                if (res.status === 200) {
+                    rel({
+                        status: 200,
+                        data: res.data,
+                        message: res.message
+                    })
+                } else {
+                    rel({
+                        status: res.status,
+                        message: res.message,
+                        data: []
+                    })
+                }
+            })
+        })
+    }
+
+    var getYearMonthPeriod = function () {
+
+        var date = new Date;
+        var year = date.getFullYear();
+        var month = date.getMonth() + 2;
+        var YearMonthPeriod = [];
+
+        for (let i = 0; i < 4; i++) {
+            month = month - 1;
+            if (month < 1) {
+                year = year - 1;
+                month = 12;
+            }
+            let item = year.toString() + (month < 10 ? "0" + month : month).toString();
+            YearMonthPeriod.push({ value: item, label: item });
+        }
+
+        return YearMonthPeriod;
+    }
+
+    /**
      * Return the object will be export from App Utils
      */
     return {
+        updateEmpOTData: updateEmpOTData,
+        getYearMonthPeriod: getYearMonthPeriod,
+        getOTByCycle: getOTByCycle,
+        initialOTByCycle: initialOTByCycle,
+        deleteEmpOTData: deleteEmpOTData,
         deletePayrollConfigs: deletePayrollConfigs,
         savePayrollConfigs: savePayrollConfigs,
         getAllPayrollConfigs: getAllPayrollConfigs,
