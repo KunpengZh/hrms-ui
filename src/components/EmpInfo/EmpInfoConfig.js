@@ -84,7 +84,8 @@ class EmpInfoConfig extends Component {
                     { text: '失业保险系数', value: 'SHIYEBAOXIANXISHU', id: 'SHIYEBAOXIANXISHU', title: '失业保险系数' },
                     { text: '住房公积金系数', value: 'ZHUFANGGONGJIJINXISHU', id: 'ZHUFANGGONGJIJINXISHU', title: '住房公积金系数' },
                     { text: '企业部分年金系数', value: 'QIYENIANJINXISHU', id: 'QIYENIANJINXISHU', title: '企业部分年金系数' },
-                    { text: '个人所得税计提基数', value: 'GERENSUODESHUISHUIJI', id: 'GERENSUODESHUISHUIJI', title: '个人所得税计提基数' }
+                    { text: '个人所得税计提基数', value: 'GERENSUODESHUISHUIJI', id: 'GERENSUODESHUISHUIJI', title: '个人所得税计提基数' },
+                    { text: '上年全市职工工资', value: 'SHANGNIANQUANSHIZHIGONGGONGZI', id: 'SHANGNIANQUANSHIZHIGONGGONGZI', title: '上年全市职工工资' }
                 ];
                 const ConfigPercentageEditor = <DropDownEditor options={ConfigPercentage} />;
                 const ConfigPercentageFormatter = <DropDownFormatter options={ConfigPercentage} value="value" />;
