@@ -78,7 +78,7 @@ var AppStore = (function () {
         Department: [],
         JobRole: [],
         WorkerCategory: [],
-        ConfigPercentage:[]
+        ConfigPercentage: []
     }
     var getExistConfigData = () => {
         return ConfigData;
@@ -644,9 +644,135 @@ var AppStore = (function () {
     }
 
     /**
+     * Funcitons related with Salary Details
+     */
+
+    var getSDByCycle = function (salaryCycle) {
+        return new Promise(function (rel, rej) {
+            if (!salaryCycle || salaryCycle === "") {
+                rel({
+                    status: 500,
+                    message: '必须指定周期',
+                    data: ''
+                })
+                return;
+            }
+            doGet('/sdd?salaryCycle=' + salaryCycle).then((res) => {
+                if (res.status === 200) {
+                    rel({
+                        status: 200,
+                        data: res.data,
+                        message: ''
+                    })
+                } else {
+                    rel({
+                        status: res.status,
+                        message: res.message
+                    })
+                }
+            })
+        })
+    }
+
+    var initialSDByCycle = function (salaryCycle) {
+        return new Promise(function (rel, rej) {
+            if (!salaryCycle || salaryCycle === "") {
+                rel({
+                    status: 700,
+                    message: '必须指定周期',
+                    data: ''
+                })
+                return;
+            }
+            doGet('/sdd/initialSD?salaryCycle=' + salaryCycle).then((res) => {
+                if (res.status === 200) {
+                    rel({
+                        status: 200,
+                        data: res.data,
+                        message: ''
+                    })
+                } else {
+                    rel({
+                        status: res.status,
+                        message: res.message
+                    })
+                }
+            })
+        })
+    }
+
+
+    var updateEmpSDData = function (data, salaryCycle) {
+        return new Promise(function (rel, rej) {
+            if (!data || !(data instanceof Array) || data.length <= 0) {
+                rel({
+                    status: 700,
+                    message: '',
+                    data: ''
+                })
+                return;
+            }
+            if (!salaryCycle || salaryCycle === "") {
+                rel({
+                    status: 500,
+                    message: '必须指定周期',
+                    data: ''
+                })
+                return;
+            }
+            doPost('/sdd/update', { data: data, salaryCycle: salaryCycle }).then(res => {
+                if (res.status === 200) {
+                    rel({
+                        status: 200,
+                        data: res.data,
+                        message: res.message
+                    })
+                } else {
+                    rel({
+                        status: res.status,
+                        message: res.message,
+                        data: []
+                    })
+                }
+            })
+        })
+    }
+
+    var reCalculateSDData = function (salaryCycle) {
+        return new Promise(function (rel, rej) {
+            if (!salaryCycle || salaryCycle === "") {
+                rel({
+                    status: 500,
+                    message: '必须指定周期',
+                    data: ''
+                })
+                return;
+            }
+            doGet('/sdd/recalculate?salaryCycle=' + salaryCycle).then((res) => {
+                if (res.status === 200) {
+                    rel({
+                        status: 200,
+                        data: res.data,
+                        message: ''
+                    })
+                } else {
+                    rel({
+                        status: res.status,
+                        message: res.message
+                    })
+                }
+            })
+        })
+    }
+
+    /**
      * Return the object will be export from App Utils
      */
     return {
+        reCalculateSDData: reCalculateSDData,
+        getSDByCycle: getSDByCycle,
+        initialSDByCycle: initialSDByCycle,
+        updateEmpSDData: updateEmpSDData,
         updateEmpOTData: updateEmpOTData,
         getYearMonthPeriod: getYearMonthPeriod,
         getOTByCycle: getOTByCycle,

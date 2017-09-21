@@ -11,8 +11,7 @@ import ReactDataGrid from 'react-data-grid'
 
 const ColumnKeysNeedValidate = ['idCard', 'bankAccount', 'jinengGongzi', 'gangweiGongzi',
     'jichuButie', 'xilifei', 'gonglingGongzi', 'zhiwuJintie', 'gongliBuzhu', 'kaoheJiangjin', 'tongxunButie',
-    'qitaJiangjin', 'xiaxiangBuzhu', 'yingyetingBuzhu', 'preAnnuallyIncom', 'nianjin', 'qiyeNianjin', 'yanglaobaoxian', 'shiyebaoxian',
-    'zhufanggongjijin', 'yiliaobaoxian', 'buchongyiliaobaoxian'];
+    'qitaJiangjin', 'xiaxiangBuzhu', 'yingyetingBuzhu', 'buchongyiliaobaoxian', 'preAnnuallyIncom'];
 const validateFailMsg = '请检查您是否在只能接受数字的字段里输入的非数字字符';
 const ColumnKeyNeedDate = ['birthday']
 const validateDateFailMsg = '您输入的出生日期字段不合法，请输入YYYY-MM-DD格式的日期';
@@ -51,8 +50,8 @@ class EmpSensitiveInfoTable extends Component {
                 { key: 'qitaJiangjin', name: '其他津贴', editable: 'true', width: 150 },
                 { key: 'xiaxiangBuzhu', name: '下乡补助', editable: 'true', width: 150 },
                 { key: 'yingyetingBuzhu', name: '营业厅补助', editable: 'true', width: 150 },
-                { key: 'preAnnuallyIncom', name: '上年收入', editable: 'true', width: 150 },
                 { key: 'buchongyiliaobaoxian', name: '补充医疗保险', editable: 'true', width: 150 },
+                { key: 'preAnnuallyIncom', name: '上年收入', editable: 'true', width: 150 },
             ]
         }).then(() => {
             AppStore.getAllEmpSensitiveInfo().then((employees) => {
@@ -124,7 +123,7 @@ class EmpSensitiveInfoTable extends Component {
                         showActionBar=''
                         showDelete={false}
                         showCreateNew={false}
-                        minWidth={4500}
+                        minWidth={2500}
                         showSave={true}
                         saveData={this.saveData.bind(this)}
                         showUploader={true}

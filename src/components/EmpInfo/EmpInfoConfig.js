@@ -78,12 +78,13 @@ class EmpInfoConfig extends Component {
         AppStore.getConfigData().then((conRes) => {
             if (conRes.status === 200) {
                 const ConfigPercentage = [
-                    { text: '年金系数', value: 'nianjinXiShu', id: 'nianjinXiShu', title: '年金系数' },
-                    { text: '养老保险', value: 'yanglaobaoxianXiShu', id: 'yanglaobaoxianXiShu', title: '养老保险' },
-                    { text: '失业保险', value: 'shiyebaoxianXiShu', id: 'shiyebaoxianXiShu', title: '失业保险' },
-                    { text: '住房公积金', value: 'zhufanggongjijinXiShu', id: 'zhufanggongjijinXiShu', title: '住房公积金' },
-                    { text: '企业部分年金', value: 'qiyenianXiShu', id: 'qiyenianXiShu', title: '企业部分年金' },
-                    { text: '个人所得税计提基数', value: 'taxXiShu', id: 'taxXiShu', title: '个人所得税计提基数' }
+                    { text: '个人年金系数', value: 'NIANJINXISHU', id: 'NIANJINXISHU', title: '个人年金系数' },
+                    { text: '养老保险系数', value: 'YANGLAOBAOXIANXISHU', id: 'YANGLAOBAOXIANXISHU', title: '养老保险系数' },
+                    { text: '医疗保险系数', value: 'YILIAOBAOXIANXISHU', id: 'YILIAOBAOXIANXISHU', title: '医疗保险系数' },
+                    { text: '失业保险系数', value: 'SHIYEBAOXIANXISHU', id: 'SHIYEBAOXIANXISHU', title: '失业保险系数' },
+                    { text: '住房公积金系数', value: 'ZHUFANGGONGJIJINXISHU', id: 'ZHUFANGGONGJIJINXISHU', title: '住房公积金系数' },
+                    { text: '企业部分年金系数', value: 'QIYENIANJINXISHU', id: 'QIYENIANJINXISHU', title: '企业部分年金系数' },
+                    { text: '个人所得税计提基数', value: 'GERENSUODESHUISHUIJI', id: 'GERENSUODESHUISHUIJI', title: '个人所得税计提基数' }
                 ];
                 const ConfigPercentageEditor = <DropDownEditor options={ConfigPercentage} />;
                 const ConfigPercentageFormatter = <DropDownFormatter options={ConfigPercentage} value="value" />;

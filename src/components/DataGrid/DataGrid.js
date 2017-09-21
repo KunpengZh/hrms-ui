@@ -189,8 +189,10 @@ class DataGrid extends Component {
         this.props.handleSelectMenuChange(value);
     }
     onUploadSuccess(res) {
-        console.log(res);
         AppStore.showSuccess(res.message);
+    }
+    handleFunc1() {
+        this.props.handleFunc1();
     }
     render() {
 
@@ -223,7 +225,7 @@ class DataGrid extends Component {
                             <Button icon="upload" type="primary">点击上传</Button>
                         </Upload>
                     ) : (null)}
-
+                    {this.props.showFunc1 ? (<Button type="primary" icon="circle-check" onClick={this.handleFunc1.bind(this)} style={{ marginRight: "20px" ,marginLeft: "20px"}}>{this.props.Func1Text}</Button>) : (null)}
                 </div>
 
                 <div className="DataGridInfoTableContainer">

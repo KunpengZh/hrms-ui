@@ -57,10 +57,9 @@ class PayrollConfig extends Component {
                 { key: 'zhufanggongjijin', name: '住房公积金', editable: 'true', width: 150, editor: YesNoEditor, formatter: YesNoFormatter },
                 { key: 'yiliaobaoxian', name: '医疗报销', editable: 'true', width: 150, editor: YesNoEditor, formatter: YesNoFormatter },
                 { key: 'buchongyiliaobaoxian', name: '补充医疗保险', editable: 'true', width: 150, editor: YesNoEditor, formatter: YesNoFormatter },
-                { key: 'jiabanFei', name: '加班费', width: 150, editable: true, editor: YesNoEditor, formatter: YesNoFormatter },
                 { key: 'kouchuGongzi', name: '扣除项', width: 150, editable: true, editor: YesNoEditor, formatter: YesNoFormatter },
                 { key: 'tax', name: '个人所得税', width: 150, editable: true, editor: YesNoEditor, formatter: YesNoFormatter },
-                { key: 'taxBaseline', name: '所得税基', width: 150, editable: true },
+                { key: 'yicixingJiangjin', name: '一次性奖金', width: 150, editable: true, editor: YesNoEditor, formatter: YesNoFormatter },
             ]
         }).then(() => {
             AppStore.getAllPayrollConfigs().then((configs) => {
@@ -99,10 +98,9 @@ class PayrollConfig extends Component {
                 zhufanggongjijin: 'Y',
                 yiliaobaoxian: 'Y',
                 buchongyiliaobaoxian: 'Y',
-                jiabanFei: 'Y',
                 kouchuGongzi: 'Y',
                 tax: 'Y',
-                taxBaseline: '3500'
+                yicixingJiangjin: 'Y',
             })
         })
 
