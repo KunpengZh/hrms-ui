@@ -9,8 +9,9 @@ import EmpSensitiveInfo from '../EmpInfo/EmpSensitiveInfo';
 import AccessManagement from '../AccessManagement/AccessManagement'
 import OTManagement from '../OTManagement/OTManagement'
 import PayrollConfig from '../Payroll/PayrollConfig'
-import PayrollCalculation from '../Payroll/PayrollCalculation'
 import EmpInfoConfig from '../EmpInfo/EmpInfoConfig'
+import PayrollPreview from '../Payroll/SalaryPreview';
+import PayrollDetails from '../Payroll/PayrollDetails';
 
 
 import {
@@ -22,6 +23,7 @@ import {
 
 class Home extends Component {
     componentDidMount() {
+        AppStore.setRouter(this.props.history);
         if (!AppStore.isUserLoggedIn()) {
             this.props.history.push("/login");
         }
@@ -35,14 +37,15 @@ class Home extends Component {
                     </div>
                     <div className="BodyContainer">
                         <Switch>
-                            <Route exact path="/" render={()=><Redirect to="/EmpBasicInfo" />} />
+                            <Route exact path="/" render={() => <Redirect to="/EmpBasicInfo" />} />
                             <Route path="/EmpBasicInfo" component={EmpBasicInfo} />
                             <Route exact path="/EmpSensitiveInfo" component={EmpSensitiveInfo} />
                             <Route exact path="/AccessManagement" component={AccessManagement} />
-                            <Route exact path="/EmpInfoConfig" component={EmpInfoConfig}/>
+                            <Route exact path="/EmpInfoConfig" component={EmpInfoConfig} />
                             <Route exact path="/OTManagement" component={OTManagement} />
                             <Route exact path="/PayrollConfig" component={PayrollConfig} />
-                            <Route exact path="/PayrollCalculation" component={PayrollCalculation} />
+                            <Route exact path="/PayrollPreview" component={PayrollPreview} />
+                            <Route exact path="/PayrollDetails" component={PayrollDetails} />
                         </Switch>
                     </div>
                     {/* <div className="BottomNavContainer">

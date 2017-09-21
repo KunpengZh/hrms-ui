@@ -17,14 +17,20 @@ class Home extends Component {
             case 'EmpInfoConfig':
                 this.props.history.push("/EmpInfoConfig");
                 break;
-            case 'PayrollConfig':
-                this.props.history.push("/PayrollConfig");
-                break;
             case 'OTManagement':
                 this.props.history.push("/OTManagement");
                 break;
             case 'PayrollCalculation':
                 this.props.history.push("/PayrollCalculation");
+                break;
+            case 'PayrollDetails':
+                this.props.history.push("/PayrollDetails");
+                break;
+            case 'PayrollPreview':
+                this.props.history.push("/PayrollPreview");
+                break;
+            case 'PayrollConfig':
+                this.props.history.push("/PayrollConfig");
                 break;
             case 'AccessManagement':
                 this.props.history.push("/AccessManagement");
@@ -45,9 +51,12 @@ class Home extends Component {
                             <Menu.Item index="EmpSensitiveInfo">员工敏感信息</Menu.Item>
                             <Menu.Item index="EmpInfoConfig">员工信息配置</Menu.Item>
                         </Menu.SubMenu>
-                        <Menu.Item index="PayrollConfig">工资配置管理</Menu.Item>
                         <Menu.Item index="OTManagement">加班申报管理</Menu.Item>
-                        <Menu.Item index="PayrollCalculation">当期工资计算</Menu.Item>
+                        <Menu.SubMenu index="Payroll" title="工资计算管理">
+                            <Menu.Item index="PayrollDetails">当期工资计算</Menu.Item>
+                            <Menu.Item index="PayrollPreview">工资单预览</Menu.Item>
+                            <Menu.Item index="PayrollConfig">工资配置管理</Menu.Item>
+                        </Menu.SubMenu>
                         <Menu.SubMenu index="Query" title="查询汇总">
                             <Menu.Item index="2-1">按月查询</Menu.Item>
                             <Menu.Item index="2-2">选项2</Menu.Item>

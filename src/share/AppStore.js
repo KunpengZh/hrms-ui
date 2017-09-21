@@ -765,10 +765,67 @@ var AppStore = (function () {
         })
     }
 
+
+    /**
+     * GongZiDan functions
+     */
+    var getGongZiDanByCycle = function (salaryCycle) {
+        return new Promise(function (rel, rej) {
+            if (!salaryCycle || salaryCycle === "") {
+                rel({
+                    status: 500,
+                    message: '必须指定周期',
+                    data: ''
+                })
+                return;
+            }
+            doGet('/gongzidan?salaryCycle=' + salaryCycle).then((res) => {
+                if (res.status === 200) {
+                    rel({
+                        status: 200,
+                        data: res.data,
+                        message: ''
+                    })
+                } else {
+                    rel({
+                        status: res.status,
+                        message: res.message
+                    })
+                }
+            })
+        })
+    }
+
+    /**
+     * GongziDan related functions
+     */
+    var GongziData = [];
+
+    var setGongziData = function (data) {
+        GongziData = data;
+    }
+    var getGongziData = function () {
+        return GongziData;
+    }
+
+    var rootRouter = {};
+
+    var setRouter = function (router) {
+        rootRouter = router
+    }
+    var getRouter = function () {
+        return rootRouter;
+    }
+
     /**
      * Return the object will be export from App Utils
      */
     return {
+        setRouter: setRouter,
+        getRouter: getRouter,
+        getGongziData: getGongziData,
+        setGongziData: setGongziData,
+        getGongZiDanByCycle: getGongZiDanByCycle,
         reCalculateSDData: reCalculateSDData,
         getSDByCycle: getSDByCycle,
         initialSDByCycle: initialSDByCycle,
