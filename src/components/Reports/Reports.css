@@ -14,7 +14,6 @@
     height: 100%;
     justify-content: flex-start;
     align-items:flex-start;
-    border:1px solid gray;
 }
 .ReportMenuContainer {
     display: flex;
@@ -23,4 +22,25 @@
     align-items: center;
     width: 100%;
     padding: 10px;
+}
+.el-form-item {
+    margin-bottom: 0;
+}
+.aToButton{
+    color: #fff;
+    background-color: #20a0ff;
+    display: inline-block;
+    line-height: 1;
+    white-space: nowrap;
+    cursor: pointer;
+    border: 1px solid #20a0ff;
+    margin: 0;
+    padding: 10px 15px;
+    font-size: 14px;
+    margin-right: 5px;
+    margin-left: 5px;
+    border-radius: 5px;
+}
+.linkButton{
+    color: #fff;
 }

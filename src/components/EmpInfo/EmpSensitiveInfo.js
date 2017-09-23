@@ -129,7 +129,7 @@ class EmpSensitiveInfoTable extends Component {
                         showUploader={true}
                         uploadLink={'/empsen/uploadempsensitiveinfo'}
                         showDownload={true}
-                        downloadLink={'http://localhost:8080/empsen/downloadempsensitiveinfo'}
+                        downloadLink={AppStore.getPreHostURLLink() +'/empsen/downloadempsensitiveinfo'}
                         showSyncEmpInfo={true}
                         handleSyncEmpInfo={this.handleSyncEmpInfo.bind(this)}
                         ColumnKeysNeedValidate={ColumnKeysNeedValidate}

@@ -701,6 +701,32 @@ var AppStore = (function () {
         })
     }
 
+    var SyncSDEmpData = function (salaryCycle) {
+        return new Promise(function (rel, rej) {
+            if (!salaryCycle || salaryCycle === "") {
+                rel({
+                    status: 700,
+                    message: '必须指定周期',
+                    data: ''
+                })
+                return;
+            }
+            doGet('/sdd/syncdata?salaryCycle=' + salaryCycle).then((res) => {
+                if (res.status === 200) {
+                    rel({
+                        status: 200,
+                        data: res.data,
+                        message: ''
+                    })
+                } else {
+                    rel({
+                        status: res.status,
+                        message: res.message
+                    })
+                }
+            })
+        })
+    }
 
     var updateEmpSDData = function (data, salaryCycle) {
         return new Promise(function (rel, rej) {
@@ -796,6 +822,34 @@ var AppStore = (function () {
         })
     }
 
+    var queryGongZiDataByCriteria = function (criteria) {
+        return new Promise(function (rel, rej) {
+            if (!criteria) {
+                rel({
+                    status: 200,
+                    message: '',
+                    data: []
+                })
+                return;
+            }
+            doPost('/gongzidan/query', { data: criteria }).then(res => {
+                if (res.status === 200) {
+                    rel({
+                        status: 200,
+                        data: res.data,
+                        message: res.message
+                    })
+                } else {
+                    rel({
+                        status: res.status,
+                        message: res.message,
+                        data: []
+                    })
+                }
+            })
+        })
+    }
+
     /**
      * GongziDan related functions
      */
@@ -815,6 +869,10 @@ var AppStore = (function () {
     }
     var getRouter = function () {
         return rootRouter;
+    }
+
+    var getPreHostURLLink=function(){
+        return 'http://localhost:8080'
     }
 
     var getAllAvailableSalaryCycle = function () {
@@ -840,13 +898,16 @@ var AppStore = (function () {
      * Return the object will be export from App Utils
      */
     return {
+        getPreHostURLLink:getPreHostURLLink,
         getAllAvailableSalaryCycle: getAllAvailableSalaryCycle,
         setRouter: setRouter,
         getRouter: getRouter,
+        queryGongZiDataByCriteria:queryGongZiDataByCriteria,
         getGongziData: getGongziData,
         setGongziData: setGongziData,
         getGongZiDanByCycle: getGongZiDanByCycle,
         reCalculateSDData: reCalculateSDData,
+        SyncSDEmpData: SyncSDEmpData,
         getSDByCycle: getSDByCycle,
         initialSDByCycle: initialSDByCycle,
         updateEmpSDData: updateEmpSDData,

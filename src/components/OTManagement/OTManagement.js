@@ -156,7 +156,7 @@ class EmpOT extends Component {
                         showUploader={true}
                         uploadLink={'/ot/uploadot'}
                         showDownload={true}
-                        downloadLink={'http://localhost:8080/ot/downloadot?OTCycle='+this.state.curYearMonth}
+                        downloadLink={AppStore.getPreHostURLLink() +'/ot/downloadot?OTCycle='+this.state.curYearMonth}
                         minWidth={2000}
                         ColumnKeysNeedValidate={ColumnKeysNeedValidate}
                         validateFailMsg={validateFailMsg}

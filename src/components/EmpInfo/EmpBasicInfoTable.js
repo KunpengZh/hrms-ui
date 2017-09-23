@@ -216,7 +216,7 @@ class EmpBasicInfoTable extends Component {
                         showUploader={true}
                         uploadLink={'/emp/uploadempbasicinfo'}
                         showDownload={true}
-                        downloadLink={'http://localhost:8080/emp/downloadempbasicinfo'}
+                        downloadLink={AppStore.getPreHostURLLink() + '/emp/downloadempbasicinfo'}
                         ColumnKeysNeedValidate={ColumnKeysNeedValidate}
                         validateFailMsg={validateFailMsg}
                         enableCheckBox={true}

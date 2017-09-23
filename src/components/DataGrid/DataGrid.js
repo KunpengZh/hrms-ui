@@ -178,6 +178,9 @@ class DataGrid extends Component {
     handleSync() {
         this.props.handleSync();
     }
+    handleInit() {
+        this.props.handleInit();
+    }
     onCellSelected({ rowIdx, idx }) {
         //this.grid.openCellEditor(rowIdx, idx);
     }
@@ -209,6 +212,7 @@ class DataGrid extends Component {
                         </Select>
                     ) : (null)}
                     {this.props.showLoading ? (<Button type="primary" icon="view" onClick={this.props.handleLoading}>{this.props.loadingText}</Button>) : (null)}
+                    {this.props.showInit ? (<Button type="primary" icon="circle-check" onClick={this.handleInit.bind(this)}>{this.props.initButtonText}</Button>) : (null)}
                     {this.props.showSync ? (<Button type="primary" icon="circle-check" onClick={this.handleSync.bind(this)}>{this.props.syncButtonText}</Button>) : (null)}
                     {this.props.showDownload ? (<div className="aToButton"><a className="linkButton" href={this.props.downloadLink} target="_blank"><i className="el-icon-document"></i>点击下载</a></div>) : (null)}
                     {this.props.showCreateNew ? (<Button type="primary" icon="plus" onClick={this.handleAddRow.bind(this)}>添加</Button>) : (null)}
@@ -225,7 +229,7 @@ class DataGrid extends Component {
                             <Button icon="upload" type="primary">点击上传</Button>
                         </Upload>
                     ) : (null)}
-                    {this.props.showFunc1 ? (<Button type="primary" icon="menu" onClick={this.handleFunc1.bind(this)} style={{ marginRight: "20px" ,marginLeft: "20px"}}>{this.props.Func1Text}</Button>) : (null)}
+                    {this.props.showFunc1 ? (<Button type="primary" icon="menu" onClick={this.handleFunc1.bind(this)} style={{ marginRight: "20px", marginLeft: "20px" }}>{this.props.Func1Text}</Button>) : (null)}
                 </div>
 
                 <div className="DataGridInfoTableContainer">

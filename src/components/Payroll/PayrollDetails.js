@@ -97,6 +97,17 @@ class PayrollDetailsCalculation extends Component {
     }
     handleSync() {
         this.setState({ fullscreen: true });
+        AppStore.SyncSDEmpData(this.state.curYearMonth).then((res) => {
+            this.setState({ fullscreen: false });
+            if (res.status === 200) {
+                this.setState({ rows: res.data });
+            } else {
+                AppStore.showError(res.message);
+            }
+        })
+    }
+    handleInit() {
+        this.setState({ fullscreen: true });
         AppStore.initialSDByCycle(this.state.curYearMonth).then((res) => {
             this.setState({ fullscreen: false });
             if (res.status === 200) {
@@ -106,7 +117,6 @@ class PayrollDetailsCalculation extends Component {
             }
         })
     }
-
     saveData(data, keysObj) {
         let { newcreated, deleted, updated } = keysObj;
         let newCreatedKeys = [], deletedKeys = [], updatedKeys = [];
@@ -172,12 +182,15 @@ class PayrollDetailsCalculation extends Component {
                         showUploader={true}
                         uploadLink={'/sdd/uploadot'}
                         showDownload={true}
-                        downloadLink={'http://localhost:8080/sdd/downloadot?salaryCycle=' + this.state.curYearMonth}
+                        downloadLink={AppStore.getPreHostURLLink() + '/sdd/downloadot?salaryCycle=' + this.state.curYearMonth}
                         ColumnKeysNeedValidate={ColumnKeysNeedValidate}
                         validateFailMsg={validateFailMsg}
                         showSync={true}
                         handleSync={this.handleSync.bind(this)}
-                        syncButtonText={'初始化工资数据'}
+                        syncButtonText={'同步员工数据'}
+                        showInit={true}
+                        handleInit={this.handleInit.bind(this)}
+                        initButtonText={'初始化工资数据'}
                         showSelectMenu={true}
                         selectMenuOptions={this.state.YearMonthPeriod}
                         handleSelectMenuChange={this.handleYearMonthChange.bind(this)}
