@@ -35,6 +35,9 @@ class Home extends Component {
             case 'AccessManagement':
                 this.props.history.push("/AccessManagement");
                 break;
+            case 'QueryReporting':
+                this.props.history.push("/QueryReporting");
+                break;
         }
 
     }
@@ -57,10 +60,8 @@ class Home extends Component {
                             <Menu.Item index="PayrollPreview">工资单预览</Menu.Item>
                             <Menu.Item index="PayrollConfig">工资配置管理</Menu.Item>
                         </Menu.SubMenu>
-                        <Menu.SubMenu index="Query" title="查询汇总">
-                            <Menu.Item index="2-1">按月查询</Menu.Item>
-                            <Menu.Item index="2-2">选项2</Menu.Item>
-                            <Menu.Item index="2-3">选项3</Menu.Item>
+                        <Menu.SubMenu index="Reporting" title="查询汇总">
+                            <Menu.Item index="QueryReporting">查询汇总</Menu.Item>
                         </Menu.SubMenu>
                         <Menu.Item index="AccessManagement">访问权限管理</Menu.Item>
                     </Menu>

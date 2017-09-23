@@ -9,8 +9,10 @@ import DataGrid from '../DataGrid/DataGrid';
 
 import ReactDataGrid from 'react-data-grid'
 
-const ColumnKeysNeedValidate = ['NormalOT', 'WeekendOT', 'HolidayOT'];
-const validateFailMsg = '加班只能填写小时数';
+const ColumnKeysNeedValidate = ['jinengGongzi', 'gangweiGongzi',
+    'jichuButie', 'xilifei', 'gonglingGongzi', 'zhiwuJintie', 'gongliBuzhu', 'kaoheJiangjin', 'tongxunButie',
+    'qitaJiangjin', 'xiaxiangBuzhu', 'yingyetingBuzhu', 'kouchu', 'kaohekoukuan', 'buchongyiliaobaoxian', 'preAnnuallyIncom'];
+const validateFailMsg = '请核查您是否在只能输入数字的字段里输入了非数字字符';
 
 class PayrollDetailsCalculation extends Component {
     constructor(props) {
@@ -56,11 +58,11 @@ class PayrollDetailsCalculation extends Component {
                     { key: 'WeekendOTComments', name: '周末加班计算方法', width: 350 },
                     { key: 'HolidayOT', name: '节假日加班' },
                     { key: 'HolidayOTComments', name: '节假日加班计算方法', width: 350 },
-                    { key: 'kouchu', name: '扣除项', width: 150, editable: 'true'},
-                    { key: 'kaohekoukuan', name: '考核扣款', width: 150,editable: 'true' },
-                    { key: 'yingfagongzi', name: '应发工资', width: 150},
+                    { key: 'kouchu', name: '扣除项', width: 150, editable: 'true' },
+                    { key: 'kaohekoukuan', name: '考核扣款', width: 150, editable: 'true' },
+                    { key: 'yingfagongzi', name: '应发工资', width: 150 },
                     { key: 'yingfagongziComments', name: '应发工资计算方法', width: 950 },
-                    { key: 'preAnnuallyIncom', name: '上年收入', width: 150,editable: 'true' },
+                    { key: 'preAnnuallyIncom', name: '上年收入', width: 150, editable: 'true' },
                     { key: 'nianjin', name: '年金', width: 150 },
                     { key: 'nianjinComments', name: '年金计算方法', width: 750 },
                     { key: 'qiyeNianjin', name: '企业年金', width: 150 },
@@ -80,7 +82,7 @@ class PayrollDetailsCalculation extends Component {
                     { key: 'yicixingjiangjin', name: '年终奖金', width: 150 },
                     { key: 'yicixingjiangjinTax', name: '年终奖金税', width: 150 },
                     { key: 'yicixingjiangjinTaxComments', name: '年终奖金税计算方法', width: 750 },
-                    { key: 'buchongyiliaobaoxian', name: '补充医疗保险', width: 150,editable: 'true' },
+                    { key: 'buchongyiliaobaoxian', name: '补充医疗保险', width: 150, editable: 'true' },
                     { key: 'netIncome', name: '实发工资', width: 150 },
                     { key: 'netIncomeComments', name: '实发工资计算方法', width: 1350 },
                 ]

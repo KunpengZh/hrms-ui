@@ -817,10 +817,30 @@ var AppStore = (function () {
         return rootRouter;
     }
 
+    var getAllAvailableSalaryCycle = function () {
+        return new Promise(function (rel, rej) {
+
+            doGet('/gongzidan/getAllAvailableSalaryCycle').then((res) => {
+                if (res.status === 200) {
+                    rel({
+                        status: 200,
+                        data: res.data,
+                        message: ''
+                    })
+                } else {
+                    rel({
+                        status: res.status,
+                        message: res.message
+                    })
+                }
+            })
+        })
+    }
     /**
      * Return the object will be export from App Utils
      */
     return {
+        getAllAvailableSalaryCycle: getAllAvailableSalaryCycle,
         setRouter: setRouter,
         getRouter: getRouter,
         getGongziData: getGongziData,

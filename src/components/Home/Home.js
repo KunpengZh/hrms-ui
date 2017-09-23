@@ -12,7 +12,7 @@ import PayrollConfig from '../Payroll/PayrollConfig'
 import EmpInfoConfig from '../EmpInfo/EmpInfoConfig'
 import PayrollPreview from '../Payroll/SalaryPreview';
 import PayrollDetails from '../Payroll/PayrollDetails';
-
+import QueryReporting from '../Reports/Query';
 
 import {
     BrowserRouter,
@@ -46,6 +46,7 @@ class Home extends Component {
                             <Route exact path="/PayrollConfig" component={PayrollConfig} />
                             <Route exact path="/PayrollPreview" component={PayrollPreview} />
                             <Route exact path="/PayrollDetails" component={PayrollDetails} />
+                            <Route exact path="/QueryReporting" component={QueryReporting} />
                         </Switch>
                     </div>
                     {/* <div className="BottomNavContainer">
