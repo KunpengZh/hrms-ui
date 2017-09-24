@@ -69,7 +69,7 @@ class DataGrid extends Component {
                         rowGetter={this.rowGetter.bind(this)}
                         rowsCount={this.state.rows.length}
                         minWidth={this.props.minWidth ? this.props.minWidth : (document.body.clientWidth - 50 < 1280 ? 1280 : document.body.clientWidth - 50)}
-                        minHeight={this.props.minHeight ? this.props.minHeight : (document.body.clientHeight - 220)}
+                        minHeight={this.props.minHeight ? this.props.minHeight : (document.body.clientHeight - 150)}
                         onGridSort={this.handleGridSort.bind(this)}
                     />
                 </div>

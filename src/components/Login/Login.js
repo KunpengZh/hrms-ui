@@ -22,7 +22,7 @@ class Login extends Component {
     
         AppStore.doAppLogin(this.state.username, this.state.password).then((res) => {
             if (res.isAuthenticated) {
-                this.props.history.push("/home/empInfo");
+                this.props.history.push("/home/EmpBasicInfo");
             } else {
                 let errState = {
                     showError: true,

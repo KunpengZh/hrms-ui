@@ -5,7 +5,7 @@ var AppStore = (function () {
 
     var AppUser = {
         "username": "",
-        "isAuthenticated": true,
+        "isAuthenticated": false,
         "jobRole": "",
         "empId": "",
         "empName": ""
@@ -871,7 +871,7 @@ var AppStore = (function () {
         return rootRouter;
     }
 
-    var getPreHostURLLink=function(){
+    var getPreHostURLLink = function () {
         return 'http://localhost:8080'
     }
 
@@ -894,15 +894,127 @@ var AppStore = (function () {
             })
         })
     }
+
+
+    /**
+     * UserMangement Fucntions
+     */
+
+    var getAllApplicationUsers = function () {
+        return new Promise(function (rel, rej) {
+            doGet('/appuser').then((res) => {
+                if (res.status === 200) {
+                    rel({
+                        status: 200,
+                        data: res.data,
+                        message: ''
+                    })
+                } else {
+                    rel({
+                        status: res.status,
+                        message: res.message
+                    })
+                }
+            })
+        })
+    }
+
+    var deleteApplicationUsers = function (username) {
+        return new Promise(function (rel, rej) {
+            if (!username) {
+                rel({
+                    status: 500,
+                    message: '请输入要删除的用户名',
+                    data: []
+                });
+                return;
+            }
+            doGet('/appuser/delete?username=' + username).then((res) => {
+                console.log(res)
+                if (res.status === 200) {
+                    console.log("here")
+                    rel({
+                        status: 200,
+                        data: res.data,
+                        message: ''
+                    })
+                } else {
+                    console.log("err")
+                    rel({
+                        status: res.status,
+                        message: res.message
+                    })
+                }
+            })
+        })
+    }
+
+    var createNewApplicationUser = function (user) {
+        return new Promise(function (rel, rej) {
+            if (!user) {
+                rel({
+                    status: 500,
+                    message: '请输入要新创建的用户信息',
+                    data: []
+                });
+                return;
+            }
+            doPost('/appuser/create', { data: user }).then(res => {
+                if (res.status === 200) {
+                    rel({
+                        status: 200,
+                        data: res.data,
+                        message: ''
+                    })
+                } else {
+                    rel({
+                        status: res.status,
+                        message: res.message
+                    })
+                }
+            })
+        })
+    }
+
+    var updateApplicationUser = function (user) {
+        return new Promise(function (rel, rej) {
+            if (!user) {
+                rel({
+                    status: 500,
+                    message: '请输入要更新的用户信息',
+                    data: []
+                });
+                return;
+            }
+            doPost('/appuser/update', { data: user }).then(res => {
+                if (res.status === 200) {
+                    rel({
+                        status: 200,
+                        data: res.data,
+                        message: ''
+                    })
+                } else {
+                    rel({
+                        status: res.status,
+                        message: res.message
+                    })
+                }
+            })
+        })
+    }
     /**
      * Return the object will be export from App Utils
      */
     return {
-        getPreHostURLLink:getPreHostURLLink,
+        deleteApplicationUsers: deleteApplicationUsers,
+        createNewApplicationUser: createNewApplicationUser,
+        updateApplicationUser: updateApplicationUser,
+        getAllApplicationUsers: getAllApplicationUsers,
+        getPreHostURLLink: getPreHostURLLink,
         getAllAvailableSalaryCycle: getAllAvailableSalaryCycle,
         setRouter: setRouter,
         getRouter: getRouter,
-        queryGongZiDataByCriteria:queryGongZiDataByCriteria,
+        queryGongZiDataByCriteria: queryGongZiDataByCriteria,
         getGongziData: getGongziData,
         setGongziData: setGongziData,
         getGongZiDanByCycle: getGongZiDanByCycle,

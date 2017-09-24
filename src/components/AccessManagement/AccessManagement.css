@@ -1,0 +1,21 @@
+.UserBodyContainer{
+    padding:10px;
+    margin: auto;
+    margin-top:10px;
+}
+.UserTopMenuContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    width: 100%;
+    padding: 10px;
+}
+
+.el-form-item__content {
+    line-height: 36px;
+    position: relative;
+    font-size: 14px;
+    text-align: left;
+    padding-left: 10px;
+}
