@@ -39,6 +39,7 @@ var AppStore = (function () {
 
             fetch('/login/', {
                 method: 'POST',
+                credentials: 'include',
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json',
@@ -69,6 +70,40 @@ var AppStore = (function () {
         })
     }
 
+    /**
+     * common Get and Post functions 
+     */
+
+    var doGet = function (url) {
+        return new Promise(function (rel, rej) {
+            fetch(url,{credentials: 'include'}).then((response) => response.json()).then((res) => {
+                rel(res)
+            }).catch((error) => {
+                console.error(error);
+                rel({ status: 500, message: "Unable to connect with Server", data: '' })
+            });
+        })
+    }
+    var doPost = function (url, dataObj) {
+        return new Promise(function (rel, rej) {
+            fetch(url, {
+                method: 'POST',
+                credentials: 'include',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.89 Safari/537.36',
+                    'Host': 'hrms.guangda.com'
+                },
+                body: JSON.stringify(dataObj)
+            }).then((response) => response.json()).then((res) => {
+                rel(res);
+            }).catch((error) => {
+                console.error(error);
+                rel({ status: 500, message: "Unable to connect with Server", data: '' })
+            });
+        })
+    }
 
     /**
      * functions to manage configuration data
@@ -93,7 +128,7 @@ var AppStore = (function () {
                 });
                 return;
             } else {
-                fetch('/AppConfig?configKey=' + 'ConfigData').then((response) => response.json()).then((res) => {
+                doGet('/AppConfig?configKey=' + 'ConfigData').then((res) => {
                     if (res.status === 200) {
                         ConfigData = res.data;
                         if (res.message !== '') AppStore.showError(res.message);
@@ -131,19 +166,10 @@ var AppStore = (function () {
 
     var saveConfigData = (configData) => {
         return new Promise(function (rel, rej) {
-            fetch('/AppConfig/save', {
-                method: 'POST',
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json',
-                    'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.89 Safari/537.36',
-                    'Host': 'hrms.guangda.com'
-                },
-                body: JSON.stringify({
-                    configKey: 'ConfigData',
-                    data: configData,
-                })
-            }).then((response) => response.json()).then((res) => {
+            doPost('/AppConfig/save',{
+                configKey: 'ConfigData',
+                data: configData,
+            }).then((res) => {
                 if (res.status === 200) {
                     ConfigData = configData;
                     rel({
@@ -200,7 +226,7 @@ var AppStore = (function () {
 
     var getUnicKey = (key) => {
         return new Promise(function (rel, rej) {
-            fetch('/getUnicKey?key=' + key).then((response) => response.json()).then((res) => {
+            doGet('/getUnicKey?key=' + key).then((res) => {
                 if (res.status === 200) {
                     rel({
                         status: 200,
@@ -225,7 +251,7 @@ var AppStore = (function () {
 
     var getAllEmpBasicInfo = () => {
         return new Promise(function (rel, rej) {
-            fetch('/emp').then((response) => response.json()).then((res) => {
+            doGet('/emp').then((res) => {
                 if (res.status === 200) {
                     rel({
                         status: 200,
@@ -246,18 +272,9 @@ var AppStore = (function () {
 
     var saveEmpBasicData = (employees) => {
         return new Promise(function (rel, rej) {
-            fetch('/emp/update', {
-                method: 'POST',
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json',
-                    'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.89 Safari/537.36',
-                    'Host': 'hrms.guangda.com'
-                },
-                body: JSON.stringify({
-                    data: employees,
-                })
-            }).then((response) => response.json()).then((res) => {
+            doPost('/emp/update',{
+                data: employees,
+            }).then((res) => {
                 if (res.status === 200) {
 
                     rel({
@@ -279,18 +296,9 @@ var AppStore = (function () {
 
     var deleteEmpBasicData = (empIds) => {
         return new Promise(function (rel, rej) {
-            fetch('/emp/delete', {
-                method: 'POST',
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json',
-                    'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.89 Safari/537.36',
-                    'Host': 'hrms.guangda.com'
-                },
-                body: JSON.stringify({
-                    data: empIds,
-                })
-            }).then((response) => response.json()).then((res) => {
+            doPost('/emp/delete',{
+                data: empIds,
+            }).then((res) => {
                 if (res.status === 200) {
 
                     rel({
@@ -316,7 +324,7 @@ var AppStore = (function () {
 
     var getAllEmpSensitiveInfo = () => {
         return new Promise(function (rel, rej) {
-            fetch('/empsen').then((response) => response.json()).then((res) => {
+            doGet('/empsen').then((res) => {
                 if (res.status === 200) {
                     rel({
                         status: 200,
@@ -338,7 +346,7 @@ var AppStore = (function () {
     var SyncEmpSenWithBasicTable = function () {
 
         return new Promise(function (rel, rej) {
-            fetch('/empsen/syncempsensitive').then((response) => response.json()).then((res) => {
+            doGet('/empsen/syncempsensitive').then((res) => {
                 if (res.status === 200) {
                     rel({
                         status: 200,
@@ -359,18 +367,9 @@ var AppStore = (function () {
 
     var saveEmpSensitiveData = (employees) => {
         return new Promise(function (rel, rej) {
-            fetch('/empsen/update', {
-                method: 'POST',
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json',
-                    'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.89 Safari/537.36',
-                    'Host': 'hrms.guangda.com'
-                },
-                body: JSON.stringify({
-                    data: employees,
-                })
-            }).then((response) => response.json()).then((res) => {
+            doPost('/empsen/update',{
+                data: employees,
+            }).then((res) => {
                 if (res.status === 200) {
 
                     rel({
@@ -390,39 +389,7 @@ var AppStore = (function () {
         })
     }
 
-    /**
-     * common Get and Post functions 
-     */
-
-    var doGet = function (url) {
-        return new Promise(function (rel, rej) {
-            fetch(url).then((response) => response.json()).then((res) => {
-                rel(res)
-            }).catch((error) => {
-                console.error(error);
-                rel({ status: 500, message: "Unable to connect with Server", data: '' })
-            });
-        })
-    }
-    var doPost = function (url, dataObj) {
-        return new Promise(function (rel, rej) {
-            fetch(url, {
-                method: 'POST',
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json',
-                    'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.89 Safari/537.36',
-                    'Host': 'hrms.guangda.com'
-                },
-                body: JSON.stringify(dataObj)
-            }).then((response) => response.json()).then((res) => {
-                rel(res);
-            }).catch((error) => {
-                console.error(error);
-                rel({ status: 500, message: "Unable to connect with Server", data: '' })
-            });
-        })
-    }
+    
     /**
      * functions related with Payroll Config
      */
