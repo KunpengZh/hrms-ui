@@ -4,6 +4,8 @@ import { Menu } from 'element-react';
 import 'element-theme-default';
 import '../../font-awesome/css/font-awesome.min.css'
 
+import AppStore from "../../share/AppStore"
+
 class Home extends Component {
     handleRouteChange(val) {
         console.log(val);
@@ -42,6 +44,7 @@ class Home extends Component {
 
     }
     render() {
+        let jobRole = AppStore.getAppUser().jobRole;
         return (
             <div className="NavContainer">
                 <div className="logoContainer">
@@ -51,19 +54,31 @@ class Home extends Component {
                     <Menu className="el-menu-demo" mode="horizontal" onSelect={this.handleRouteChange.bind(this)}>
                         <Menu.SubMenu index="Emp" title="员工信息管理">
                             <Menu.Item index="EmpBasicInfo">员工基本信息</Menu.Item>
-                            <Menu.Item index="EmpSensitiveInfo">员工敏感信息</Menu.Item>
-                            <Menu.Item index="EmpInfoConfig">员工信息配置</Menu.Item>
+                            {(jobRole === 'SysAdmin' || jobRole === 'HRAdmin') ? (
+                                <Menu.Item index="EmpSensitiveInfo">员工敏感信息</Menu.Item>
+                            ) : (null)}
+                            {(jobRole === 'SysAdmin' || jobRole === 'HRAdmin') ? (
+                                <Menu.Item index="EmpInfoConfig">员工信息配置</Menu.Item>
+                            ) : (null)}
                         </Menu.SubMenu>
-                        <Menu.Item index="OTManagement">加班申报管理</Menu.Item>
-                        <Menu.SubMenu index="Payroll" title="工资计算管理">
-                            <Menu.Item index="PayrollDetails">当期工资计算</Menu.Item>
-                            <Menu.Item index="PayrollPreview">工资单预览</Menu.Item>
-                            <Menu.Item index="PayrollConfig">工资配置管理</Menu.Item>
-                        </Menu.SubMenu>
-                        <Menu.SubMenu index="Reporting" title="查询汇总">
-                            <Menu.Item index="QueryReporting">查询汇总</Menu.Item>
-                        </Menu.SubMenu>
-                        <Menu.Item index="AccessManagement">访问权限管理</Menu.Item>
+                        {(jobRole === 'SysAdmin' || jobRole === 'HRAdmin') ? (
+                            <Menu.Item index="OTManagement">加班申报管理</Menu.Item>
+                        ) : (null)}
+                        {(jobRole === 'SysAdmin' || jobRole === 'PayrollAdmin') ? (
+                            <Menu.SubMenu index="Payroll" title="工资计算管理">
+                                <Menu.Item index="PayrollDetails">当期工资计算</Menu.Item>
+                                <Menu.Item index="PayrollPreview">工资单预览</Menu.Item>
+                                <Menu.Item index="PayrollConfig">工资配置管理</Menu.Item>
+                            </Menu.SubMenu>
+                        ) : (null)}
+                        {(jobRole === 'SysAdmin' || jobRole === 'PayrollAdmin') ? (
+                            <Menu.SubMenu index="Reporting" title="查询汇总">
+                                <Menu.Item index="QueryReporting">查询汇总</Menu.Item>
+                            </Menu.SubMenu>
+                        ) : (null)}
+                        {(jobRole === 'SysAdmin') ? (
+                            <Menu.Item index="AccessManagement">访问权限管理</Menu.Item>
+                        ) : (null)}
                     </Menu>
                 </div>
                 <div className="rightContainer">

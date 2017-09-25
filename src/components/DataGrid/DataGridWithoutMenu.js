@@ -22,6 +22,19 @@ class DataGrid extends Component {
         this.updatedKey = [];
         this.deletedKey = [];
     }
+    onRowsSelected(rows) {
+        console.log("row selected")
+        let rowKey = this.state.rowKey;
+        this.selectedKeys = this.selectedKeys.concat(rows.map(r => r.row[rowKey]));
+        this.setState({ selectedIndexes: this.state.selectedIndexes.concat(rows.map(r => r.rowIdx)) });
+    }
+    onRowsDeselected(rows) {
+        let rowKey = this.state.rowKey;
+        let rowIndexes = rows.map(r => r.rowIdx);
+        let selKey = rows.map(r => r.row[rowKey]);
+        this.selectedKeys = this.selectedKeys.filter(i => selKey.indexOf(i) === -1);
+        this.setState({ selectedIndexes: this.state.selectedIndexes.filter(i => rowIndexes.indexOf(i) === -1) });
+    }
     rowGetter(i) {
         return this.state.rows[i];
     }
@@ -51,11 +64,6 @@ class DataGrid extends Component {
 
         this.setState({ rows });
     }
-
-
-
-
-
     render() {
 
         return (

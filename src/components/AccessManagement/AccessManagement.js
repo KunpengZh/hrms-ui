@@ -3,7 +3,7 @@ import './AccessManagement.css';
 import { Button, Table, Form, Dialog, Input, Select, Loading } from 'element-react';
 import 'element-theme-default';
 import '../../font-awesome/css/font-awesome.min.css'
-
+import DataGrid from '../DataGrid/DataGridWithoutMenu';
 import AppStore from '../../share/AppStore';
 
 
@@ -59,6 +59,46 @@ class AccessManagement extends Component {
             showEditUserDialog: false,
             showResetPassword: 'none',
             showCreateUserDialog: false,
+            showEmpTable: false,
+            empTable: {
+                rows: [],
+                rowKey: 'empId',
+                columns: [
+                    {
+                        type: 'selection'
+                    },
+                    {
+                        label: "员工号",
+                        prop: "empId",
+                        width: 100,
+                        align: 'center'
+                    },
+                    {
+                        prop: 'name',
+                        label: '员工姓名',
+                        width: 150,
+                        align: 'center'
+                    },
+                    {
+                        prop: 'department',
+                        label: '部门',
+                        width: 150,
+                        align: 'center'
+                    },
+                    {
+                        prop: 'jobRole',
+                        label: '岗位',
+                        width: 150,
+                        align: 'center'
+                    },
+                    {
+                        prop: 'workerCategory',
+                        label: '员工类别',
+                        width: 200,
+                        align: 'center'
+                    }
+                ]
+            }
 
         }
     }
@@ -82,7 +122,7 @@ class AccessManagement extends Component {
             this.setState({ fullscreen: true });
             AppStore.deleteApplicationUsers(username).then(res => {
                 console.log(res);
-                if (res.status ===200) {
+                if (res.status === 200) {
                     this.setState({ rows: res.data, fullscreen: false });
                 } else {
                     this.setState({ fullscreen: false });
@@ -103,9 +143,18 @@ class AccessManagement extends Component {
         })
     }
     handleCreateNew() {
-        this.setState({
-            showCreateUserDialog: true
+        this.setState({ fullscreen: true });
+        AppStore.getAllEmpBasicInfo().then(res => {
+            if (res.status === 200) {
+                let empTable = Object.assign({}, this.state.empTable);
+                empTable.rows = res.data;
+                this.setState({ fullscreen: false, empTable: empTable, showEmpTable: true });
+            } else {
+                this.setState({ fullscreen: false });
+                AppStore.showError(res.message);
+            }
         })
+
     }
     handleEditSave() {
         this.setState({ fullscreen: true });
@@ -197,6 +246,7 @@ class AccessManagement extends Component {
         nstate.showEditUserDialog = false;
         nstate.showResetPassword = 'none';
         nstate.showCreateUserDialog = false;
+        nstate.showEmpTable = false;
         this.setState(nstate);
     }
     handleEditEmpNameChange(value) {
@@ -233,6 +283,21 @@ class AccessManagement extends Component {
         let newUser = this.state.newUser;
         newUser.username = value;
         this.setState({ editUser: newUser });
+    }
+    handleUserSelection(dataItem, checked) {
+        let nstate = {
+            newUser: {
+                empId: dataItem.empId,
+                empName: dataItem.name,
+                username: '',
+                password: '',
+                jobRole: ''
+            },
+            showCreateUserDialog: true,
+            showEmpTable: false
+        };
+        console.log(nstate);
+        this.setState(nstate);
     }
     render() {
         return (
@@ -317,6 +382,25 @@ class AccessManagement extends Component {
                         <Button type="primary" onClick={this.handleCancel.bind(this)}>取 消</Button>
                         <Button type="primary" onClick={this.handleCreateSave.bind(this)}>确 定</Button>
                     </Dialog.Footer>
+                </Dialog>
+                <Dialog
+                    title="选到用户"
+                    visible={this.state.showEmpTable}
+                    onCancel={this.handleCancel.bind(this)}
+                >
+                    <Dialog.Body>
+                        <Table
+                            style={{ width: '100%' }}
+                            columns={this.state.empTable.columns}
+                            border={true}
+                            data={this.state.empTable.rows}
+                            onSelectChange={this.handleUserSelection.bind(this)}
+                        />
+                    </Dialog.Body>
+                    {/* <Dialog.Footer className="dialog-footer">
+                        <Button type="primary" onClick={this.handleCancel.bind(this)}>取 消</Button>
+                        <Button type="primary" onClick={this.handleCreateSave.bind(this)}>确 定</Button>
+                    </Dialog.Footer> */}
                 </Dialog>
             </div>
         );
