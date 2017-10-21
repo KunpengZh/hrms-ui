@@ -1,0 +1,15 @@
+.NRContainer{
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    padding:10px;
+    width: 100%;
+}
+.NRBodyContainer{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    justify-content: flex-start;
+    align-items: center;
+}

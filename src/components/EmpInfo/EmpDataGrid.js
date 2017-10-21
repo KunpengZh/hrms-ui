@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import ReactDataGrid from 'react-data-grid'
-import { Button, Upload } from 'element-react';
+import { Button, Upload, Select, Form, } from 'element-react';
 import 'element-theme-default';
 import './Employee.css';
 import 'bootstrap/dist/css/bootstrap.css';
 import AppStore from '../../share/AppStore';
+
+
 
 class ConfigGrid extends Component {
     constructor(props) {
@@ -28,7 +30,16 @@ class ConfigGrid extends Component {
             selectedIndexes: [],
             rowKey: props.rowKey ? props.rowKey : 'id',
             originalRows: [],
-            filters: {}
+            filters: {},
+            department: [],
+            jobRole: [],
+            workerCategory: [],
+            query: {
+                department: 'All',
+                jobRole: 'All',
+                workerCategory: 'All',
+                empStatus: 'Active'
+            },
         };
         this.selectedKeys = [];
         this.newCreatedKey = [];
@@ -50,8 +61,23 @@ class ConfigGrid extends Component {
     rowGetter(i) {
         return this.state.rows[i];
     }
-    componentWillReceiveProps(newProps) {
+    componentDidMount() {
+        AppStore.getAllAvailableSalaryCycle().then(res => {
+            let nstate = Object.assign({}, this.state);
+            if (res.status === 200) {
+                nstate.department = res.data.department;
+                nstate.jobRole = res.data.jobRole;
+                nstate.workerCategory = res.data.workerCategory;
+                nstate.fullscreen = false;
+                this.setState(nstate);
+            } else {
+                this.setState({ fullscreen: false });
+                AppStore.showError(res.message);
+            }
+        })
 
+    }
+    componentWillReceiveProps(newProps) {
         let nstate = {
             originalRows: Object.assign([], newProps.rows),
             rows: newProps.rows,
@@ -61,7 +87,6 @@ class ConfigGrid extends Component {
             rowKey: newProps.rowKey ? newProps.rowKey : 'id',
         };
         this.setState(nstate);
-
     }
     handleGridSort(sortColumn, sortDirection) {
         const comparer = (a, b) => {
@@ -109,14 +134,15 @@ class ConfigGrid extends Component {
     handleGridRowsUpdated({ fromRow, toRow, updated }) {
         let rowKey = this.state.rowKey;
         let rows = this.state.rows.slice();
-
+        let ColumnKeysNeedValidate = this.props.ColumnKeysNeedValidate;
+        let ColumnKeyNeedDate = this.props.ColumnKeyNeedDate;
         let validationPass = true;
+
         for (let key in updated) {
-            let ColumnKeysNeedValidate = this.props.ColumnKeysNeedValidate;
             if (ColumnKeysNeedValidate && ColumnKeysNeedValidate.indexOf(key) >= 0) {
                 validationPass = this._validateOnlyNumber(updated[key]);
             }
-            let ColumnKeyNeedDate = this.props.ColumnKeyNeedDate;
+
             if (ColumnKeyNeedDate && ColumnKeyNeedDate.indexOf(key) >= 0) {
                 validationPass = this._isDate(updated[key]);
             }
@@ -125,6 +151,27 @@ class ConfigGrid extends Component {
                 return;
             }
         }
+
+
+        if (this.props.ColumnsNotEditableForNonRegularEmp && this.props.ColumnsNotEditableForNonRegularEmp.length > 0) {
+            if (rows[fromRow].workerCategory === this.props.NonRegularEmployeeCategory) {
+                let haveFailedItem = false;
+                this.props.ColumnsNotEditableForNonRegularEmp.forEach(function (propName) {
+                    for (let key in updated) {
+                        if (key === propName) {
+                            updated[propName] = "";
+                            haveFailedItem = true;
+                        }
+                    }
+                });
+                if (haveFailedItem) {
+                    AppStore.showError("对于非全日制的员工来说，这些项目不能编辑");
+                    this.setState({ rows });
+                    return;
+                }
+            }
+        }
+
 
         let updatedRow = Object.assign(rows[fromRow], updated);
         rows[fromRow] = updatedRow;
@@ -185,26 +232,114 @@ class ConfigGrid extends Component {
     onCellDeSelected({ rowIdx, idx }) {
 
     }
+
+    handleWokerCategoryChange(value) {
+        let query = this.state.query;
+        query.workerCategory = value;
+        this.setState({ query: query });
+    }
+    handleDepartmentChange(value) {
+        let query = this.state.query;
+        query.department = value;
+        this.setState({ query: query });
+    }
+    handleJobRoleChange(value) {
+        let query = this.state.query;
+        query.jobRole = value;
+        this.setState({ query: query });
+    }
+    handleEmpStatusChange(value) {
+        let query = this.state.query;
+        query.empStatus = value;
+        this.setState({ query: query });
+    }
+    handleQuery() {
+        let query = {};
+        if (this.state.query.workerCategory !== 'All' && this.state.query.workerCategory !== '') query.workerCategory = this.state.query.workerCategory;
+        if (this.state.query.department !== 'All' && this.state.query.department !== '') query.department = this.state.query.department;
+        if (this.state.query.jobRole !== 'All' && this.state.query.jobRole !== '') query.jobRole = this.state.query.jobRole;
+        if (this.state.query.empStatus !== 'All' && this.state.query.empStatus !== '') query.empStatus = this.state.query.empStatus;
+        console.log(query);
+        this.props.handleQuery(query).then(res => {
+            if (res.status === 200) {
+                let nstate = {
+                    originalRows: Object.assign([], res.data),
+                    rows: res.data,
+                    selectedIndexes: [],
+                    selectedKeys: []
+                };
+                this.setState(nstate);
+            }
+        })
+    }
     render() {
         let self = this;
         return (
             <div className="EmpDataGrid">
                 <div className="topMenuContainer" style={{ 'display': this.props.showActionBar }}>
-                    {this.props.showDownload ? (<div className="aToButton"><a className="linkButton" href={this.props.downloadLink} target="_blank"><i className="el-icon-document"></i>点击下载</a></div>) : (null)}
-                    {this.props.showCreateNew ? (<Button type="primary" icon="plus" onClick={this.handleAddRow.bind(this)}>添加</Button>) : (null)}
-                    {this.props.showDelete ? (<Button type="primary" icon="delete" onClick={this.handleDelete.bind(this)}>删除</Button>) : (null)}
-                    {this.props.showSave ? (<Button type="primary" icon="circle-check" onClick={this.handleSaveData.bind(this)}>保存</Button>) : (null)}
-                    {this.props.showSyncEmpInfo ? (<Button type="primary" icon="circle-check" onClick={this.handleSyncEmpInfo.bind(this)}>同步</Button>) : (null)}
-                    {this.props.showUploader ? (
-                        <Upload
-                            className="FileUPloader"
-                            action={this.props.uploadLink}
-                            multiple={false}
-                            showFileList={false}
-                        >
-                            <Button icon="upload" type="primary">点击上传</Button>
-                        </Upload>
-                    ) : (null)}
+                    <Form labelWidth="50">
+                        {this.props.showFilters ? (
+                            <Form.Item label="在职:" style={{ display: "inline-block", paddingLeft: "5px" }}>
+                                <Select value={this.state.query.empStatus} onChange={this.handleEmpStatusChange.bind(this)} style={{ width: "120px" }}>
+                                    <Select.Option key="在职员工" label="在职员工" value="Active" />
+                                    <Select.Option key="离职员工" label="离职员工" value="InActive" />
+                                    <Select.Option key="全部员工" label="全部员工" value="All" />
+                                </Select>
+                            </Form.Item>
+                        ) : (null)}
+                        {this.props.showFilters ? (
+                            <Form.Item label="部门:" style={{ display: "inline-block", paddingLeft: "5px" }}>
+                                <Select value={this.state.query.department} onChange={this.handleDepartmentChange.bind(this)} style={{ width: "120px" }}>
+                                    {
+                                        this.state.department.map(el => {
+                                            return <Select.Option key={el.value} label={el.label} value={el.value} />
+                                        })
+                                    }
+                                </Select>
+                            </Form.Item>
+                        ) : (null)}
+                        {this.props.showFilters ? (
+                            <Form.Item label="岗位:" style={{ display: "inline-block", paddingLeft: "5px" }}>
+                                <Select value={this.state.query.jobRole} onChange={this.handleJobRoleChange.bind(this)} style={{ width: "120px" }}>
+                                    {
+                                        this.state.jobRole.map(el => {
+                                            return <Select.Option key={el.value} label={el.label} value={el.value} />
+                                        })
+                                    }
+                                </Select>
+                            </Form.Item>
+                        ) : (null)}
+                        {this.props.showFilters ? (
+                            <Form.Item label="类别:" style={{ display: "inline-block", paddingLeft: "5px" }}>
+                                <Select value={this.state.query.workerCategory} onChange={this.handleWokerCategoryChange.bind(this)} style={{ width: "120px" }}>
+                                    {
+                                        this.state.workerCategory.map(el => {
+                                            return <Select.Option key={el.value} label={el.label} value={el.value} />
+                                        })
+                                    }
+                                </Select>
+                            </Form.Item>
+                        ) : (null)}
+                        <Form.Item style={{ display: "inline-block" }}>
+                            <Button type="primary" icon="search" onClick={this.handleQuery.bind(this)}>查询</Button>
+                            {this.props.showDownload ? (<div className="aToButton"><a className="linkButton" href={this.props.downloadLink} target="_blank"><i className="el-icon-document"></i>点击下载</a></div>) : (null)}
+                            {this.props.showCreateNew ? (<Button type="primary" icon="plus" onClick={this.handleAddRow.bind(this)}>添加</Button>) : (null)}
+                            {this.props.showDelete ? (<Button type="primary" icon="delete" onClick={this.handleDelete.bind(this)}>删除</Button>) : (null)}
+                            {this.props.showSave ? (<Button type="primary" icon="circle-check" onClick={this.handleSaveData.bind(this)}>保存</Button>) : (null)}
+                            {this.props.showSyncEmpInfo ? (<Button type="primary" icon="circle-check" onClick={this.handleSyncEmpInfo.bind(this)}>同步</Button>) : (null)}
+                            {this.props.showUploader ? (
+                                <Upload
+                                    className="FileUPloader"
+                                    action={this.props.uploadLink}
+                                    multiple={false}
+                                    showFileList={false}
+                                >
+                                    <Button icon="upload" type="primary">点击上传</Button>
+                                </Upload>
+                            ) : (null)}
+                        </Form.Item>
+                    </Form>
+
 
                 </div>
 
@@ -220,7 +355,7 @@ class ConfigGrid extends Component {
                         minHeight={this.props.minHeight ? this.props.minHeight : (document.body.clientHeight - 150)}
                         onGridRowsUpdated={this.handleGridRowsUpdated.bind(this)}
                         rowSelection={{
-                            showCheckbox: (self.props.enableCheckBox === true || self.props.enableCheckBox===undefined) ? true : false,
+                            showCheckbox: (self.props.enableCheckBox === true || self.props.enableCheckBox === undefined) ? true : false,
                             enableShiftSelect: true,
                             onRowsSelected: this.onRowsSelected.bind(this),
                             onRowsDeselected: this.onRowsDeselected.bind(this),
@@ -241,3 +376,40 @@ class ConfigGrid extends Component {
 export default ConfigGrid;
 
 // minHeight={this.props.minHeight ? this.props.minHeight : (document.body.clientHeight - 150)}
+
+// {this.props.showDownload ? (<div className="aToButton"><a className="linkButton" href={this.props.downloadLink} target="_blank"><i className="el-icon-document"></i>点击下载</a></div>) : (null)}
+// {this.props.showCreateNew ? (<Button type="primary" icon="plus" onClick={this.handleAddRow.bind(this)}>添加</Button>) : (null)}
+// {this.props.showDelete ? (<Button type="primary" icon="delete" onClick={this.handleDelete.bind(this)}>删除</Button>) : (null)}
+// {this.props.showSave ? (<Button type="primary" icon="circle-check" onClick={this.handleSaveData.bind(this)}>保存</Button>) : (null)}
+// {this.props.showSyncEmpInfo ? (<Button type="primary" icon="circle-check" onClick={this.handleSyncEmpInfo.bind(this)}>同步</Button>) : (null)}
+// {this.props.showUploader ? (
+//     <Upload
+//         className="FileUPloader"
+//         action={this.props.uploadLink}
+//         multiple={false}
+//         showFileList={false}
+//     >
+//         <Button icon="upload" type="primary">点击上传</Button>
+//     </Upload>
+// ) : (null)}
+
+{/* <Form.Item style={{ display: "inline-block" }}>
+                            <Button type="primary" onClick={this.handleQuery.bind(this)}>查询</Button>
+                        </Form.Item>
+                        {this.props.showDownload ? (<Form.Item style={{ display: "inline-block" }}><div className="aToButton"><a className="linkButton" href={this.props.downloadLink} target="_blank"><i className="el-icon-document"></i>点击下载</a></div></Form.Item>) : (null)}
+                        {this.props.showCreateNew ? (<Form.Item style={{ display: "inline-block" }}><Button type="primary" icon="plus" onClick={this.handleAddRow.bind(this)}>添加</Button></Form.Item>) : (null)}
+                        {this.props.showDelete ? (<Form.Item style={{ display: "inline-block" }}><Button type="primary" icon="delete" onClick={this.handleDelete.bind(this)}>删除</Button></Form.Item>) : (null)}
+                        {this.props.showSave ? (<Form.Item style={{ display: "inline-block" }}><Button type="primary" icon="circle-check" onClick={this.handleSaveData.bind(this)}>保存</Button></Form.Item>) : (null)}
+                        {this.props.showSyncEmpInfo ? (<Form.Item style={{ display: "inline-block" }}><Button type="primary" icon="circle-check" onClick={this.handleSyncEmpInfo.bind(this)}>同步</Button></Form.Item>) : (null)}
+                        {this.props.showUploader ? (
+                            <Form.Item style={{ display: "inline-block" }}>
+                                <Upload
+                                    className="FileUPloader"
+                                    action={this.props.uploadLink}
+                                    multiple={false}
+                                    showFileList={false}
+                                >
+                                    <Button icon="upload" type="primary">点击上传</Button>
+                                </Upload>
+                            </Form.Item>
+                        ) : (null)} */}

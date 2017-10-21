@@ -13,6 +13,7 @@ import EmpInfoConfig from '../EmpInfo/EmpInfoConfig'
 import PayrollPreview from '../Payroll/SalaryPreview';
 import PayrollDetails from '../Payroll/PayrollDetails';
 import QueryReporting from '../Reports/Query';
+import NonRegularEmp from '../NonRegularEmp/NonRegularEmp';
 
 import {
     BrowserRouter,
@@ -43,6 +44,7 @@ class Home extends Component {
                             <Route exact path="/AccessManagement" component={AccessManagement} />
                             <Route exact path="/EmpInfoConfig" component={EmpInfoConfig} />
                             <Route exact path="/OTManagement" component={OTManagement} />
+                            <Route exact path="/NonRegularEmp" component={NonRegularEmp} />
                             <Route exact path="/PayrollConfig" component={PayrollConfig} />
                             <Route exact path="/PayrollPreview" component={PayrollPreview} />
                             <Route exact path="/PayrollDetails" component={PayrollDetails} />

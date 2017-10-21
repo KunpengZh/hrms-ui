@@ -192,7 +192,7 @@ class EmpInfoConfig extends Component {
                             </Select>
                         </Form.Item>
                         <Form.Item style={{ display: "inline-block" }}>
-                            <Button type="primary" onClick={this.handleQuery.bind(this)}>查询</Button>
+                            <Button type="primary" icon="search" onClick={this.handleQuery.bind(this)}>查询</Button>
                         </Form.Item>
                         <Form.Item style={{ display: "inline-block" }}>
                             <div className="aToButton"><a className="linkButton" href={this.state.downloadLink} target="_blank"><i className="el-icon-document"></i>下载</a></div>

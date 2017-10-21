@@ -44,7 +44,7 @@ class EmpGongZiDan extends Component {
                             <td>工资周期</td>
                             <td>{this.props.data.salaryCycle}</td>
                             <td>工资组成:</td>
-                            <td colSpan="6" style={{textAlign:"left"}}>工资+奖金+值班费+通讯补贴-扣款-养老保险-医疗保险-失业保险-住房公积金-个人所得税-补充医疗保险+一次性奖金-奖金税=实发工资</td>
+                            <td colSpan="6" style={{textAlign:"left"}}>{this.props.data.gongziDesc}</td>
                         </tr>
                         <tr>
                             <td>工资</td>

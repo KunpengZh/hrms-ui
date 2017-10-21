@@ -22,6 +22,9 @@ class Home extends Component {
             case 'OTManagement':
                 this.props.history.push("/OTManagement");
                 break;
+            case 'NonRegular':
+                this.props.history.push("/NonRegularEmp");
+                break;
             case 'PayrollCalculation':
                 this.props.history.push("/PayrollCalculation");
                 break;
@@ -61,14 +64,17 @@ class Home extends Component {
                                 <Menu.Item index="EmpInfoConfig">员工信息配置</Menu.Item>
                             ) : (null)}
                         </Menu.SubMenu>
-                        {(jobRole === 'SysAdmin' || jobRole === 'HRAdmin') ? (
-                            <Menu.Item index="OTManagement">加班申报管理</Menu.Item>
+                        {(jobRole === 'SysAdmin' || jobRole === 'HRAdmin' || jobRole === 'PayrollAdmin') ? (
+                            <Menu.SubMenu index="OTAndWorkTime" title="当月工资数据申报">
+                                <Menu.Item index="OTManagement">全日制人员申报</Menu.Item>
+                                <Menu.Item index="NonRegular">非全日制人员申报</Menu.Item>
+                            </Menu.SubMenu>
                         ) : (null)}
                         {(jobRole === 'SysAdmin' || jobRole === 'PayrollAdmin') ? (
                             <Menu.SubMenu index="Payroll" title="工资计算管理">
                                 <Menu.Item index="PayrollDetails">当期工资计算</Menu.Item>
                                 <Menu.Item index="PayrollPreview">工资单预览</Menu.Item>
-                                <Menu.Item index="PayrollConfig">工资配置管理</Menu.Item>
+                                {/* <Menu.Item index="PayrollConfig">工资配置管理</Menu.Item> */}
                             </Menu.SubMenu>
                         ) : (null)}
                         {(jobRole === 'SysAdmin' || jobRole === 'PayrollAdmin') ? (

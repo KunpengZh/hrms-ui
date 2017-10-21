@@ -76,7 +76,7 @@ var AppStore = (function () {
 
     var doGet = function (url) {
         return new Promise(function (rel, rej) {
-            fetch(url,{credentials: 'include'}).then((response) => response.json()).then((res) => {
+            fetch(url, { credentials: 'include' }).then((response) => response.json()).then((res) => {
                 rel(res)
             }).catch((error) => {
                 console.error(error);
@@ -166,7 +166,7 @@ var AppStore = (function () {
 
     var saveConfigData = (configData) => {
         return new Promise(function (rel, rej) {
-            doPost('/AppConfig/save',{
+            doPost('/AppConfig/save', {
                 configKey: 'ConfigData',
                 data: configData,
             }).then((res) => {
@@ -272,7 +272,7 @@ var AppStore = (function () {
 
     var saveEmpBasicData = (employees) => {
         return new Promise(function (rel, rej) {
-            doPost('/emp/update',{
+            doPost('/emp/update', {
                 data: employees,
             }).then((res) => {
                 if (res.status === 200) {
@@ -296,7 +296,7 @@ var AppStore = (function () {
 
     var deleteEmpBasicData = (empIds) => {
         return new Promise(function (rel, rej) {
-            doPost('/emp/delete',{
+            doPost('/emp/delete', {
                 data: empIds,
             }).then((res) => {
                 if (res.status === 200) {
@@ -315,6 +315,34 @@ var AppStore = (function () {
                 console.error(error);
                 rel({ status: 500, message: "Unable to connect with Server" })
             });
+        })
+    }
+
+    var queryEmpBasicDataByCriteria = function (criteria) {
+        return new Promise(function (rel, rej) {
+            if (!criteria) {
+                rel({
+                    status: 200,
+                    message: '',
+                    data: []
+                })
+                return;
+            }
+            doPost('/emp/querybycriteria', { data: criteria }).then(res => {
+                if (res.status === 200) {
+                    rel({
+                        status: 200,
+                        data: res.data,
+                        message: res.message
+                    })
+                } else {
+                    rel({
+                        status: res.status,
+                        message: res.message,
+                        data: []
+                    })
+                }
+            })
         })
     }
 
@@ -367,7 +395,7 @@ var AppStore = (function () {
 
     var saveEmpSensitiveData = (employees) => {
         return new Promise(function (rel, rej) {
-            doPost('/empsen/update',{
+            doPost('/empsen/update', {
                 data: employees,
             }).then((res) => {
                 if (res.status === 200) {
@@ -388,8 +416,34 @@ var AppStore = (function () {
             });
         })
     }
+    var queryEmpSensitiveDataByCriteria = function (criteria) {
+        return new Promise(function (rel, rej) {
+            if (!criteria) {
+                rel({
+                    status: 200,
+                    message: '',
+                    data: []
+                })
+                return;
+            }
+            doPost('/empsen/querybycriteria', { data: criteria }).then(res => {
+                if (res.status === 200) {
+                    rel({
+                        status: 200,
+                        data: res.data,
+                        message: res.message
+                    })
+                } else {
+                    rel({
+                        status: res.status,
+                        message: res.message,
+                        data: []
+                    })
+                }
+            })
+        })
+    }
 
-    
     /**
      * functions related with Payroll Config
      */
@@ -460,6 +514,7 @@ var AppStore = (function () {
             })
         })
     }
+
     /**
      * OT related functions
      */
@@ -608,6 +663,136 @@ var AppStore = (function () {
         }
 
         return YearMonthPeriod;
+    }
+
+    /**
+     * Non Regular Salary related functions
+     */
+
+
+    var getNRByCycle = function (salaryCycle) {
+        return new Promise(function (rel, rej) {
+            if (!salaryCycle || salaryCycle === "") {
+                rel({
+                    status: 500,
+                    message: '必须指定工资周期',
+                    data: ''
+                })
+                return;
+            }
+            doGet('/nonregular?salaryCycle=' + salaryCycle).then((res) => {
+                if (res.status === 200) {
+                    rel({
+                        status: 200,
+                        data: res.data,
+                        message: ''
+                    })
+                } else {
+                    rel({
+                        status: res.status,
+                        message: res.message
+                    })
+                }
+            })
+        })
+    }
+
+    var initialNRByCycle = function (salaryCycle) {
+        return new Promise(function (rel, rej) {
+            if (!salaryCycle || salaryCycle === "") {
+                rel({
+                    status: 700,
+                    message: '必须指定工资周期',
+                    data: ''
+                })
+                return;
+            }
+            doGet('/nonregular/initialNRSalary?salaryCycle=' + salaryCycle).then((res) => {
+                if (res.status === 200) {
+                    rel({
+                        status: 200,
+                        data: res.data,
+                        message: ''
+                    })
+                } else {
+                    rel({
+                        status: res.status,
+                        message: res.message
+                    })
+                }
+            })
+        })
+    }
+
+    var deleteNRSalaryData = function (keys, salaryCycle) {
+        return new Promise(function (rel, rej) {
+            if (!keys || !(keys instanceof Array) || keys.length <= 0) {
+                rel({
+                    status: 700,
+                    message: '',
+                    data: ''
+                })
+                return;
+            }
+            if (!salaryCycle || salaryCycle === "") {
+                rel({
+                    status: 500,
+                    message: '必须指定工资周期',
+                    data: ''
+                })
+                return;
+            }
+            doPost('/nonregular/delete', { data: keys, salaryCycle: salaryCycle }).then(res => {
+                if (res.status === 200) {
+                    rel({
+                        status: 200,
+                        data: res.data,
+                        message: "删除成功"
+                    })
+                } else {
+                    rel({
+                        status: res.status,
+                        message: res.message
+                    })
+                }
+            })
+        })
+    }
+
+    var updateNRSalaryData = function (data, salaryCycle) {
+        return new Promise(function (rel, rej) {
+            if (!data || !(data instanceof Array) || data.length <= 0) {
+                rel({
+                    status: 700,
+                    message: '',
+                    data: ''
+                })
+                return;
+            }
+            if (!salaryCycle || salaryCycle === "") {
+                rel({
+                    status: 500,
+                    message: '必须指定加班周期',
+                    data: ''
+                })
+                return;
+            }
+            doPost('/nonregular/update', { data: data, salaryCycle: salaryCycle }).then(res => {
+                if (res.status === 200) {
+                    rel({
+                        status: 200,
+                        data: res.data,
+                        message: res.message
+                    })
+                } else {
+                    rel({
+                        status: res.status,
+                        message: res.message,
+                        data: []
+                    })
+                }
+            })
+        })
     }
 
     /**
@@ -1001,9 +1186,11 @@ var AppStore = (function () {
         saveEmpSensitiveData: saveEmpSensitiveData,
         SyncEmpSenWithBasicTable: SyncEmpSenWithBasicTable,
         getAllEmpSensitiveInfo: getAllEmpSensitiveInfo,
+        queryEmpSensitiveDataByCriteria: queryEmpSensitiveDataByCriteria,
         deleteEmpBasicData: deleteEmpBasicData,
         saveEmpBasicData: saveEmpBasicData,
         getAllEmpBasicInfo: getAllEmpBasicInfo,
+        queryEmpBasicDataByCriteria: queryEmpBasicDataByCriteria,
         getUnicKey: getUnicKey,
         showError: showError,
         showInfo: showInfo,
@@ -1014,7 +1201,11 @@ var AppStore = (function () {
         saveConfigData: saveConfigData,
         getAppUser: getAppUser,
         isUserLoggedIn: isUserLoggedIn,
-        doAppLogin: doAppLogin
+        doAppLogin: doAppLogin,
+        updateNRSalaryData: updateNRSalaryData,
+        deleteNRSalaryData: deleteNRSalaryData,
+        initialNRByCycle: initialNRByCycle,
+        getNRByCycle: getNRByCycle
     }
 
 })()

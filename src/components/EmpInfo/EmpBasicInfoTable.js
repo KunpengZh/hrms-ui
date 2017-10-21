@@ -12,8 +12,10 @@ const { Editors, Formatters } = require('react-data-grid-addons');
 const { DropDownEditor } = Editors;
 const { DropDownFormatter } = Formatters;
 
-const ColumnKeysNeedValidate = ['workAge', 'age'];
+const ColumnKeysNeedValidate = [];
 const validateFailMsg = '工龄, 年龄字段只能接受数字，请检查您是否在工龄或是年龄字段里输入的非数字字符';
+const ColumnKeyNeedDate = ['entryTime', 'unEmpDate'];
+const validateDateFailMsg = '您输入的出生日期字段不合法，请输入YYYY-MM-DD格式的日期';
 
 class EmpBasicInfoTable extends Component {
     constructor(props) {
@@ -42,6 +44,10 @@ class EmpBasicInfoTable extends Component {
             const wcategory = configData.data.WorkerCategory;
             const wcategoryEditor = <DropDownEditor options={wcategory} />;
             const wcategoryFormatter = <DropDownFormatter options={wcategory} value="value" />;
+
+            const EmployeementStatus = [{ id: '01', value: 'Active', text: '在职' }, { id: '02', value: 'InActive', text: '离职' }];
+            const EmployeementStatusEditor = <DropDownEditor options={EmployeementStatus} />;
+            const EmployeementStatusFormatter = <DropDownFormatter options={EmployeementStatus} value="value" />;
             nstate.columns = [
                 {
                     key: 'empId',
@@ -56,6 +62,14 @@ class EmpBasicInfoTable extends Component {
                     width: 200,
                     sortable: true,
                     filterable: true
+                },
+                {
+                    key: 'workerCategory',
+                    name: '员工类别',
+                    editable: true,
+                    editor: wcategoryEditor,
+                    formatter: wcategoryFormatter,
+                    sortable: true
                 },
                 {
                     key: 'department',
@@ -74,14 +88,14 @@ class EmpBasicInfoTable extends Component {
                     sortable: true
                 },
                 {
-                    key: 'workAge',
-                    name: '工龄',
-                    editable: true,
+                    key: "entryTime",
+                    name: "入职时间",
+                    editable: true
                 },
                 {
-                    key: 'age',
-                    name: '年龄',
-                    editable: true,
+                    key: 'workAge',
+                    name: '工龄',
+                    editable: false,
                 },
                 {
                     key: 'gender',
@@ -91,12 +105,16 @@ class EmpBasicInfoTable extends Component {
                     formatter: gendersFormatter
                 },
                 {
-                    key: 'workerCategory',
-                    name: '员工类别',
+                    key: 'empStatus',
+                    name: '是否在职',
                     editable: true,
-                    editor: wcategoryEditor,
-                    formatter: wcategoryFormatter,
-                    sortable: true
+                    editor: EmployeementStatusEditor,
+                    formatter: EmployeementStatusFormatter
+                },
+                {
+                    key: 'unEmpDate',
+                    name: '离职日期',
+                    editable: true,
                 },
                 {
                     key: 'comment',
@@ -125,12 +143,13 @@ class EmpBasicInfoTable extends Component {
                     const newRow = {
                         empId: empId.data,
                         name: '',
+                        workerCategory: '',
                         department: '',
                         jobRole: '',
+                        entryTime: '',
                         workAge: '',
                         age: '',
                         gender: '',
-                        workerCategory: '',
                         comment: ''
                     };
                     rel(newRow);
@@ -188,13 +207,18 @@ class EmpBasicInfoTable extends Component {
         }
         return validate;
     }
-    // handleMenuActions(menuItem) {
-    //     switch (menuItem) {
-    //         case "CreateNew":
-    //             this.props.history.push("/EmpBasicNew");
-    //             break;
-    //     }
-    // }
+    _handleQuery(criteria) {
+        return new Promise(function (rel, rej) {
+            AppStore.queryEmpBasicDataByCriteria(criteria).then(res => {
+                if (res.status === 200) {
+                    rel(res);
+                } else {
+                    AppStore.showError(res.message);
+                    rel(res);
+                }
+            })
+        })
+    }
     render() {
         return (
             <div className="EmpContainer">
@@ -218,8 +242,12 @@ class EmpBasicInfoTable extends Component {
                         showDownload={true}
                         downloadLink={AppStore.getPreHostURLLink() + '/emp/downloadempbasicinfo'}
                         ColumnKeysNeedValidate={ColumnKeysNeedValidate}
+                        ColumnKeyNeedDate={ColumnKeyNeedDate}
+                        validateDateFailMsg={validateDateFailMsg}
                         validateFailMsg={validateFailMsg}
                         enableCheckBox={true}
+                        handleQuery={this._handleQuery.bind(this)}
+                        showFilters={true}
                     />
                 </div>
             </div>

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './OTManagemetn.css';
+import './NonRegularEmp.css';
 import { Loading } from 'element-react';
 import 'element-theme-default';
 import '../../font-awesome/css/font-awesome.min.css'
@@ -8,14 +8,11 @@ import AppStore from '../../share/AppStore';
 import DataGrid from '../DataGrid/DataGrid';
 
 import ReactDataGrid from 'react-data-grid'
-// const { Editors, Formatters } = require('react-data-grid-addons');
-// const { DropDownEditor } = Editors;
-// const { DropDownFormatter } = Formatters;
 
-const ColumnKeysNeedValidate = ['NormalOT', 'WeekendOT', 'HolidayOT', 'kouchu', 'kaohekoukuan', 'yiliaobaoxian', 'yicixingjiangjin'];
+const ColumnKeysNeedValidate = ['daySalary', 'workDays', 'anquanJiangli', 'wuweizhangJiangli', 'OTJiangjin'];
 const validateFailMsg = '只能填写数字';
 
-class EmpOT extends Component {
+class NonRegularSalary extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -30,8 +27,8 @@ class EmpOT extends Component {
     componentDidMount() {
         let nstate = Object.assign({}, this.state);
         if (nstate.curYearMonth === "") nstate.curYearMonth = nstate.YearMonthPeriod[0].value;
-        AppStore.getOTByCycle(nstate.curYearMonth).then((OTs) => {
-            if (OTs.status === 200) {
+        AppStore.getNRByCycle(nstate.curYearMonth).then((data) => {
+            if (data.status === 200) {
                 nstate.columns = [
                     {
                         key: 'empId',
@@ -59,41 +56,48 @@ class EmpOT extends Component {
                         sortable: true
                     },
                     {
-                        key: 'OTCycle',
-                        name: '加班周期',
+                        key: 'salaryCycle',
+                        name: '工资周期',
                     },
                     {
-                        key: 'NormalOT',
-                        name: '平时加班(小时数)',
+                        key: 'daySalary',
+                        name: '日工资',
                         editable: true,
                     },
                     {
-                        key: 'WeekendOT',
-                        name: '周末加班(小时数)',
+                        key: 'workDays',
+                        name: '工作天数',
                         editable: true,
                     },
                     {
-                        key: 'HolidayOT',
-                        name: '节假日加班(小时数)',
+                        key: 'anquanJiangli',
+                        name: '安全奖励',
                         editable: true,
                     },
-                    { key: 'kouchu', name: '扣除项', width: 150, editable: 'true' },
-                    { key: 'kaohekoukuan', name: '考核扣款', width: 150, editable: 'true' },
-                    { key: 'yiliaobaoxian', name: '医疗保险', width: 150, editable: 'true' },
-                    { key: 'yicixingjiangjin', name: '年终奖金', width: 150, editable: 'true' }
+                    {
+                        key: 'wuweizhangJiangli',
+                        name: '无违章奖励',
+                        editable: true,
+                    },
+                    {
+                        key: 'OTJiangjin',
+                        name: '加班奖金',
+                        editable: true,
+                    },
                 ]
-                nstate.rows = OTs.data;
+                nstate.rows = data.data;
                 nstate.fullscreen = false;
                 this.setState(nstate);
             } else {
                 this.setState({ fullscreen: false });
-                AppStore.showError(OTs.message);
+                AppStore.showError(data.message);
             }
         })
     }
     handleSync() {
+        console.log("am I executed")
         this.setState({ fullscreen: true });
-        AppStore.initialOTByCycle(this.state.curYearMonth).then((res) => {
+        AppStore.initialNRByCycle(this.state.curYearMonth).then((res) => {
             this.setState({ fullscreen: false });
             if (res.status === 200) {
                 this.setState({ rows: res.data });
@@ -106,17 +110,24 @@ class EmpOT extends Component {
     saveData(data, keysObj) {
         let { newcreated, deleted, updated } = keysObj;
         let newCreatedKeys = [], deletedKeys = [], updatedKeys = [];
-        AppStore.deleteEmpOTData(deleted, this.state.curYearMonth).then(res => {
+
+        AppStore.deleteNRSalaryData(deleted, this.state.curYearMonth).then(res => {
+            console.log(res);
             if (res.status === 700) {
 
             } else if (res.status === 200) {
-                AppStore.showSuccess(res.message);
+                AppStore.showInfo("删除成功");
             } else {
-                AppStore.showError(res.message);
+                AppStore.showError("更新成功");
             }
         }).then(() => {
-            AppStore.updateEmpOTData(data, this.state.curYearMonth).then((res) => {
-                AppStore.showInfo(res.message);
+            AppStore.updateNRSalaryData(data, this.state.curYearMonth).then((res) => {
+                if(res.status===200){
+                    AppStore.showSuccess("更新成功");
+                }else{
+                    AppStore.showError(res.message);
+                }
+               
             });
         })
     }
@@ -126,31 +137,32 @@ class EmpOT extends Component {
     }
     handleLoading() {
         this.setState({ fullscreen: true });
-        AppStore.getOTByCycle(this.state.curYearMonth).then((OTs) => {
+        AppStore.getNRByCycle(this.state.curYearMonth).then((data) => {
 
-            if (OTs.status === 200) {
+            if (data.status === 200) {
                 this.setState({
-                    rows: OTs.data,
+                    rows: data.data,
                     fullscreen: false
                 })
                 AppStore.showSuccess("成功")
             } else {
                 this.setState({ fullscreen: false });
-                AppStore.showError(OTs.message)
+                AppStore.showError(data.message)
             }
         })
     }
 
     render() {
         return (
-            <div className="OTContainer">
-                <div className="OTBodyContainer">
+            <div className="NRContainer">
+                <div className="NRBodyContainer">
                     {
                         this.state.fullscreen && <Loading fullscreen={true} />
                     }
                     <DataGrid
                         columns={this.state.columns}
                         rows={this.state.rows}
+                        rowsCount={this.state.rows.length}
                         rowKey={this.state.rowKey}
                         showActionBar=''
                         showDelete={true}
@@ -158,15 +170,15 @@ class EmpOT extends Component {
                         showSave={true}
                         saveData={this.saveData.bind(this)}
                         showUploader={true}
-                        uploadLink={'/ot/uploadot'}
+                        uploadLink={'/nonregular/upload'}
                         showDownload={true}
-                        downloadLink={AppStore.getPreHostURLLink() + '/ot/downloadot?OTCycle=' + this.state.curYearMonth}
+                        downloadLink={AppStore.getPreHostURLLink() + '/nonregular/download?salaryCycle=' + this.state.curYearMonth}
                         minWidth={2000}
                         ColumnKeysNeedValidate={ColumnKeysNeedValidate}
                         validateFailMsg={validateFailMsg}
                         showSync={true}
                         handleSync={this.handleSync.bind(this)}
-                        syncButtonText={'初始化加班数据'}
+                        syncButtonText={'初始化数据'}
                         showSelectMenu={true}
                         selectMenuOptions={this.state.YearMonthPeriod}
                         handleSelectMenuChange={this.handleYearMonthChange.bind(this)}
@@ -181,4 +193,4 @@ class EmpOT extends Component {
     }
 }
 
-export default EmpOT;
+export default NonRegularSalary;

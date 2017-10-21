@@ -230,6 +230,7 @@ class DataGrid extends Component {
                         </Upload>
                     ) : (null)}
                     {this.props.showFunc1 ? (<Button type="primary" icon="menu" onClick={this.handleFunc1.bind(this)} style={{ marginRight: "20px", marginLeft: "20px" }}>{this.props.Func1Text}</Button>) : (null)}
+                    {this.props.showDownloadTable?(<div className="aToButton"><a className="linkButton" href={this.props.downloadTableLink} target="_blank"><i className="el-icon-document"></i>下载表格</a></div>):(null)}
                 </div>
 
                 <div className="DataGridInfoTableContainer">

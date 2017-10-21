@@ -79,13 +79,19 @@ class EmpInfoConfig extends Component {
             if (conRes.status === 200) {
                 const ConfigPercentage = [
                     { text: '个人年金系数', value: 'NIANJINXISHU', id: 'NIANJINXISHU', title: '个人年金系数' },
-                    { text: '养老保险系数', value: 'YANGLAOBAOXIANXISHU', id: 'YANGLAOBAOXIANXISHU', title: '养老保险系数' },
-                    { text: '医疗保险系数', value: 'YILIAOBAOXIANXISHU', id: 'YILIAOBAOXIANXISHU', title: '医疗保险系数' },
-                    { text: '失业保险系数', value: 'SHIYEBAOXIANXISHU', id: 'SHIYEBAOXIANXISHU', title: '失业保险系数' },
-                    { text: '住房公积金系数', value: 'ZHUFANGGONGJIJINXISHU', id: 'ZHUFANGGONGJIJINXISHU', title: '住房公积金系数' },
-                    { text: '企业部分年金系数', value: 'QIYENIANJINXISHU', id: 'QIYENIANJINXISHU', title: '企业部分年金系数' },
+                    { text: '个人养老保险系数', value: 'YANGLAOBAOXIANXISHU', id: 'YANGLAOBAOXIANXISHU', title: '个人养老保险系数' },
+                    { text: '个人医疗保险系数', value: 'YILIAOBAOXIANXISHU', id: 'YILIAOBAOXIANXISHU', title: '个人医疗保险系数' },
+                    { text: '个人失业保险系数', value: 'SHIYEBAOXIANXISHU', id: 'SHIYEBAOXIANXISHU', title: '个人失业保险系数' },
+                    { text: '个人住房公积金系数', value: 'ZHUFANGGONGJIJINXISHU', id: 'ZHUFANGGONGJIJINXISHU', title: '个人住房公积金系数' },
                     { text: '个人所得税计提基数', value: 'GERENSUODESHUISHUIJI', id: 'GERENSUODESHUISHUIJI', title: '个人所得税计提基数' },
-                    { text: '上年全市职工工资', value: 'SHANGNIANQUANSHIZHIGONGGONGZI', id: 'SHANGNIANQUANSHIZHIGONGGONGZI', title: '上年全市职工工资' }
+                    { text: '平时与周六日加班系数', value: 'PINGRIJIABANXISHU', id: 'PINGRIJIABANXISHU', title: '平时与周六日加班系数'},
+                    { text: '节假日加班系数', value: 'JIEJIARIJIABANXISHU', id: 'JIEJIARIJIABANXISHU', title: '节假日加班系数'},
+                    { text: '上年全市职工工资', value: 'SHANGNIANQUANSHIZHIGONGGONGZI', id: 'SHANGNIANQUANSHIZHIGONGGONGZI', title: '上年全市职工工资' },
+                    { text: '企业年金系数', value: 'QIYENIANJINXISHU', id: 'QIYENIANJINXISHU', title: '企业年金系数' },
+                    { text: '企业养老保险系数', value: 'QIYEYANGLAOBAOXIANXISHU', id: 'QIYEYANGLAOBAOXIANXISHU', title: '企业养老保险系数' },
+                    { text: '企业医疗保险系数', value: 'QIYEYILIAOBAOXIANXISHU', id: 'QIYEYILIAOBAOXIANXISHU', title: '企业医疗保险系数' },
+                    { text: '企业失业保险系数', value: 'QIYESHIYEBAOXIANXISHU', id: 'QIYESHIYEBAOXIANXISHU', title: '企业失业保险系数' },
+                    { text: '企业住房公积金系数', value: 'QIYEZHUFANGGONGJIJINXISHU', id: 'QIYEZHUFANGGONGJIJINXISHU', title: '企业住房公积金系数'}   
                 ];
                 const ConfigPercentageEditor = <DropDownEditor options={ConfigPercentage} />;
                 const ConfigPercentageFormatter = <DropDownFormatter options={ConfigPercentage} value="value" />;
@@ -157,7 +163,7 @@ class EmpInfoConfig extends Component {
         return new Promise(function (rel, rej) {
             AppStore.getUnicKey("ConfigDocID").then((res) => {
                 if (res.status === 200) {
-                    if (self.activeKey = 'ConfigPercentage') {
+                    if (self.activeKey === 'ConfigPercentage') {
                         const newRow = {
                             id: res.data,
                             text: '',
@@ -179,16 +185,30 @@ class EmpInfoConfig extends Component {
         })
     }
     saveData(data) {
-        for (let i = 0; i < data.length; i++) {
-            let hasDuplicateWokerCtaegory = false;
-            for (let k = i + 1; k < data.length && !hasDuplicateWokerCtaegory; k++) {
-                if (data[i].text === data[k].text) hasDuplicateWokerCtaegory = true;
+        if (this.activeKey === "ConfigPercentage") {
+            for (let i = 0; i < data.length; i++) {
+                let hasDuplicateWokerCtaegory = false;
+                for (let k = i + 1; k < data.length && !hasDuplicateWokerCtaegory; k++) {
+                    if (data[i].text === data[k].text) hasDuplicateWokerCtaegory = true;
+                }
+                if (hasDuplicateWokerCtaegory) {
+                    AppStore.showError("配置系数不允许有重复的，请仔细检查");
+                    return;
+                }
             }
-            if (hasDuplicateWokerCtaegory) {
-                AppStore.showError("配置系数不允许有重复的，请仔细检查");
-                return;
+        } else {
+            for (let i = 0; i < data.length; i++) {
+                let hasDuplicateWokerCtaegory = false;
+                for (let k = i + 1; k < data.length && !hasDuplicateWokerCtaegory; k++) {
+                    if (data[i].value === data[k].value) hasDuplicateWokerCtaegory = true;
+                }
+                if (hasDuplicateWokerCtaegory) {
+                    AppStore.showError("配置项名称不允许有重复的，请仔细检查");
+                    return;
+                }
             }
         }
+
 
         let newState = Object.assign({}, this.state.rows);
         newState[this.activeKey] = data;

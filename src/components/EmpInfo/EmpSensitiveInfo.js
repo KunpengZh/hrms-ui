@@ -13,9 +13,24 @@ const ColumnKeysNeedValidate = ['idCard', 'bankAccount', 'jinengGongzi', 'gangwe
     'jichuButie', 'xilifei', 'gonglingGongzi', 'zhiwuJintie', 'gongliBuzhu', 'kaoheJiangjin', 'tongxunButie',
     'qitaJiangjin', 'xiaxiangBuzhu', 'yingyetingBuzhu', 'buchongyiliaobaoxian', 'preAnnuallyIncom'];
 const validateFailMsg = '请检查您是否在只能接受数字的字段里输入的非数字字符';
-const ColumnKeyNeedDate = ['birthday']
+const ColumnKeyNeedDate = []
 const validateDateFailMsg = '您输入的出生日期字段不合法，请输入YYYY-MM-DD格式的日期';
 
+const ColumnsNotEditableForNonRegularEmp = [
+    "jinengGongzi",
+    "gangweiGongzi",
+    "jichuButie",
+    "xilifei",
+    "gonglingGongzi",
+    "zhiwuJintie",
+    "gongliBuzhu",
+    "kaoheJiangjin",
+    "tongxunButie",
+    "qitaJiangjin",
+    "xiaxiangBuzhu",
+    "yingyetingBuzhu",
+    "buchongyiliaobaoxian"];
+const NonRegularEmployeeCategory = "非全日制人员";
 
 class EmpSensitiveInfoTable extends Component {
     constructor(props) {
@@ -35,8 +50,30 @@ class EmpSensitiveInfoTable extends Component {
             nstate.columns = [
                 { key: 'empId', name: '员工号', sortable: true, width: 150 },
                 { key: 'name', name: '姓名', sortable: true, width: 150 },
-                { key: 'idCard', name: '身份证', editable: 'true', width: 150 },
-                { key: 'birthday', name: '出生日期', editable: 'true', width: 150 },
+                {
+                    key: 'workerCategory',
+                    name: '员工类别',
+                    editable: false,
+                    sortable: true,
+                    width: 150
+                },
+                {
+                    key: 'department',
+                    name: '部门',
+                    editable: false,
+                    sortable: true,
+                    width: 150
+                },
+                {
+                    key: 'jobRole',
+                    name: '岗位',
+                    editable: false,
+                    sortable: true,
+                    width: 150
+                },
+                { key: 'idCard', name: '身份证', editable: 'true', width: 250 },
+                { key: 'birthday', name: '出生日期', editable: false, width: 150 },
+                { key: 'age', name: '年龄', editable: false, width: 150 },
                 { key: 'bankAccount', name: '银行帐号', editable: 'true', width: 150 },
                 { key: 'jinengGongzi', name: '技能工资', editable: 'true', width: 150 },
                 { key: 'gangweiGongzi', name: '岗位工资', editable: 'true', width: 150 },
@@ -109,6 +146,19 @@ class EmpSensitiveInfoTable extends Component {
         return validate;
     }
 
+    _handleQuery(criteria) {
+        return new Promise(function (rel, rej) {
+            AppStore.queryEmpSensitiveDataByCriteria(criteria).then(res => {
+                if (res.status === 200) {
+                    rel(res);
+                } else {
+                    AppStore.showError(res.message);
+                    rel(res);
+                }
+            })
+        })
+    }
+
     render() {
         return (
             <div className="EmpContainer">
@@ -129,7 +179,7 @@ class EmpSensitiveInfoTable extends Component {
                         showUploader={true}
                         uploadLink={'/empsen/uploadempsensitiveinfo'}
                         showDownload={true}
-                        downloadLink={AppStore.getPreHostURLLink() +'/empsen/downloadempsensitiveinfo'}
+                        downloadLink={AppStore.getPreHostURLLink() + '/empsen/downloadempsensitiveinfo'}
                         showSyncEmpInfo={true}
                         handleSyncEmpInfo={this.handleSyncEmpInfo.bind(this)}
                         ColumnKeysNeedValidate={ColumnKeysNeedValidate}
@@ -137,6 +187,10 @@ class EmpSensitiveInfoTable extends Component {
                         ColumnKeyNeedDate={ColumnKeyNeedDate}
                         validateDateFailMsg={validateDateFailMsg}
                         enableCheckBox={false}
+                        handleQuery={this._handleQuery.bind(this)}
+                        ColumnsNotEditableForNonRegularEmp={ColumnsNotEditableForNonRegularEmp}
+                        NonRegularEmployeeCategory={NonRegularEmployeeCategory}
+                        showFilters={true}
                     />
                 </div>
             </div>
