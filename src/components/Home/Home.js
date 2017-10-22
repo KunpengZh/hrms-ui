@@ -14,6 +14,8 @@ import PayrollPreview from '../Payroll/SalaryPreview';
 import PayrollDetails from '../Payroll/PayrollDetails';
 import QueryReporting from '../Reports/Query';
 import NonRegularEmp from '../NonRegularEmp/NonRegularEmp';
+import GongZiDanByWorkerCategory from '../Reports/GongZiDanByWorkerCategory';
+import GongZiDanByDepartment from '../Reports/GongZiDanByDepartment';
 
 import {
     BrowserRouter,
@@ -49,6 +51,8 @@ class Home extends Component {
                             <Route exact path="/PayrollPreview" component={PayrollPreview} />
                             <Route exact path="/PayrollDetails" component={PayrollDetails} />
                             <Route exact path="/QueryReporting" component={QueryReporting} />
+                            <Route exact path="/GongZiDanByWorkerCategory" component={GongZiDanByWorkerCategory} />
+                            <Route exact path="/GongZiDanByDepartment" component={GongZiDanByDepartment} />
                         </Switch>
                     </div>
                     {/* <div className="BottomNavContainer">

@@ -43,6 +43,12 @@ class Home extends Component {
             case 'QueryReporting':
                 this.props.history.push("/QueryReporting");
                 break;
+            case 'GongZiDanByWorkerCategory':
+                this.props.history.push("/GongZiDanByWorkerCategory");
+                break;
+            case 'GongZiDanByDepartment':
+                this.props.history.push("/GongZiDanByDepartment");
+                break;
         }
 
     }
@@ -80,6 +86,8 @@ class Home extends Component {
                         {(jobRole === 'SysAdmin' || jobRole === 'PayrollAdmin') ? (
                             <Menu.SubMenu index="Reporting" title="查询汇总">
                                 <Menu.Item index="QueryReporting">查询汇总</Menu.Item>
+                                <Menu.Item index="GongZiDanByWorkerCategory">按类别汇总</Menu.Item>
+                                <Menu.Item index="GongZiDanByDepartment">按部门汇总</Menu.Item>
                             </Menu.SubMenu>
                         ) : (null)}
                         {(jobRole === 'SysAdmin') ? (

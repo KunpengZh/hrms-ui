@@ -528,9 +528,9 @@ var AppStore = (function () {
                 })
                 return;
             }
-         
+
             doPost('/ot/querybycriteria', { data: criteria }).then(res => {
-                
+
                 if (res.status === 200) {
                     rel({
                         status: 200,
@@ -1028,6 +1028,61 @@ var AppStore = (function () {
     /**
      * GongZiDan functions
      */
+    var GongZiDanByDepartment = function (criteria) {
+        return new Promise(function (rel, rej) {
+            if (!criteria || criteria === "") {
+                rel({
+                    status: 500,
+                    message: '必须指定查询条件',
+                    data: ''
+                })
+                return;
+            }
+            doGet('/gongzidan/gatherByDepartment?criteria=' + JSON.stringify(criteria)).then((res) => {
+                if (res.status === 200) {
+                    rel({
+                        status: 200,
+                        data: res.data,
+                        message: ''
+                    })
+                } else {
+                    rel({
+                        status: res.status,
+                        message: res.message
+                    })
+                }
+            })
+        })
+    }
+    var GongZiDanByWorkerCategory = function (criteria) {
+        return new Promise(function (rel, rej) {
+            if (!criteria || criteria === "") {
+                rel({
+                    status: 500,
+                    message: '必须指定周期',
+                    data: ''
+                })
+                return;
+            }
+
+            doGet('/gongzidan/gatherByWorkerCategory?criteria=' + JSON.stringify(criteria)).then((res) => {
+                if (res.status === 200) {
+                    rel({
+                        status: 200,
+                        data: res.data,
+                        message: ''
+                    })
+                } else {
+                    rel({
+                        status: res.status,
+                        message: res.message
+                    })
+                }
+            })
+        })
+    }
+
+
     var getGongZiDanByCycle = function (salaryCycle) {
         return new Promise(function (rel, rej) {
             if (!salaryCycle || salaryCycle === "") {
@@ -1250,6 +1305,8 @@ var AppStore = (function () {
         queryGongZiDataByCriteria: queryGongZiDataByCriteria,
         getGongziData: getGongziData,
         setGongziData: setGongziData,
+        GongZiDanByWorkerCategory: GongZiDanByWorkerCategory,
+        GongZiDanByDepartment: GongZiDanByDepartment,
         getGongZiDanByCycle: getGongZiDanByCycle,
         reCalculateSDData: reCalculateSDData,
         SyncSDEmpData: SyncSDEmpData,
