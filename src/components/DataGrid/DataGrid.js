@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import ReactDataGrid from 'react-data-grid'
-import { Button, Upload, Select } from 'element-react';
+import { Button, Upload, Select, Form } from 'element-react';
 import 'element-theme-default';
 import './DataGrid.css';
 import 'bootstrap/dist/css/bootstrap.css';
@@ -28,7 +28,16 @@ class DataGrid extends Component {
             selectedIndexes: [],
             rowKey: props.rowKey ? props.rowKey : 'id',
             originalRows: [],
-            selectMenu: ''
+            department: [],
+            jobRole: [],
+            workerCategory: [],
+            query: {
+                department: 'All',
+                jobRole: 'All',
+                workerCategory: 'All',
+                empStatus: 'Active',
+                salaryCycle: ''
+            },
         };
         this.selectedKeys = [];
         this.newCreatedKey = [];
@@ -50,7 +59,25 @@ class DataGrid extends Component {
     rowGetter(i) {
         return this.state.rows[i];
     }
+    componentDidMount() {
+        AppStore.getAllAvailableSalaryCycle().then(res => {
+            let nstate = Object.assign({}, this.state);
+            if (res.status === 200) {
+                nstate.department = res.data.department;
+                nstate.jobRole = res.data.jobRole;
+                nstate.workerCategory = res.data.workerCategory;
+                nstate.fullscreen = false;
+                this.setState(nstate);
+            } else {
+                this.setState({ fullscreen: false });
+                AppStore.showError(res.message);
+            }
+        })
+
+    }
     componentWillReceiveProps(newProps) {
+        let query = Object.assign({}, this.state.query);
+        query.salaryCycle = newProps.salaryCycle ? newProps.salaryCycle : '';
         let nstate = {
             originalRows: Object.assign([], newProps.rows),
             rows: newProps.rows,
@@ -58,7 +85,7 @@ class DataGrid extends Component {
             selectedIndexes: [],
             selectedKeys: [],
             rowKey: newProps.rowKey ? newProps.rowKey : 'id',
-            selectMenu: newProps.selectMenuSelectedItem
+            query: query
         };
         this.setState(nstate);
 
@@ -188,8 +215,10 @@ class DataGrid extends Component {
     onCellDeSelected({ rowIdx, idx }) {
 
     }
-    handleSelectMenuChange(value) {
-        this.props.handleSelectMenuChange(value);
+    handleSalaryCycleChange(value) {
+        let query = this.state.query;
+        query.salaryCycle = value;
+        this.setState({ query: query });
     }
     onUploadSuccess(res) {
         AppStore.showSuccess(res.message);
@@ -197,40 +226,153 @@ class DataGrid extends Component {
     handleFunc1() {
         this.props.handleFunc1();
     }
+    handleDepartmentChange(value) {
+        let query = this.state.query;
+        query.department = value;
+        this.setState({ query: query });
+    }
+    handleJobRoleChange(value) {
+        let query = this.state.query;
+        query.jobRole = value;
+        this.setState({ query: query });
+    }
+    handleWokerCategoryChange(value) {
+        let query = this.state.query;
+        query.workerCategory = value;
+        this.setState({ query: query });
+    }
+    handleQuery() {
+        let query = {};
+        if (this.state.query.workerCategory !== 'All' && this.state.query.workerCategory !== '') query.workerCategory = this.state.query.workerCategory;
+        if (this.state.query.department !== 'All' && this.state.query.department !== '') query.department = this.state.query.department;
+        if (this.state.query.jobRole !== 'All' && this.state.query.jobRole !== '') query.jobRole = this.state.query.jobRole;
+        if (this.state.query.salaryCycle !== 'All' && this.state.query.salaryCycle !== '') query.salaryCycle = this.state.query.salaryCycle;
+        this.props.handleQuery(query)
+        // this.props.handleQuery(query).then(res => {
+        //     if (res.status === 200) {
+        //         let nstate = {
+        //             originalRows: Object.assign([], res.data),
+        //             rows: res.data,
+        //             selectedIndexes: [],
+        //             selectedKeys: []
+        //         };
+        //         this.setState(nstate);
+        //     }
+        // })
+    }
     render() {
 
         return (
             <div className="DataGrid">
-                <div className="topMenuContainer" style={{ 'display': this.props.showActionBar }}>
-                    {this.props.showSelectMenu ? (
-                        <Select value={this.state.selectMenu} onChange={this.handleSelectMenuChange.bind(this)} style={{ marginRight: "20px" }}>
-                            {
-                                this.props.selectMenuOptions.map(el => {
-                                    return <Select.Option key={el.value} label={el.label} value={el.value} />
-                                })
-                            }
-                        </Select>
-                    ) : (null)}
-                    {this.props.showLoading ? (<Button type="primary" icon="view" onClick={this.props.handleLoading}>{this.props.loadingText}</Button>) : (null)}
-                    {this.props.showInit ? (<Button type="primary" icon="circle-check" onClick={this.handleInit.bind(this)}>{this.props.initButtonText}</Button>) : (null)}
-                    {this.props.showSync ? (<Button type="primary" icon="circle-check" onClick={this.handleSync.bind(this)}>{this.props.syncButtonText}</Button>) : (null)}
-                    {this.props.showDownload ? (<div className="aToButton"><a className="linkButton" href={this.props.downloadLink} target="_blank"><i className="el-icon-document"></i>点击下载</a></div>) : (null)}
-                    {this.props.showCreateNew ? (<Button type="primary" icon="plus" onClick={this.handleAddRow.bind(this)}>添加</Button>) : (null)}
-                    {this.props.showDelete ? (<Button type="primary" icon="delete" onClick={this.handleDelete.bind(this)}>删除</Button>) : (null)}
-                    {this.props.showSave ? (<Button type="primary" icon="circle-check" onClick={this.handleSaveData.bind(this)}>保存</Button>) : (null)}
-                    {this.props.showUploader ? (
-                        <Upload
-                            className="FileUPloader"
-                            action={this.props.uploadLink}
-                            multiple={false}
-                            showFileList={false}
-                            onSuccess={this.onUploadSuccess.bind(this)}
-                        >
-                            <Button icon="upload" type="primary">点击上传</Button>
-                        </Upload>
-                    ) : (null)}
-                    {this.props.showFunc1 ? (<Button type="primary" icon="menu" onClick={this.handleFunc1.bind(this)} style={{ marginRight: "20px", marginLeft: "20px" }}>{this.props.Func1Text}</Button>) : (null)}
-                    {this.props.showDownloadTable?(<div className="aToButton"><a className="linkButton" href={this.props.downloadTableLink} target="_blank"><i className="el-icon-document"></i>下载表格</a></div>):(null)}
+                <div style={{ 'display': this.props.showActionBar, marginBottom: "10px;" }}>
+                    <Form labelWidth="50" style={{ textAlign: 'left' }}>
+                        {this.props.showSelectMenu ? (
+                            <Form.Item label="部门:" style={{ display: "inline-block", paddingLeft: "5px" }}>
+                                <Select value={this.state.query.department} onChange={this.handleDepartmentChange.bind(this)} style={{ width: "120px" }}>
+                                    {
+                                        this.state.department.map(el => {
+                                            return <Select.Option key={el.value} label={el.label} value={el.value} />
+                                        })
+                                    }
+                                </Select>
+                            </Form.Item>
+                        ) : (null)}
+                        {this.props.showSelectMenu ? (
+                            <Form.Item label="岗位:" style={{ display: "inline-block", paddingLeft: "5px" }}>
+                                <Select value={this.state.query.jobRole} onChange={this.handleJobRoleChange.bind(this)} style={{ width: "120px" }}>
+                                    {
+                                        this.state.jobRole.map(el => {
+                                            return <Select.Option key={el.value} label={el.label} value={el.value} />
+                                        })
+                                    }
+                                </Select>
+                            </Form.Item>
+                        ) : (null)}
+                        {this.props.showSelectMenu ? (
+                            <Form.Item label="类别:" style={{ display: "inline-block", paddingLeft: "5px" }}>
+                                <Select value={this.state.query.workerCategory} onChange={this.handleWokerCategoryChange.bind(this)} style={{ width: "120px" }}>
+                                    {
+                                        this.state.workerCategory.map(el => {
+                                            return <Select.Option key={el.value} label={el.label} value={el.value} />
+                                        })
+                                    }
+                                </Select>
+                            </Form.Item>
+                        ) : (null)}
+                        {this.props.showSelectMenu ? (
+                            <Form.Item label="周期:" style={{ display: "inline-block", paddingLeft: "5px" }}>
+                                <Select value={this.state.query.salaryCycle} onChange={this.handleSalaryCycleChange.bind(this)} style={{ width: "120px" }}>
+                                    {
+                                        this.props.salaryCycleOptions.map(el => {
+                                            return <Select.Option key={el.value} label={el.label} value={el.value} />
+                                        })
+                                    }
+                                </Select>
+                            </Form.Item>
+                        ) : (null)}
+                        <Form.Item labelWidth="0" style={{ display: "inline-block", margin: "0", padding: "0", textAlign: "left" }}>
+                            {this.props.showQuery ? (
+                                <Button type="primary" icon="view" onClick={this.handleQuery.bind(this)}>{this.props.queryText}</Button>
+                            ) : (null)}
+                            {this.props.showInit ? (
+
+                                <Button type="primary" icon="circle-check" onClick={this.handleInit.bind(this)}>{this.props.initButtonText}</Button>
+
+                            ) : (null)}
+                            {this.props.showSync ? (
+
+                                <Button type="primary" icon="circle-check" onClick={this.handleSync.bind(this)}>{this.props.syncButtonText}</Button>
+
+                            ) : (null)}
+                            {this.props.showDownload ? (
+
+                                <div className="aToButton"><a className="linkButton" href={this.props.downloadLink} target="_blank"><i className="el-icon-document"></i>点击下载</a></div>
+
+                            ) : (null)}
+                            {this.props.showCreateNew ? (
+
+                                <Button type="primary" icon="plus" onClick={this.handleAddRow.bind(this)}>添加</Button>
+
+                            ) : (null)}
+                            {this.props.showDelete ? (
+
+                                <Button type="primary" icon="delete" onClick={this.handleDelete.bind(this)}>删除</Button>
+
+                            ) : (null)}
+
+                            {this.props.showSave ? (
+
+                                <Button type="primary" icon="circle-check" onClick={this.handleSaveData.bind(this)}>保存</Button>
+
+                            ) : (null)}
+
+
+                            {this.props.showUploader ? (
+
+                                <Upload
+                                    className="FileUPloader"
+                                    action={this.props.uploadLink}
+                                    multiple={false}
+                                    showFileList={false}
+                                    onSuccess={this.onUploadSuccess.bind(this)}
+                                >
+                                    <Button icon="upload" type="primary">点击上传</Button>
+                                </Upload>
+
+                            ) : (null)}
+                            {this.props.showFunc1 ? (
+
+                                <Button type="primary" icon="menu" onClick={this.handleFunc1.bind(this)} style={{ marginRight: "20px", marginLeft: "20px" }}>{this.props.Func1Text}</Button>
+
+                            ) : (null)}
+                            {this.props.showDownloadTable ? (
+
+                                <div className="aToButton"><a className="linkButton" href={this.props.downloadTableLink} target="_blank"><i className="el-icon-document"></i>下载表格</a></div>
+
+                            ) : (null)}
+                        </Form.Item>
+                    </Form>
+
                 </div>
 
                 <div className="DataGridInfoTableContainer">
@@ -266,3 +408,70 @@ class DataGrid extends Component {
 export default DataGrid;
 
 // minHeight={this.props.minHeight ? this.props.minHeight : (document.body.clientHeight - 150)}
+// {this.props.showQuery ? (
+//     <Form.Item style={{ display: "inline-block",width:"70px", marginLeft:'10px'}}>
+//         <Button type="primary" icon="view" onClick={this.handleQuery}>{this.props.queryText}</Button>
+//     </Form.Item>
+// ) : (null)}
+
+
+// {this.props.showInit ? (
+//     <Form.Item style={{ display: "inline-block",width:"100px", marginLeft:'10px'}}>
+//         <Button type="primary" icon="circle-check" onClick={this.handleInit.bind(this)}>{this.props.initButtonText}</Button>
+//     </Form.Item>
+// ) : (null)}
+
+
+// {this.props.showSync ? (
+//     <Form.Item style={{ display: "inline-block",width:"100px", marginLeft:'10px'}}>
+//         <Button type="primary" icon="circle-check" onClick={this.handleSync.bind(this)}>{this.props.syncButtonText}</Button>
+//     </Form.Item>
+// ) : (null)}
+
+// {this.props.showDownload ? (
+// <Form.Item style={{ display: "inline-block",width:"100px", marginLeft:'10px'}}>
+//     <div className="aToButton"><a className="linkButton" href={this.props.downloadLink} target="_blank"><i className="el-icon-document"></i>点击下载</a></div>
+// </Form.Item>
+// ) : (null)}
+//     {this.props.showCreateNew ? (
+//     <Form.Item style={{ display: "inline-block",width:"70px", marginLeft:'10px'}}>
+//         <Button type="primary" icon="plus" onClick={this.handleAddRow.bind(this)}>添加</Button>
+//     </Form.Item>
+// ) : (null)}
+
+// {this.props.showDelete ? (
+//     <Form.Item style={{ display: "inline-block", marginLeft:'10px'}}>
+//         <Button type="primary" icon="delete" onClick={this.handleDelete.bind(this)}>删除</Button>
+//     </Form.Item>
+// ) : (null)}
+
+// {this.props.showSave ? (
+//     <Form.Item style={{ display: "inline-block", marginLeft:'10px'}}>
+//         <Button type="primary" icon="circle-check" onClick={this.handleSaveData.bind(this)}>保存</Button>
+//     </Form.Item>
+// ) : (null)}
+
+
+// {this.props.showUploader ? (
+//     <Form.Item style={{ display: "inline-block",marginLeft:'10px' }}>
+//         <Upload
+//             className="FileUPloader"
+//             action={this.props.uploadLink}
+//             multiple={false}
+//             showFileList={false}
+//             onSuccess={this.onUploadSuccess.bind(this)}
+//         >
+//             <Button icon="upload" type="primary">点击上传</Button>
+//         </Upload>
+//     </Form.Item>
+// ) : (null)}
+// {this.props.showFunc1 ? (
+//     <Form.Item style={{ display: "inline-block" ,marginLeft:'10px'}}>
+//         <Button type="primary" icon="menu" onClick={this.handleFunc1.bind(this)} style={{ marginRight: "20px", marginLeft: "20px" }}>{this.props.Func1Text}</Button>
+//     </Form.Item>
+// ) : (null)}
+// {this.props.showDownloadTable ? (
+//     <Form.Item style={{ display: "inline-block",marginLeft:'10px' }}>
+//         <div className="aToButton"><a className="linkButton" href={this.props.downloadTableLink} target="_blank"><i className="el-icon-document"></i>下载表格</a></div>
+//     </Form.Item>
+// ) : (null)}

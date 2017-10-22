@@ -23,13 +23,19 @@
     padding:20px;
     
 }
+.myMenuContainer{
+    display:flex;
+    justify-content: flex-start;
+    margin-bottom: 10px;
+    margin-top:10px;
+}
 .topMenuContainer {
     display: flex;
     justify-content: flex-end;
-    height: 35px;
     width: 100%;
     margin-bottom: 15px;
-    padding-right: 15px;
+    padding-right: 10px;
+    height: 80px;
 }
 .TopMenu{
     display: flex;

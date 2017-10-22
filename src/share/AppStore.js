@@ -518,7 +518,35 @@ var AppStore = (function () {
     /**
      * OT related functions
      */
-
+    var queryOTByCriteria = function (criteria) {
+        return new Promise(function (rel, rej) {
+            if (!criteria) {
+                rel({
+                    status: 200,
+                    message: '',
+                    data: []
+                })
+                return;
+            }
+         
+            doPost('/ot/querybycriteria', { data: criteria }).then(res => {
+                
+                if (res.status === 200) {
+                    rel({
+                        status: 200,
+                        data: res.data,
+                        message: res.message
+                    })
+                } else {
+                    rel({
+                        status: res.status,
+                        message: res.message,
+                        data: []
+                    })
+                }
+            })
+        })
+    }
 
     var getOTByCycle = function (OTCycle) {
         return new Promise(function (rel, rej) {
@@ -668,7 +696,33 @@ var AppStore = (function () {
     /**
      * Non Regular Salary related functions
      */
-
+    var queryNRByCriteria = function (criteria) {
+        return new Promise(function (rel, rej) {
+            if (!criteria) {
+                rel({
+                    status: 200,
+                    message: '',
+                    data: []
+                })
+                return;
+            }
+            doPost('/nonregular/querybycriteria', { data: criteria }).then(res => {
+                if (res.status === 200) {
+                    rel({
+                        status: 200,
+                        data: res.data,
+                        message: res.message
+                    })
+                } else {
+                    rel({
+                        status: res.status,
+                        message: res.message,
+                        data: []
+                    })
+                }
+            })
+        })
+    }
 
     var getNRByCycle = function (salaryCycle) {
         return new Promise(function (rel, rej) {
@@ -798,6 +852,33 @@ var AppStore = (function () {
     /**
      * Funcitons related with Salary Details
      */
+    var querySDDataByCriteria = function (criteria) {
+        return new Promise(function (rel, rej) {
+            if (!criteria) {
+                rel({
+                    status: 200,
+                    message: '',
+                    data: []
+                })
+                return;
+            }
+            doPost('/sdd/querybycriteria', { data: criteria }).then(res => {
+                if (res.status === 200) {
+                    rel({
+                        status: 200,
+                        data: res.data,
+                        message: res.message
+                    })
+                } else {
+                    rel({
+                        status: res.status,
+                        message: res.message,
+                        data: []
+                    })
+                }
+            })
+        })
+    }
 
     var getSDByCycle = function (salaryCycle) {
         return new Promise(function (rel, rej) {
@@ -1173,11 +1254,13 @@ var AppStore = (function () {
         reCalculateSDData: reCalculateSDData,
         SyncSDEmpData: SyncSDEmpData,
         getSDByCycle: getSDByCycle,
+        querySDDataByCriteria: querySDDataByCriteria,
         initialSDByCycle: initialSDByCycle,
         updateEmpSDData: updateEmpSDData,
         updateEmpOTData: updateEmpOTData,
         getYearMonthPeriod: getYearMonthPeriod,
         getOTByCycle: getOTByCycle,
+        queryOTByCriteria: queryOTByCriteria,
         initialOTByCycle: initialOTByCycle,
         deleteEmpOTData: deleteEmpOTData,
         deletePayrollConfigs: deletePayrollConfigs,
@@ -1205,7 +1288,8 @@ var AppStore = (function () {
         updateNRSalaryData: updateNRSalaryData,
         deleteNRSalaryData: deleteNRSalaryData,
         initialNRByCycle: initialNRByCycle,
-        getNRByCycle: getNRByCycle
+        getNRByCycle: getNRByCycle,
+        queryNRByCriteria: queryNRByCriteria
     }
 
 })()

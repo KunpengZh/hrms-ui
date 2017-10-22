@@ -131,13 +131,10 @@ class NonRegularSalary extends Component {
             });
         })
     }
-
-    handleYearMonthChange(value) {
-        this.setState({ curYearMonth: value });
-    }
-    handleLoading() {
+    handleQuery(criteria) {
+        
         this.setState({ fullscreen: true });
-        AppStore.getNRByCycle(this.state.curYearMonth).then((data) => {
+        AppStore.queryNRByCriteria(criteria).then((data) => {
 
             if (data.status === 200) {
                 this.setState({
@@ -178,14 +175,13 @@ class NonRegularSalary extends Component {
                         validateFailMsg={validateFailMsg}
                         showSync={true}
                         handleSync={this.handleSync.bind(this)}
-                        syncButtonText={'初始化数据'}
+                        syncButtonText={'初始化'}
                         showSelectMenu={true}
-                        selectMenuOptions={this.state.YearMonthPeriod}
-                        handleSelectMenuChange={this.handleYearMonthChange.bind(this)}
-                        selectMenuSelectedItem={this.state.curYearMonth}
-                        showLoading={true}
-                        handleLoading={this.handleLoading.bind(this)}
-                        loadingText={"显示所选月份数据"}
+                        salaryCycleOptions={this.state.YearMonthPeriod}
+                        handleQuery={this.handleQuery.bind(this)}
+                        salaryCycle={this.state.curYearMonth}
+                        showQuery={true}
+                        queryText={"显示"}
                     />
                 </div>
             </div>

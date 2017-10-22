@@ -259,7 +259,7 @@ class ConfigGrid extends Component {
         if (this.state.query.department !== 'All' && this.state.query.department !== '') query.department = this.state.query.department;
         if (this.state.query.jobRole !== 'All' && this.state.query.jobRole !== '') query.jobRole = this.state.query.jobRole;
         if (this.state.query.empStatus !== 'All' && this.state.query.empStatus !== '') query.empStatus = this.state.query.empStatus;
-        console.log(query);
+       
         this.props.handleQuery(query).then(res => {
             if (res.status === 200) {
                 let nstate = {
@@ -276,8 +276,8 @@ class ConfigGrid extends Component {
         let self = this;
         return (
             <div className="EmpDataGrid">
-                <div className="topMenuContainer" style={{ 'display': this.props.showActionBar }}>
-                    <Form labelWidth="50">
+                <div style={{ 'display': this.props.showActionBar }}>
+                    <Form labelWidth="50" style={{ textAlign: 'left' }}>
                         {this.props.showFilters ? (
                             <Form.Item label="在职:" style={{ display: "inline-block", paddingLeft: "5px" }}>
                                 <Select value={this.state.query.empStatus} onChange={this.handleEmpStatusChange.bind(this)} style={{ width: "120px" }}>
@@ -320,7 +320,7 @@ class ConfigGrid extends Component {
                                 </Select>
                             </Form.Item>
                         ) : (null)}
-                        <Form.Item style={{ display: "inline-block" }}>
+                        <Form.Item labelWidth="0" style={{ display: "inline-block" }}>
                             <Button type="primary" icon="search" onClick={this.handleQuery.bind(this)}>查询</Button>
                             {this.props.showDownload ? (<div className="aToButton"><a className="linkButton" href={this.props.downloadLink} target="_blank"><i className="el-icon-document"></i>点击下载</a></div>) : (null)}
                             {this.props.showCreateNew ? (<Button type="primary" icon="plus" onClick={this.handleAddRow.bind(this)}>添加</Button>) : (null)}

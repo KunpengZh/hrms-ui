@@ -38,22 +38,22 @@ class PayrollDetailsCalculation extends Component {
                     { key: 'jobRole', name: '岗位', width: 150 },
                     { key: 'workerCategory', name: '工作类别', width: 150 },
                     { key: 'salaryCycle', name: '工资周期', width: 150 },
-                    { key: 'jinengGongzi', name: '技能工资', editable: false, width: 150 },
-                    { key: 'gangweiGongzi', name: '岗位工资', editable: false, width: 150 },
-                    { key: 'jichuButie', name: '基础补贴', editable: false, width: 150 },
-                    { key: 'xilifei', name: '洗理费', editable: false, width: 150 },
-                    { key: 'gonglingGongzi', name: '工龄工资', editable: false, width: 150 },
-                    { key: 'daySalary', name: '日工资(非全日制)', editable: false, width: 150 },
-                    { key: 'workDays', name: '工作天数(非全日制)', editable: false, width: 150 },
+                    { key: 'jinengGongzi', name: '技能工资', editable: 'true', width: 150 },
+                    { key: 'gangweiGongzi', name: '岗位工资', editable: 'true', width: 150 },
+                    { key: 'jichuButie', name: '基础补贴', editable: 'true', width: 150 },
+                    { key: 'xilifei', name: '洗理费', editable: 'true', width: 150 },
+                    { key: 'gonglingGongzi', name: '工龄工资', editable: 'true', width: 150 },
+                    { key: 'daySalary', name: '日工资(非全日制)', editable: 'true', width: 150 },
+                    { key: 'workDays', name: '工作天数(非全日制)', editable: 'true', width: 150 },
                     { key: 'jibengongzi', name: '基本工资', width: 150 },
                     { key: 'jibengongziComments', name: '基本工资计算方法', width: 650 },
-                    { key: 'zhiwuJintie', name: '职务津贴', editable: false, width: 150 },
-                    { key: 'gongliBuzhu', name: '公里补助', editable: false, width: 150 },
-                    { key: 'kaoheJiangjin', name: '考核奖金', editable: false, width: 150 },
-                    { key: 'tongxunButie', name: '通讯补贴', editable: false, width: 150 },
-                    { key: 'qitaJiangjin', name: '其他津贴', editable: false, width: 150 },
-                    { key: 'xiaxiangBuzhu', name: '下乡补助', editable: false, width: 150 },
-                    { key: 'yingyetingBuzhu', name: '营业厅补助', editable: false, width: 150 },
+                    { key: 'zhiwuJintie', name: '职务津贴', editable: 'true', width: 150 },
+                    { key: 'gongliBuzhu', name: '公里补助', editable: 'true', width: 150 },
+                    { key: 'kaoheJiangjin', name: '考核奖金', editable: 'true', width: 150 },
+                    { key: 'tongxunButie', name: '通讯补贴', editable: 'true', width: 150 },
+                    { key: 'qitaJiangjin', name: '其他津贴', editable: 'true', width: 150 },
+                    { key: 'xiaxiangBuzhu', name: '下乡补助', editable: 'true', width: 150 },
+                    { key: 'yingyetingBuzhu', name: '营业厅补助', editable: 'true', width: 150 },
                     { key: 'NormalOT', name: '平时加班', width: 150 },
                     { key: 'NormalOTComments', name: '平时加班计算方法', width: 500 },
                     { key: 'WeekendOT', name: '周末加班', },
@@ -63,11 +63,11 @@ class PayrollDetailsCalculation extends Component {
                     { key: 'anquanJiangli', name: '安全奖励(非全日制)', width: 350 },
                     { key: 'wuweizhangJiangli', name: '无违章奖励(非全日制)', width: 350 },
                     { key: 'OTJiangjin', name: '加班奖金(非全日制)', width: 350 },
-                    { key: 'kouchu', name: '扣除项', width: 150, editable: false },
-                    { key: 'kaohekoukuan', name: '考核扣款', width: 150, editable: false },
+                    { key: 'kouchu', name: '扣除项', width: 150, editable: 'true' },
+                    { key: 'kaohekoukuan', name: '考核扣款', width: 150, editable: 'true' },
                     { key: 'yingfagongzi', name: '应发工资', width: 150 },
                     { key: 'yingfagongziComments', name: '应发工资计算方法', width: 1400 },
-                    { key: 'preAnnuallyIncom', name: '上年收入', width: 150, editable: false },
+                    { key: 'preAnnuallyIncom', name: '上年收入', width: 150, editable: 'true' },
                     { key: 'nianjin', name: '年金', width: 150 },
                     { key: 'nianjinComments', name: '年金计算方法', width: 450 },
                     { key: 'qiyeNianjin', name: '企业年金', width: 150 },
@@ -87,7 +87,7 @@ class PayrollDetailsCalculation extends Component {
                     { key: 'yicixingjiangjin', name: '年终奖金', width: 150 },
                     { key: 'yicixingjiangjinTax', name: '年终奖金税', width: 150 },
                     { key: 'yicixingjiangjinTaxComments', name: '年终奖金税计算方法', width: 1750 },
-                    { key: 'buchongyiliaobaoxian', name: '补充医疗保险', width: 150, editable: false },
+                    { key: 'buchongyiliaobaoxian', name: '补充医疗保险', width: 150, editable: 'true' },
                     { key: 'netIncome', name: '实发工资', width: 150 },
                     { key: 'netIncomeComments', name: '实发工资计算方法', width: 1350 },
                 ]
@@ -131,9 +131,13 @@ class PayrollDetailsCalculation extends Component {
         });
 
     }
-    handleQuery(criteria) {
+
+    handleYearMonthChange(value) {
+        this.setState({ curYearMonth: value });
+    }
+    handleLoading() {
         this.setState({ fullscreen: true });
-        AppStore.querySDDataByCriteria(criteria).then((SDs) => {
+        AppStore.getSDByCycle(this.state.curYearMonth).then((SDs) => {
 
             if (SDs.status === 200) {
                 this.setState({
@@ -180,9 +184,9 @@ class PayrollDetailsCalculation extends Component {
                         showCreateNew={false}
                         showSave={true}
                         saveData={this.saveData.bind(this)}
-                        showUploader={false}
+                        showUploader={true}
                         uploadLink={'/sdd/uploadot'}
-                        showDownload={false}
+                        showDownload={true}
                         downloadLink={AppStore.getPreHostURLLink() + '/sdd/downloadot?salaryCycle=' + this.state.curYearMonth}
                         ColumnKeysNeedValidate={ColumnKeysNeedValidate}
                         validateFailMsg={validateFailMsg}
@@ -193,13 +197,14 @@ class PayrollDetailsCalculation extends Component {
                         handleInit={this.handleInit.bind(this)}
                         initButtonText={'初始化'}
                         showSelectMenu={true}
-                        salaryCycleOptions={this.state.YearMonthPeriod}
-                        handleQuery={this.handleQuery.bind(this)}
-                        salaryCycle={this.state.curYearMonth}
-                        showQuery={true}
-                        queryText={"显示"}
+                        selectMenuOptions={this.state.YearMonthPeriod}
+                        handleSelectMenuChange={this.handleYearMonthChange.bind(this)}
+                        selectMenuSelectedItem={this.state.curYearMonth}
+                        showLoading={true}
+                        handleLoading={this.handleLoading.bind(this)}
+                        loadingText={"显示"}
                         enableCheckBox={false}
-                        showFunc1={false}
+                        showFunc1={true}
                         Func1Text="重新计算"
                         handleFunc1={this.handleRecalculate.bind(this)}
                         showDownloadTable={true}

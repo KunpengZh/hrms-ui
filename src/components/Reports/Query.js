@@ -141,8 +141,8 @@ class EmpInfoConfig extends Component {
                 {
                     this.state.fullscreen && <Loading fullscreen={true} />
                 }
-                <div className="ReportMenuContainer">
-                    <Form labelWidth="50">
+                <div>
+                    <Form labelWidth="50" style={{ textAlign: 'left' }}>
                         <Form.Item label="从:" style={{ display: "inline-block" }}>
                             <Select value={this.state.query.startSalaryCycle} onChange={this.handleStartSalaryCycleChange.bind(this)} style={{ width: "120px" }}>
                                 {
@@ -191,10 +191,8 @@ class EmpInfoConfig extends Component {
                                 }
                             </Select>
                         </Form.Item>
-                        <Form.Item style={{ display: "inline-block" }}>
+                        <Form.Item labelWidth="0" style={{ display: "inline-block" }}>
                             <Button type="primary" icon="search" onClick={this.handleQuery.bind(this)}>查询</Button>
-                        </Form.Item>
-                        <Form.Item style={{ display: "inline-block" }}>
                             <div className="aToButton"><a className="linkButton" href={this.state.downloadLink} target="_blank"><i className="el-icon-document"></i>下载</a></div>
                         </Form.Item>
                     </Form>
