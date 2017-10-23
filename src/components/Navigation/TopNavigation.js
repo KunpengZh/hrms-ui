@@ -49,6 +49,21 @@ class Home extends Component {
             case 'GongZiDanByDepartment':
                 this.props.history.push("/GongZiDanByDepartment");
                 break;
+            case 'DanweiJitiYanglaobaoxian':
+                this.props.history.push("/DanweiJitiYanglaobaoxian");
+                break;
+            case 'DanweiJitiShiyebaoxian':
+                this.props.history.push("/DanweiJitiShiyebaoxian");
+                break;
+            case 'DanweiJitiYiliaobaoxian':
+                this.props.history.push("/DanweiJitiYiliaobaoxian");
+                break;
+            case 'DanweiJitiZhufanggongjijin':
+                this.props.history.push("/DanweiJitiZhufanggongjijin");
+                break;
+            case 'DanweiJitiNianjin':
+                this.props.history.push("/DanweiJitiNianjin");
+                break;
         }
 
     }
@@ -88,6 +103,11 @@ class Home extends Component {
                                 <Menu.Item index="QueryReporting">查询汇总</Menu.Item>
                                 <Menu.Item index="GongZiDanByWorkerCategory">按类别汇总</Menu.Item>
                                 <Menu.Item index="GongZiDanByDepartment">按部门汇总</Menu.Item>
+                                <Menu.Item index="DanweiJitiYanglaobaoxian">单位计提养老保险</Menu.Item>
+                                <Menu.Item index="DanweiJitiShiyebaoxian">单位计提失业保险</Menu.Item>
+                                <Menu.Item index="DanweiJitiYiliaobaoxian">单位计提医疗保险</Menu.Item>
+                                <Menu.Item index="DanweiJitiZhufanggongjijin">单位计提住房公积金</Menu.Item>
+                                <Menu.Item index="DanweiJitiNianjin">单位计提年金</Menu.Item>
                             </Menu.SubMenu>
                         ) : (null)}
                         {(jobRole === 'SysAdmin') ? (

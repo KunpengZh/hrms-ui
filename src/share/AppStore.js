@@ -3,6 +3,10 @@ import 'element-theme-default';
 
 var AppStore = (function () {
 
+    var getPreHostURLLink = function () {
+        return 'http://localhost:8080'
+    }
+
     var AppUser = {
         "username": "",
         "isAuthenticated": false,
@@ -1159,9 +1163,7 @@ var AppStore = (function () {
         return rootRouter;
     }
 
-    var getPreHostURLLink = function () {
-        return 'http://localhost:8080'
-    }
+
 
     var getAllAvailableSalaryCycle = function () {
         return new Promise(function (rel, rej) {
@@ -1290,10 +1292,159 @@ var AppStore = (function () {
             })
         })
     }
+
+    /**
+     * 单位计提 
+     */
+    var queryYanglaobaoxian = function (criteria) {
+        return new Promise(function (rel, rej) {
+            if (!criteria) {
+                rel({
+                    status: 500,
+                    message: '必须指定查询条件',
+                    data: []
+                })
+                return;
+            }
+            doGet('/danweijiti/yanglaobaoxian?criteria=' + JSON.stringify(criteria)).then(res => {
+                if (res.status === 200) {
+                    rel({
+                        status: 200,
+                        data: res.data,
+                        message: res.message
+                    })
+                } else {
+                    rel({
+                        status: res.status,
+                        message: res.message,
+                        data: []
+                    })
+                }
+            })
+        })
+    }
+
+    var queryShiyebaoxian = function (criteria) {
+        return new Promise(function (rel, rej) {
+            if (!criteria) {
+                rel({
+                    status: 500,
+                    message: '必须指定查询条件',
+                    data: []
+                })
+                return;
+            }
+            doGet('/danweijiti/shiyebaoxian?criteria=' + JSON.stringify(criteria)).then(res => {
+                if (res.status === 200) {
+                    rel({
+                        status: 200,
+                        data: res.data,
+                        message: res.message
+                    })
+                } else {
+                    rel({
+                        status: res.status,
+                        message: res.message,
+                        data: []
+                    })
+                }
+            })
+        })
+    }
+
+    var queryYiliaobaoxian = function (criteria) {
+        return new Promise(function (rel, rej) {
+            if (!criteria) {
+                rel({
+                    status: 500,
+                    message: '必须指定查询条件',
+                    data: []
+                })
+                return;
+            }
+            doGet('/danweijiti/yiliaobaoxian?criteria=' + JSON.stringify(criteria)).then(res => {
+                if (res.status === 200) {
+                    rel({
+                        status: 200,
+                        data: res.data,
+                        message: res.message
+                    })
+                } else {
+                    rel({
+                        status: res.status,
+                        message: res.message,
+                        data: []
+                    })
+                }
+            })
+        })
+    }
+
+    var queryZhufanggongjijin = function (criteria) {
+        return new Promise(function (rel, rej) {
+            if (!criteria) {
+                rel({
+                    status: 500,
+                    message: '必须指定查询条件',
+                    data: []
+                })
+                return;
+            }
+            doGet('/danweijiti/zhufanggongjijin?criteria=' + JSON.stringify(criteria)).then(res => {
+                if (res.status === 200) {
+                    rel({
+                        status: 200,
+                        data: res.data,
+                        message: res.message
+                    })
+                } else {
+                    rel({
+                        status: res.status,
+                        message: res.message,
+                        data: []
+                    })
+                }
+            })
+        })
+    }
+
+    var queryNianjin = function (criteria) {
+        return new Promise(function (rel, rej) {
+            if (!criteria) {
+                rel({
+                    status: 500,
+                    message: '必须指定查询条件',
+                    data: []
+                })
+                return;
+            }
+            doGet('/danweijiti/nianjin?criteria=' + JSON.stringify(criteria)).then(res => {
+                if (res.status === 200) {
+                    rel({
+                        status: 200,
+                        data: res.data,
+                        message: res.message
+                    })
+                } else {
+                    rel({
+                        status: res.status,
+                        message: res.message,
+                        data: []
+                    })
+                }
+            })
+        })
+    }
+
     /**
      * Return the object will be export from App Utils
      */
     return {
+        queryShiyebaoxian: queryShiyebaoxian,
+        queryNianjin: queryNianjin,
+        queryYanglaobaoxian: queryYanglaobaoxian,
+        queryYiliaobaoxian: queryYiliaobaoxian,
+        queryZhufanggongjijin: queryZhufanggongjijin,
         deleteApplicationUsers: deleteApplicationUsers,
         createNewApplicationUser: createNewApplicationUser,
         updateApplicationUser: updateApplicationUser,

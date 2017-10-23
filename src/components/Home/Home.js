@@ -17,6 +17,14 @@ import NonRegularEmp from '../NonRegularEmp/NonRegularEmp';
 import GongZiDanByWorkerCategory from '../Reports/GongZiDanByWorkerCategory';
 import GongZiDanByDepartment from '../Reports/GongZiDanByDepartment';
 
+import DanweiJitiYanglaobaoxian from '../Reports/DanweiJitiYanglaobaoxian';
+import DanweiJitiShiyebaoxian from '../Reports/DanweiJitiShiyebaoxian';
+import DanweiJitiYiliaobaoxian from '../Reports/DanweiJitiYiliaobaoxian';
+
+import DanweiJitiZhufanggongjijin from '../Reports/DanweiJitiZhufanggongjijin';
+import DanweiJitiNianjin from '../Reports/DanweiJitiNianjin';
+
+
 import {
     BrowserRouter,
     Route,
@@ -53,6 +61,11 @@ class Home extends Component {
                             <Route exact path="/QueryReporting" component={QueryReporting} />
                             <Route exact path="/GongZiDanByWorkerCategory" component={GongZiDanByWorkerCategory} />
                             <Route exact path="/GongZiDanByDepartment" component={GongZiDanByDepartment} />
+                            <Route exact path="/DanweiJitiYanglaobaoxian" component={DanweiJitiYanglaobaoxian} />
+                            <Route exact path="/DanweiJitiShiyebaoxian" component={DanweiJitiShiyebaoxian} />
+                            <Route exact path="/DanweiJitiYiliaobaoxian" component={DanweiJitiYiliaobaoxian} />
+                            <Route exact path="/DanweiJitiZhufanggongjijin" component={DanweiJitiZhufanggongjijin} />
+                            <Route exact path="/DanweiJitiNianjin" component={DanweiJitiNianjin} />
                         </Switch>
                     </div>
                     {/* <div className="BottomNavContainer">
