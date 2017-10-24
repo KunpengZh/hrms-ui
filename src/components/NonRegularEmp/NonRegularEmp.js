@@ -24,6 +24,9 @@ class NonRegularSalary extends Component {
             curYearMonth: ''
         }
     }
+    handleSalaryCycleChange(value) {
+        this.setState({ curYearMonth: value });
+    }
     componentDidMount() {
         let nstate = Object.assign({}, this.state);
         if (nstate.curYearMonth === "") nstate.curYearMonth = nstate.YearMonthPeriod[0].value;
@@ -182,6 +185,7 @@ class NonRegularSalary extends Component {
                         salaryCycle={this.state.curYearMonth}
                         showQuery={true}
                         queryText={"显示"}
+                        handleSalaryCycleChange={this.handleSalaryCycleChange.bind(this)}
                     />
                 </div>
             </div>

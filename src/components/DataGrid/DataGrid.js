@@ -219,6 +219,9 @@ class DataGrid extends Component {
         let query = this.state.query;
         query.salaryCycle = value;
         this.setState({ query: query });
+        if (this.props.handleSalaryCycleChange) {
+            this.props.handleSalaryCycleChange(value);
+        }
     }
     onUploadSuccess(res) {
         AppStore.showSuccess(res.message);
@@ -248,17 +251,6 @@ class DataGrid extends Component {
         if (this.state.query.jobRole !== 'All' && this.state.query.jobRole !== '') query.jobRole = this.state.query.jobRole;
         if (this.state.query.salaryCycle !== 'All' && this.state.query.salaryCycle !== '') query.salaryCycle = this.state.query.salaryCycle;
         this.props.handleQuery(query)
-        // this.props.handleQuery(query).then(res => {
-        //     if (res.status === 200) {
-        //         let nstate = {
-        //             originalRows: Object.assign([], res.data),
-        //             rows: res.data,
-        //             selectedIndexes: [],
-        //             selectedKeys: []
-        //         };
-        //         this.setState(nstate);
-        //     }
-        // })
     }
     render() {
 

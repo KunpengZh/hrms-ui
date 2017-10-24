@@ -4,7 +4,8 @@ import 'element-theme-default';
 var AppStore = (function () {
 
     var getPreHostURLLink = function () {
-        return 'http://localhost:8080'
+        //return 'http://localhost:8080'
+        return ''
     }
 
     var AppUser = {

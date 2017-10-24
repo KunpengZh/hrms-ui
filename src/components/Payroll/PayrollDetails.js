@@ -172,6 +172,9 @@ class PayrollDetailsCalculation extends Component {
         })
     }
 
+    handleSalaryCycleChange(value) {
+        this.setState({ curYearMonth: value });
+    }
     render() {
         return (
             <div className="PayrollContainer">
@@ -212,6 +215,7 @@ class PayrollDetailsCalculation extends Component {
                         handleFunc1={this.handleRecalculate.bind(this)}
                         showDownloadTable={true}
                         downloadTableLink={AppStore.getPreHostURLLink() + '/sdd/downloadtable?salaryCycle=' + this.state.curYearMonth}
+                        handleSalaryCycleChange={this.handleSalaryCycleChange.bind(this)}
                     />
                 </div>
             </div>

@@ -36,8 +36,17 @@ class EmpBasicInfo extends Component {
         this.setState({ selectMenu: value });
     }
     handleSelection() {
+        let nstate = Object.assign({}, this.state);
+        this.setState({ fullscreen: true });
         AppStore.getGongZiDanByCycle(this.state.selectMenu).then(res => {
-            console.log(res);
+            if (res.status === 200) {
+                nstate.rows = res.data;
+                nstate.fullscreen = false;
+                this.setState(nstate);
+            } else {
+                this.setState({ fullscreen: false });
+                AppStore.showError(res.message);
+            }
         })
     }
     handlePrint() {
