@@ -40,50 +40,59 @@ class EmpOT extends Component {
                         key: 'empId',
                         name: '员工号',
                         sortable: true,
+                        width:100
                     },
                     {
                         key: 'name',
                         name: '员工姓名',
-                        filterable: true
+                        filterable: true,
+                        width:100
                     },
                     {
                         key: 'department',
                         name: '部门',
-                        sortable: true
+                        sortable: true,
+                        width:100
                     },
                     {
                         key: 'jobRole',
                         name: '岗位',
-                        sortable: true
+                        sortable: true,
+                        width:100
                     },
                     {
                         key: 'workerCategory',
                         name: '员工类别',
-                        sortable: true
+                        sortable: true,
+                        width:150
                     },
                     {
                         key: 'OTCycle',
                         name: '加班周期',
+                        width:100
                     },
                     {
                         key: 'NormalOT',
                         name: '平时加班(小时数)',
                         editable: true,
+                        width:150
                     },
                     {
                         key: 'WeekendOT',
                         name: '周末加班(小时数)',
                         editable: true,
+                        width:150
                     },
                     {
                         key: 'HolidayOT',
                         name: '节假日加班(小时数)',
                         editable: true,
+                        width:150
                     },
-                    { key: 'kouchu', name: '扣除项', width: 150, editable: 'true' },
-                    { key: 'kaohekoukuan', name: '考核扣款', width: 150, editable: 'true' },
-                    { key: 'yiliaobaoxian', name: '医疗保险', width: 150, editable: 'true' },
-                    { key: 'yicixingjiangjin', name: '年终奖金', width: 150, editable: 'true' }
+                    { key: 'kouchu', name: '扣除项', width: 100, editable: 'true' },
+                    { key: 'kaohekoukuan', name: '考核扣款', width: 100, editable: 'true' },
+                    { key: 'yiliaobaoxian', name: '医疗保险', width: 100, editable: 'true' },
+                    { key: 'yicixingjiangjin', name: '年终奖金', width: 100, editable: 'true' }
                 ]
                 nstate.rows = OTs.data;
                 nstate.fullscreen = false;

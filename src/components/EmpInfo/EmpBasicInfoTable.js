@@ -54,6 +54,7 @@ class EmpBasicInfoTable extends Component {
                     name: '员工号',
                     sortable: true,
                     editable: false,
+                    width:100
                 },
                 {
                     key: 'name',
@@ -61,7 +62,8 @@ class EmpBasicInfoTable extends Component {
                     editable: true,
                     width: 200,
                     sortable: true,
-                    filterable: true
+                    filterable: true,
+                    width:100
                 },
                 {
                     key: 'workerCategory',
@@ -69,7 +71,8 @@ class EmpBasicInfoTable extends Component {
                     editable: true,
                     editor: wcategoryEditor,
                     formatter: wcategoryFormatter,
-                    sortable: true
+                    sortable: true,
+                    width:110
                 },
                 {
                     key: 'department',
@@ -77,7 +80,8 @@ class EmpBasicInfoTable extends Component {
                     editable: true,
                     editor: DepartmentEditor,
                     formatter: DepartmentFormatter,
-                    sortable: true
+                    sortable: true,
+                    width:100
                 },
                 {
                     key: 'jobRole',
@@ -85,41 +89,48 @@ class EmpBasicInfoTable extends Component {
                     editable: true,
                     editor: jobRolesEditor,
                     formatter: jobRolesFormatter,
-                    sortable: true
+                    sortable: true,
+                    width:100
                 },
                 {
                     key: "entryTime",
                     name: "入职时间",
-                    editable: true
+                    editable: true,
+                    width:100
                 },
                 {
                     key: 'workAge',
                     name: '工龄',
                     editable: false,
+                    width:80
                 },
                 {
                     key: 'gender',
                     name: '性别',
                     editable: true,
                     editor: gendersEditor,
-                    formatter: gendersFormatter
+                    formatter: gendersFormatter,
+                    width:80
                 },
                 {
                     key: 'empStatus',
                     name: '是否在职',
                     editable: true,
                     editor: EmployeementStatusEditor,
-                    formatter: EmployeementStatusFormatter
+                    formatter: EmployeementStatusFormatter,
+                    width:100
                 },
                 {
                     key: 'unEmpDate',
                     name: '离职日期',
                     editable: true,
+                    width:100
                 },
                 {
                     key: 'comment',
                     name: '备注',
                     editable: true,
+                    width:200
                 },
             ]
         }).then(() => {

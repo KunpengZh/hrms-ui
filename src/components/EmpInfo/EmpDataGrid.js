@@ -276,7 +276,7 @@ class ConfigGrid extends Component {
         let self = this;
         return (
             <div className="EmpDataGrid">
-                <div style={{ 'display': this.props.showActionBar }}>
+                <div style={{ 'display': this.props.showActionBar, 'marginBottom':'5px' }}>
                     <Form labelWidth="50" style={{ textAlign: 'left' }}>
                         {this.props.showFilters ? (
                             <Form.Item label="在职:" style={{ display: "inline-block", paddingLeft: "5px" }}>

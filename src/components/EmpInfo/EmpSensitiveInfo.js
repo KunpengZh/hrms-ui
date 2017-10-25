@@ -48,8 +48,8 @@ class EmpSensitiveInfoTable extends Component {
         AppStore.getConfigData().then((configData) => {
             if (configData.status !== 200) AppStore.showError(configData.message);
             nstate.columns = [
-                { key: 'empId', name: '员工号', sortable: true, width: 150 },
-                { key: 'name', name: '姓名', sortable: true, width: 150 },
+                { key: 'empId', name: '员工号', sortable: true, width: 100 },
+                { key: 'name', name: '姓名', sortable: true, width: 100 },
                 {
                     key: 'workerCategory',
                     name: '员工类别',
@@ -62,33 +62,33 @@ class EmpSensitiveInfoTable extends Component {
                     name: '部门',
                     editable: false,
                     sortable: true,
-                    width: 150
+                    width: 100
                 },
                 {
                     key: 'jobRole',
                     name: '岗位',
                     editable: false,
                     sortable: true,
-                    width: 150
+                    width: 100
                 },
                 { key: 'idCard', name: '身份证', editable: 'true', width: 250 },
                 { key: 'birthday', name: '出生日期', editable: false, width: 150 },
-                { key: 'age', name: '年龄', editable: false, width: 150 },
-                { key: 'bankAccount', name: '银行帐号', editable: 'true', width: 150 },
-                { key: 'jinengGongzi', name: '技能工资', editable: 'true', width: 150 },
-                { key: 'gangweiGongzi', name: '岗位工资', editable: 'true', width: 150 },
-                { key: 'jichuButie', name: '基础补贴', editable: 'true', width: 150 },
-                { key: 'xilifei', name: '洗理费', editable: 'true', width: 150 },
-                { key: 'gonglingGongzi', name: '工龄工资', editable: 'true', width: 150 },
-                { key: 'zhiwuJintie', name: '职务津贴', editable: 'true', width: 150 },
-                { key: 'gongliBuzhu', name: '公里补助', editable: 'true', width: 150 },
-                { key: 'kaoheJiangjin', name: '考核奖金', editable: 'true', width: 150 },
-                { key: 'tongxunButie', name: '通讯补贴', editable: 'true', width: 150 },
-                { key: 'qitaJiangjin', name: '其他津贴', editable: 'true', width: 150 },
-                { key: 'xiaxiangBuzhu', name: '下乡补助', editable: 'true', width: 150 },
-                { key: 'yingyetingBuzhu', name: '营业厅补助', editable: 'true', width: 150 },
-                { key: 'buchongyiliaobaoxian', name: '补充医疗保险', editable: 'true', width: 150 },
-                { key: 'preAnnuallyIncom', name: '上年收入', editable: 'true', width: 150 },
+                { key: 'age', name: '年龄', editable: false, width: 80 },
+                { key: 'bankAccount', name: '银行帐号', editable: 'true', width: 300 },
+                { key: 'jinengGongzi', name: '技能工资', editable: 'true', width: 100 },
+                { key: 'gangweiGongzi', name: '岗位工资', editable: 'true', width: 100 },
+                { key: 'jichuButie', name: '基础补贴', editable: 'true', width: 100 },
+                { key: 'xilifei', name: '洗理费', editable: 'true', width: 100 },
+                { key: 'gonglingGongzi', name: '工龄工资', editable: 'true', width: 100 },
+                { key: 'zhiwuJintie', name: '职务津贴', editable: 'true', width: 100 },
+                { key: 'gongliBuzhu', name: '公里补助', editable: 'true', width: 100 },
+                { key: 'kaoheJiangjin', name: '考核奖金', editable: 'true', width: 100 },
+                { key: 'tongxunButie', name: '通讯补贴', editable: 'true', width: 100 },
+                { key: 'qitaJiangjin', name: '其他津贴', editable: 'true', width: 100 },
+                { key: 'xiaxiangBuzhu', name: '下乡补助', editable: 'true', width: 100 },
+                { key: 'yingyetingBuzhu', name: '营业厅补助', editable: 'true', width: 100 },
+                { key: 'buchongyiliaobaoxian', name: '补充医疗保险', editable: 'true', width: 100 },
+                { key: 'preAnnuallyIncom', name: '上年收入', editable: 'true', width: 100 },
             ]
         }).then(() => {
             AppStore.getAllEmpSensitiveInfo().then((employees) => {

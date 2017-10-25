@@ -37,55 +37,66 @@ class NonRegularSalary extends Component {
                         key: 'empId',
                         name: '员工号',
                         sortable: true,
+                        width:100
                     },
                     {
                         key: 'name',
                         name: '员工姓名',
-                        filterable: true
+                        filterable: true,
+                        width:100
                     },
                     {
                         key: 'department',
                         name: '部门',
-                        sortable: true
+                        sortable: true,
+                        width:100
                     },
                     {
                         key: 'jobRole',
                         name: '岗位',
-                        sortable: true
+                        sortable: true,
+                        width:100
                     },
                     {
                         key: 'workerCategory',
                         name: '员工类别',
-                        sortable: true
+                        sortable: true,
+                        width:150
                     },
                     {
                         key: 'salaryCycle',
                         name: '工资周期',
+                        width:100
                     },
                     {
                         key: 'daySalary',
                         name: '日工资',
                         editable: true,
+                        width:100
                     },
                     {
                         key: 'workDays',
                         name: '工作天数',
                         editable: true,
+                        width:100
                     },
                     {
                         key: 'anquanJiangli',
                         name: '安全奖励',
                         editable: true,
+                        width:100
                     },
                     {
                         key: 'wuweizhangJiangli',
                         name: '无违章奖励',
                         editable: true,
+                        width:100
                     },
                     {
                         key: 'OTJiangjin',
                         name: '加班奖金',
                         editable: true,
+                        width:100
                     },
                 ]
                 nstate.rows = data.data;
