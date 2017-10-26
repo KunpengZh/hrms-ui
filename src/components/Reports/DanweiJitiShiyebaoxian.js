@@ -24,8 +24,7 @@ class EmpInfoConfig extends Component {
             activeKey: '',
             availableSalaryCycles: [],
             query: {
-                startSalaryCycle: 'All',
-                endSalaryCycle: 'All',
+                salaryCycle: '',
             },
             rowKey: 'empId',
             downloadLink: '#',
@@ -45,21 +44,19 @@ class EmpInfoConfig extends Component {
         })
 
     }
-    handleStartSalaryCycleChange(value) {
+    handleSalaryCycleChange(value) {
         let query = this.state.query;
-        query.startSalaryCycle = value;
-        this.setState({ query: query });
-    }
-    handleEndSalaryCycleChange(value) {
-        let query = this.state.query;
-        query.endSalaryCycle = value;
+        query.salaryCycle = value;
         this.setState({ query: query });
     }
     handleQuery() {
         let query = {};
-        if (this.state.query.startSalaryCycle !== 'All' && this.state.query.startSalaryCycle !== '') query.startSalaryCycle = this.state.query.startSalaryCycle;
-        if (this.state.query.endSalaryCycle !== 'All' && this.state.query.endSalaryCycle !== '') query.endSalaryCycle = this.state.query.endSalaryCycle;
-
+        if (this.state.query.salaryCycle !== 'All' && this.state.query.salaryCycle !== '') {
+            query.salaryCycle = this.state.query.salaryCycle;
+        } else {
+            AppStore.showError("请先选择工资周期！！！");
+            return;
+        }
         if (JSON.stringify(query) === '{}') {
             AppStore.showError("请先选择查询条件！！！");
             return;
@@ -86,20 +83,13 @@ class EmpInfoConfig extends Component {
                 }
                 <div>
                     <Form labelWidth="50" style={{ textAlign: 'left' }}>
-                        <Form.Item label="从:" style={{ display: "inline-block" }}>
-                            <Select value={this.state.query.startSalaryCycle} onChange={this.handleStartSalaryCycleChange.bind(this)} style={{ width: "120px" }}>
+                        <Form.Item labelWidth="80" label="工资周期:" style={{ display: "inline-block" }}>
+                            <Select value={this.state.query.salaryCycle} onChange={this.handleSalaryCycleChange.bind(this)} style={{ width: "120px" }}>
                                 {
                                     this.state.availableSalaryCycles.map(el => {
-                                        return <Select.Option key={el.value} label={el.label} value={el.value} />
-                                    })
-                                }
-                            </Select>
-                        </Form.Item>
-                        <Form.Item label="到:" style={{ display: "inline-block" }}>
-                            <Select value={this.state.query.endSalaryCycle} onChange={this.handleEndSalaryCycleChange.bind(this)} style={{ width: "120px" }}>
-                                {
-                                    this.state.availableSalaryCycles.map(el => {
-                                        return <Select.Option key={el.value} label={el.label} value={el.value} />
+                                        if (el.value !== "All") {
+                                            return <Select.Option key={el.value} label={el.label} value={el.value} />
+                                        }
                                     })
                                 }
                             </Select>

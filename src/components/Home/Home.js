@@ -12,6 +12,7 @@ import PayrollConfig from '../Payroll/PayrollConfig'
 import EmpInfoConfig from '../EmpInfo/EmpInfoConfig'
 import PayrollPreview from '../Payroll/SalaryPreview';
 import PayrollDetails from '../Payroll/PayrollDetails';
+import PayrollGongZi from '../Payroll/PayrollGongZi';
 import QueryReporting from '../Reports/Query';
 import NonRegularEmp from '../NonRegularEmp/NonRegularEmp';
 import GongZiDanByWorkerCategory from '../Reports/GongZiDanByWorkerCategory';
@@ -58,6 +59,7 @@ class Home extends Component {
                             <Route exact path="/PayrollConfig" component={PayrollConfig} />
                             <Route exact path="/PayrollPreview" component={PayrollPreview} />
                             <Route exact path="/PayrollDetails" component={PayrollDetails} />
+                            <Route exact path="/PayrollGongZi" component={PayrollGongZi} />
                             <Route exact path="/QueryReporting" component={QueryReporting} />
                             <Route exact path="/GongZiDanByWorkerCategory" component={GongZiDanByWorkerCategory} />
                             <Route exact path="/GongZiDanByDepartment" component={GongZiDanByDepartment} />

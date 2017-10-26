@@ -34,6 +34,9 @@ class Home extends Component {
             case 'PayrollPreview':
                 this.props.history.push("/PayrollPreview");
                 break;
+            case 'PayrollGongZi':
+                this.props.history.push("/PayrollGongZi");
+                break;
             case 'PayrollConfig':
                 this.props.history.push("/PayrollConfig");
                 break;
@@ -95,6 +98,7 @@ class Home extends Component {
                             <Menu.SubMenu index="Payroll" title="工资计算管理">
                                 <Menu.Item index="PayrollDetails">当期工资计算</Menu.Item>
                                 <Menu.Item index="PayrollPreview">工资单预览</Menu.Item>
+                                <Menu.Item index="PayrollGongZi">工资发放表</Menu.Item>
                                 {/* <Menu.Item index="PayrollConfig">工资配置管理</Menu.Item> */}
                             </Menu.SubMenu>
                         ) : (null)}

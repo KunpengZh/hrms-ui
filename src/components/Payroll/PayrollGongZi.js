@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './Reports.css';
+import '../Reports/Reports.css';
 import { Loading, Select, Form, Input, Button } from 'element-react';
 import 'element-theme-default';
 import '../../font-awesome/css/font-awesome.min.css'
@@ -16,15 +16,34 @@ class EmpInfoConfig extends Component {
             columns: [
                 { key: 'empId', name: '员工号', sortable: true, width: 150 },
                 { key: 'name', name: '姓名', sortable: true, width: 150 },
-                { key: 'personal', name: '个人缴纳', width: 150 },
-                { key: 'company', name: '公司缴纳', width: 150 },
-                { key: 'total', name: '合计', width: 150 },
-                { key: 'comments', name: '备注', width: 150 },
+                { key: 'department', name: '部门', width: 150 },
+                { key: 'jobRole', name: '岗位', width: 150 },
+                { key: 'workerCategory', name: '类别', width: 150 },
+                { key: 'salaryCycle', name: '工资周期', width: 150 },
+                { key: 'jibengongzi', name: '工资', width: 150 },
+                { key: 'totalJiangjin', name: '奖金', width: 150 },
+                { key: 'totalOT', name: '加班费', width: 150 },
+                { key: 'tongxunButie', name: '通讯补贴', width: 150 },
+                { key: 'nianjin', name: '扣年金', width: 150 },
+                { key: 'yanglaobaoxian', name: '扣养老保险', width: 150 },
+                { key: 'shiyebaoxian', name: '扣失业保险', width: 150 },
+                { key: 'zhufanggongjijin', name: '扣住房公积金', width: 150 },
+                { key: 'yiliaobaoxian', name: '扣医疗保险', width: 150 },
+                { key: 'totalKouchu', name: '扣除工资', width: 150 },
+                { key: 'tax', name: '扣个人所得税', width: 150 },
+                { key: 'yicixingjiangjin', name: '年终奖金', width: 150 },
+                { key: 'yicixingjiangjinTax', name: '扣年终奖金税', width: 150 },
+                { key: 'buchongyiliaobaoxian', name: '扣补充医疗保险', width: 150 },
+                { key: 'netIncome', name: '实发工资', width: 150 },
             ],
             activeKey: '',
             availableSalaryCycles: [],
+            department: [],
+            workerCategory: [],
             query: {
                 salaryCycle: '',
+                department: 'All',
+                workerCategory: 'All'
             },
             rowKey: 'empId',
             downloadLink: '#',
@@ -35,6 +54,8 @@ class EmpInfoConfig extends Component {
             let nstate = Object.assign({}, this.state);
             if (res.status === 200) {
                 nstate.availableSalaryCycles = res.data.salaryCycle;
+                nstate.department = res.data.department;
+                nstate.workerCategory = res.data.workerCategory;
                 nstate.fullscreen = false;
                 this.setState(nstate);
             } else {
@@ -49,6 +70,16 @@ class EmpInfoConfig extends Component {
         query.salaryCycle = value;
         this.setState({ query: query });
     }
+    handleWokerCategoryChange(value) {
+        let query = this.state.query;
+        query.workerCategory = value;
+        this.setState({ query: query });
+    }
+    handleDepartmentChange(value) {
+        let query = this.state.query;
+        query.department = value;
+        this.setState({ query: query });
+    }
     handleQuery() {
         let query = {};
         if (this.state.query.salaryCycle !== 'All' && this.state.query.salaryCycle !== '') {
@@ -57,17 +88,20 @@ class EmpInfoConfig extends Component {
             AppStore.showError("请先选择工资周期！！！");
             return;
         }
+        if (this.state.query.workerCategory !== 'All' && this.state.query.workerCategory !== '') query.workerCategory = this.state.query.workerCategory;
+        if (this.state.query.department !== 'All' && this.state.query.department !== '') query.department = this.state.query.department;
+
         if (JSON.stringify(query) === '{}') {
             AppStore.showError("请先选择查询条件！！！");
             return;
         }
         this.setState({ fullscreen: true });
-        AppStore.queryYanglaobaoxian(query).then(res => {
+        AppStore.queryGongZiDataByCriteria(query).then(res => {
             if (res.status === 200) {
                 this.setState({
                     rows: res.data,
                     fullscreen: false,
-                    downloadLink: AppStore.getPreHostURLLink() + '/danweijiti/downloadyanglaobaoxian?criteria=' + JSON.stringify(query)
+                    downloadLink: AppStore.getPreHostURLLink() + '/gongzidan/downloadreport?criteria=' + JSON.stringify(query)
                 })
             } else {
                 this.setState({ fullscreen: false });
@@ -90,6 +124,24 @@ class EmpInfoConfig extends Component {
                                         if (el.value !== "All") {
                                             return <Select.Option key={el.value} label={el.label} value={el.value} />
                                         }
+                                    })
+                                }
+                            </Select>
+                        </Form.Item>
+                        <Form.Item label="部门:" style={{ display: "inline-block", paddingLeft: "5px" }}>
+                            <Select value={this.state.query.department} onChange={this.handleDepartmentChange.bind(this)} style={{ width: "120px" }}>
+                                {
+                                    this.state.department.map(el => {
+                                        return <Select.Option key={el.value} label={el.label} value={el.value} />
+                                    })
+                                }
+                            </Select>
+                        </Form.Item>
+                        <Form.Item label="类别:" style={{ display: "inline-block", paddingLeft: "5px" }}>
+                            <Select value={this.state.query.workerCategory} onChange={this.handleWokerCategoryChange.bind(this)} style={{ width: "120px" }}>
+                                {
+                                    this.state.workerCategory.map(el => {
+                                        return <Select.Option key={el.value} label={el.label} value={el.value} />
                                     })
                                 }
                             </Select>
@@ -117,3 +169,8 @@ class EmpInfoConfig extends Component {
 
 
 export default EmpInfoConfig;
+
+// { key: 'gender', name: '姓别', width: 150 },
+// { key: 'idCard', name: '身份证', width: 150 },
+// { key: 'bankAccount', name: '银行帐号', width: 150 },
+// { key: 'comment', name: '备注', width: 150 },
