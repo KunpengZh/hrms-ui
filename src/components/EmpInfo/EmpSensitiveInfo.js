@@ -81,14 +81,7 @@ class EmpSensitiveInfoTable extends Component {
                 { key: 'xilifei', name: '洗理费', editable: 'true', width: 100 },
                 { key: 'gonglingGongzi', name: '工龄工资', editable: 'true', width: 100 },
                 { key: 'zhiwuJintie', name: '职务津贴', editable: 'true', width: 100 },
-                { key: 'gongliBuzhu', name: '公里补助', editable: 'true', width: 100 },
-                { key: 'kaoheJiangjin', name: '考核奖金', editable: 'true', width: 100 },
-                { key: 'tongxunButie', name: '通讯补贴', editable: 'true', width: 100 },
-                { key: 'qitaJiangjin', name: '其他津贴', editable: 'true', width: 100 },
-                { key: 'xiaxiangBuzhu', name: '下乡补助', editable: 'true', width: 100 },
-                { key: 'yingyetingBuzhu', name: '营业厅补助', editable: 'true', width: 100 },
-                { key: 'buchongyiliaobaoxian', name: '补充医疗保险', editable: 'true', width: 100 },
-                { key: 'preAnnuallyIncom', name: '上年收入', editable: 'true', width: 100 },
+                { key: 'preAnnuallyIncom', name: '上年月平均收入', editable: 'true', width: 150 },
             ]
         }).then(() => {
             AppStore.getAllEmpSensitiveInfo().then((employees) => {
@@ -173,7 +166,7 @@ class EmpSensitiveInfoTable extends Component {
                         showActionBar=''
                         showDelete={false}
                         showCreateNew={false}
-                        minWidth={2500}
+                        minWidth={2000}
                         showSave={true}
                         saveData={this.saveData.bind(this)}
                         showUploader={true}

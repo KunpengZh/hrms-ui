@@ -71,27 +71,33 @@ class EmpOT extends Component {
                         name: '加班周期',
                         width:100
                     },
+                    { key: 'gongliBuzhu', name: '公里补助', editable: 'true', width: 100 },
+                    { key: 'kaoheJiangjin', name: '考核奖金', editable: 'true', width: 100 },
+                    { key: 'tongxunButie', name: '通讯补贴', editable: 'true', width: 100 },
+                    { key: 'qitaJiangjin', name: '其他津贴', editable: 'true', width: 100 },
+                    { key: 'xiaxiangBuzhu', name: '下乡补助', editable: 'true', width: 100 },
+                    { key: 'yingyetingBuzhu', name: '营业厅补助', editable: 'true', width: 100 },
+                    { key: 'buchongyiliaobaoxian', name: '补充医疗保险', editable: 'true', width: 100 },
                     {
                         key: 'NormalOT',
-                        name: '平时加班(小时数)',
+                        name: '夜间值班',
                         editable: true,
                         width:150
                     },
                     {
                         key: 'WeekendOT',
-                        name: '周末加班(小时数)',
+                        name: '周末值班',
                         editable: true,
                         width:150
                     },
                     {
                         key: 'HolidayOT',
-                        name: '节假日加班(小时数)',
+                        name: '节假日值班(天数)',
                         editable: true,
                         width:150
                     },
-                    { key: 'kouchu', name: '扣除项', width: 100, editable: 'true' },
-                    { key: 'kaohekoukuan', name: '考核扣款', width: 100, editable: 'true' },
-                    { key: 'yiliaobaoxian', name: '医疗保险', width: 100, editable: 'true' },
+                    { key: 'kouchu', name: '扣工资', width: 100, editable: 'true' },
+                    { key: 'kaohekoukuan', name: '其它罚款', width: 100, editable: 'true' },
                     { key: 'yicixingjiangjin', name: '年终奖金', width: 100, editable: 'true' }
                 ]
                 nstate.rows = OTs.data;
@@ -171,7 +177,7 @@ class EmpOT extends Component {
                         uploadLink={'/ot/uploadot'}
                         showDownload={true}
                         downloadLink={AppStore.getPreHostURLLink() + '/ot/downloadot?OTCycle=' + this.state.curYearMonth}
-                        minWidth={2000}
+                        minWidth={2500}
                         ColumnKeysNeedValidate={ColumnKeysNeedValidate}
                         validateFailMsg={validateFailMsg}
                         showSync={true}
