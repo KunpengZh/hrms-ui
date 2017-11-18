@@ -37,67 +37,69 @@ class NonRegularSalary extends Component {
                         key: 'empId',
                         name: '员工号',
                         sortable: true,
-                        width:100
+                        width: 100
                     },
                     {
                         key: 'name',
                         name: '员工姓名',
                         filterable: true,
-                        width:100
+                        width: 100
                     },
                     {
                         key: 'department',
                         name: '部门',
                         sortable: true,
-                        width:100
+                        width: 100
                     },
                     {
                         key: 'jobRole',
                         name: '岗位',
                         sortable: true,
-                        width:100
+                        width: 100
                     },
                     {
                         key: 'workerCategory',
                         name: '员工类别',
                         sortable: true,
-                        width:150
+                        width: 150
                     },
                     {
                         key: 'salaryCycle',
                         name: '工资周期',
-                        width:100
+                        width: 100
                     },
                     {
                         key: 'daySalary',
                         name: '日工资',
                         editable: true,
-                        width:100
+                        width: 100
                     },
                     {
                         key: 'workDays',
                         name: '工作天数',
                         editable: true,
-                        width:100
+                        width: 100
                     },
                     {
                         key: 'anquanJiangli',
                         name: '安全奖励',
                         editable: true,
-                        width:100
+                        width: 100
                     },
                     {
                         key: 'wuweizhangJiangli',
                         name: '无违章奖励',
                         editable: true,
-                        width:100
+                        width: 100
                     },
                     {
                         key: 'OTJiangjin',
                         name: '加班奖金',
                         editable: true,
-                        width:100
-                    }
+                        width: 100
+                    },
+                    { key: 'yiliaobaoxian', name: '医疗保险', width: 100, editable: 'true' },
+                    { key: 'qiyeYiliaobaoxian', name: '企业部分医疗保险', width: 150, editable: 'true' }
                 ]
                 nstate.rows = data.data;
                 nstate.fullscreen = false;
@@ -136,17 +138,17 @@ class NonRegularSalary extends Component {
             }
         }).then(() => {
             AppStore.updateNRSalaryData(data, this.state.curYearMonth).then((res) => {
-                if(res.status===200){
+                if (res.status === 200) {
                     AppStore.showSuccess("更新成功");
-                }else{
+                } else {
                     AppStore.showError(res.message);
                 }
-               
+
             });
         })
     }
     handleQuery(criteria) {
-        
+
         this.setState({ fullscreen: true });
         AppStore.queryNRByCriteria(criteria).then((data) => {
 
