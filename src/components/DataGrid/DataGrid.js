@@ -224,7 +224,12 @@ class DataGrid extends Component {
         }
     }
     onUploadSuccess(res) {
-        AppStore.showSuccess(res.message);
+        if (res.errorList) {
+            AppStore.showError(JSON.stringify(res.errorList));
+        } else {
+            AppStore.showSuccess(res.message);
+        }
+
     }
     handleFunc1() {
         this.props.handleFunc1();

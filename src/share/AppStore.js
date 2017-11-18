@@ -685,7 +685,7 @@ var AppStore = (function () {
         var month = date.getMonth() + 2;
         var YearMonthPeriod = [];
 
-        for (let i = 0; i < 4; i++) {
+        for (let i = 0; i < 13; i++) {
             month = month - 1;
             if (month < 1) {
                 year = year - 1;
@@ -1438,9 +1438,40 @@ var AppStore = (function () {
     }
 
     /**
+     * Full query for Payroll part
+     */
+    var payrollFullQuery = function (criteria) {
+        return new Promise(function (rel, rej) {
+            if (!criteria) {
+                rel({
+                    status: 200,
+                    message: '',
+                    data: []
+                })
+                return;
+            }
+            doPost('/payrollquery/query', { data: criteria }).then(res => {
+                if (res.status === 200) {
+                    rel({
+                        status: 200,
+                        data: res.data,
+                        message: res.message
+                    })
+                } else {
+                    rel({
+                        status: res.status,
+                        message: res.message,
+                        data: []
+                    })
+                }
+            })
+        })
+    }
+    /**
      * Return the object will be export from App Utils
      */
     return {
+        payrollFullQuery:payrollFullQuery,
         queryShiyebaoxian: queryShiyebaoxian,
         queryNianjin: queryNianjin,
         queryYanglaobaoxian: queryYanglaobaoxian,

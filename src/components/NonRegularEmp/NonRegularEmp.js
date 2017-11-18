@@ -97,7 +97,7 @@ class NonRegularSalary extends Component {
                         name: '加班奖金',
                         editable: true,
                         width:100
-                    },
+                    }
                 ]
                 nstate.rows = data.data;
                 nstate.fullscreen = false;

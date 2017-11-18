@@ -27,6 +27,8 @@ class PayrollDetailsCalculation extends Component {
         }
     }
     componentDidMount() {
+       // { key: 'yiliaobaoxianComments', name: '医疗保险计算方法', width: 450 },
+       //{ key: 'qiyeYiliaobaoxianComments', name: '企业医疗保险计算方法', width: 450 },
         let nstate = Object.assign({}, this.state);
         if (nstate.curYearMonth === "") nstate.curYearMonth = nstate.YearMonthPeriod[0].value;
         AppStore.getSDByCycle(nstate.curYearMonth).then((SDs) => {
@@ -50,6 +52,7 @@ class PayrollDetailsCalculation extends Component {
                     { key: 'zhiwuJintie', name: '职务津贴', editable: false, width: 150 },
                     { key: 'gongliBuzhu', name: '公里补助', editable: false, width: 150 },
                     { key: 'kaoheJiangjin', name: '考核奖金', editable: false, width: 150 },
+                    { key: 'gudingJiangjin', name: '固定奖金', editable: false, width: 150 },
                     { key: 'tongxunButie', name: '通讯补贴', editable: false, width: 150 },
                     { key: 'qitaJiangjin', name: '其他津贴', editable: false, width: 150 },
                     { key: 'xiaxiangBuzhu', name: '下乡补助', editable: false, width: 150 },
@@ -75,7 +78,6 @@ class PayrollDetailsCalculation extends Component {
                     { key: 'zhufanggongjijin', name: '住房公积金', width: 150 },
                     { key: 'zhufanggongjijinComments', name: '住房公积金计算方法', width: 450 },
                     { key: 'yiliaobaoxian', name: '医疗保险', width: 150 },
-                    { key: 'yiliaobaoxianComments', name: '医疗保险计算方法', width: 450 },
                     { key: 'qiyeNianjin', name: '企业年金', width: 150 },
                     { key: 'qiyeNianJinComments', name: '企业年金计算方法', width: 450 },
                     { key: 'qiyeYanglaobaoxian', name: '企业养老保险', width: 150 },
@@ -85,7 +87,6 @@ class PayrollDetailsCalculation extends Component {
                     { key: 'qiyeZhufanggongjijin', name: '企业住房公积金', width: 150 },
                     { key: 'qiyeZhufanggongjijinComments', name: '企业住房公积金计算方法', width: 450 },
                     { key: 'qiyeYiliaobaoxian', name: '企业医疗保险', width: 150 },
-                    { key: 'qiyeYiliaobaoxianComments', name: '企业医疗保险计算方法', width: 450 },
                     { key: 'yingshuigongzi', name: '应税工资', width: 150 },
                     { key: 'yingshuigongziComments', name: '应税工资计算方法', width: 1250 },
                     { key: 'tax', name: '个人所得税', width: 150, width: 150 },
@@ -129,12 +130,12 @@ class PayrollDetailsCalculation extends Component {
         })
     }
     saveData(data, keysObj) {
-        let { newcreated, deleted, updated } = keysObj;
-        let newCreatedKeys = [], deletedKeys = [], updatedKeys = [];
+        // let { newcreated, deleted, updated } = keysObj;
+        // let newCreatedKeys = [], deletedKeys = [], updatedKeys = [];
 
-        AppStore.updateEmpSDData(data, this.state.curYearMonth).then((res) => {
-            AppStore.showInfo(res.message);
-        });
+        // AppStore.updateEmpSDData(data, this.state.curYearMonth).then((res) => {
+        //     AppStore.showInfo(res.message);
+        // });
 
     }
     handleQuery(criteria) {
@@ -189,7 +190,7 @@ class PayrollDetailsCalculation extends Component {
                         showCreateNew={false}
                         showSave={true}
                         saveData={this.saveData.bind(this)}
-                        showUploader={false}
+                        showUploader={true}
                         uploadLink={'/sdd/uploadot'}
                         showDownload={false}
                         downloadLink={AppStore.getPreHostURLLink() + '/sdd/downloadot?salaryCycle=' + this.state.curYearMonth}

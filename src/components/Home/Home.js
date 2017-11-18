@@ -25,6 +25,8 @@ import DanweiJitiYiliaobaoxian from '../Reports/DanweiJitiYiliaobaoxian';
 import DanweiJitiZhufanggongjijin from '../Reports/DanweiJitiZhufanggongjijin';
 import DanweiJitiNianjin from '../Reports/DanweiJitiNianjin';
 
+import PayrollFullQuery from '../Reports/FullQuery';
+
 
 import {
     BrowserRouter,
@@ -68,6 +70,7 @@ class Home extends Component {
                             <Route exact path="/DanweiJitiYiliaobaoxian" component={DanweiJitiYiliaobaoxian} />
                             <Route exact path="/DanweiJitiZhufanggongjijin" component={DanweiJitiZhufanggongjijin} />
                             <Route exact path="/DanweiJitiNianjin" component={DanweiJitiNianjin} />
+                            <Route exact path="/PayrollFullQuery" component={PayrollFullQuery} />
                         </Switch>
                     </div>
                     {/* <div className="BottomNavContainer">

@@ -68,13 +68,14 @@ class EmpOT extends Component {
                     },
                     {
                         key: 'OTCycle',
-                        name: '加班周期',
+                        name: '工资周期',
                         width:100
                     },
                     { key: 'gongliBuzhu', name: '公里补助', editable: 'true', width: 100 },
                     { key: 'kaoheJiangjin', name: '考核奖金', editable: 'true', width: 100 },
+                    { key: 'gudingJiangjin', name: '固定奖金', editable: 'true', width: 100 },
                     { key: 'tongxunButie', name: '通讯补贴', editable: 'true', width: 100 },
-                    { key: 'qitaJiangjin', name: '其他津贴', editable: 'true', width: 100 },
+                    { key: 'qitaJiangjin', name: '其他奖励', editable: 'true', width: 100 },
                     { key: 'xiaxiangBuzhu', name: '下乡补助', editable: 'true', width: 100 },
                     { key: 'yingyetingBuzhu', name: '营业厅补助', editable: 'true', width: 100 },
                     { key: 'buchongyiliaobaoxian', name: '补充医疗保险', editable: 'true', width: 100 },
@@ -98,7 +99,9 @@ class EmpOT extends Component {
                     },
                     { key: 'kouchu', name: '扣工资', width: 100, editable: 'true' },
                     { key: 'kaohekoukuan', name: '其它罚款', width: 100, editable: 'true' },
-                    { key: 'yicixingjiangjin', name: '年终奖金', width: 100, editable: 'true' }
+                    { key: 'yicixingjiangjin', name: '年终奖金', width: 100, editable: 'true' },
+                    { key: 'yiliaobaoxian', name: '医疗保险', width: 100, editable: 'true' },
+                    { key: 'qiyeYiliaobaoxian', name: '企业部分医疗保险', width: 150, editable: 'true' }
                 ]
                 nstate.rows = OTs.data;
                 nstate.fullscreen = false;

@@ -76,18 +76,17 @@ class EmpInfoConfig extends Component {
     componentDidMount() {
         let nstate = Object.assign({}, this.state);
         AppStore.getConfigData().then((conRes) => {
-
+            // { text: '个人医疗保险系数', value: 'YILIAOBAOXIANXISHU', id: 'YILIAOBAOXIANXISHU', title: '个人医疗保险系数' },
+            // { text: '企业医疗保险系数', value: 'QIYEYILIAOBAOXIANXISHU', id: 'QIYEYILIAOBAOXIANXISHU', title: '企业医疗保险系数' },
             if (conRes.status === 200) {
                 const ConfigPercentage = [
                     { text: '个人年金系数', value: 'NIANJINXISHU', id: 'NIANJINXISHU', title: '个人年金系数' },
                     { text: '个人养老保险系数', value: 'YANGLAOBAOXIANXISHU', id: 'YANGLAOBAOXIANXISHU', title: '个人养老保险系数' },
-                    { text: '个人医疗保险系数', value: 'YILIAOBAOXIANXISHU', id: 'YILIAOBAOXIANXISHU', title: '个人医疗保险系数' },
                     { text: '个人失业保险系数', value: 'SHIYEBAOXIANXISHU', id: 'SHIYEBAOXIANXISHU', title: '个人失业保险系数' },
                     { text: '个人住房公积金系数', value: 'ZHUFANGGONGJIJINXISHU', id: 'ZHUFANGGONGJIJINXISHU', title: '个人住房公积金系数' },
                     { text: '个人所得税计提基数', value: 'GERENSUODESHUISHUIJI', id: 'GERENSUODESHUISHUIJI', title: '个人所得税计提基数' },
                     { text: '企业年金系数', value: 'QIYENIANJINXISHU', id: 'QIYENIANJINXISHU', title: '企业年金系数' },
                     { text: '企业养老保险系数', value: 'QIYEYANGLAOBAOXIANXISHU', id: 'QIYEYANGLAOBAOXIANXISHU', title: '企业养老保险系数' },
-                    { text: '企业医疗保险系数', value: 'QIYEYILIAOBAOXIANXISHU', id: 'QIYEYILIAOBAOXIANXISHU', title: '企业医疗保险系数' },
                     { text: '企业失业保险系数', value: 'QIYESHIYEBAOXIANXISHU', id: 'QIYESHIYEBAOXIANXISHU', title: '企业失业保险系数' },
                     { text: '企业住房公积金系数', value: 'QIYEZHUFANGGONGJIJINXISHU', id: 'QIYEZHUFANGGONGJIJINXISHU', title: '企业住房公积金系数' }
                 ];

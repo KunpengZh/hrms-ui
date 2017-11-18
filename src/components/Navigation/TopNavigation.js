@@ -67,6 +67,9 @@ class Home extends Component {
             case 'DanweiJitiNianjin':
                 this.props.history.push("/DanweiJitiNianjin");
                 break;
+            case 'PayrollFullQuery':
+                this.props.history.push('/PayrollFullQuery');
+                break;
         }
 
     }
@@ -105,6 +108,7 @@ class Home extends Component {
                         {(jobRole === 'SysAdmin' || jobRole === 'PayrollAdmin') ? (
                             <Menu.SubMenu index="Reporting" title="查询汇总">
                                 <Menu.Item index="QueryReporting">查询汇总</Menu.Item>
+                                <Menu.Item index="PayrollFullQuery">查询汇总详单</Menu.Item>
                                 <Menu.Item index="GongZiDanByWorkerCategory">按类别汇总</Menu.Item>
                                 <Menu.Item index="GongZiDanByDepartment">按部门汇总</Menu.Item>
                                 <Menu.Item index="DanweiJitiYanglaobaoxian">单位计提养老保险</Menu.Item>

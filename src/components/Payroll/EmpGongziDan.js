@@ -75,9 +75,9 @@ class EmpGongZiDan extends Component {
                             <td>失业保险</td>
                             <td>住房公积金</td>
                             <td>个人所得税</td>
-                            <td>补充医疗保险</td>
                             <td>奖金税</td>
                             <td>扣款</td>
+                            <td></td>
                         </tr>
                         <tr>
                             <td>{this.props.data.nianjin}</td>
@@ -86,9 +86,9 @@ class EmpGongZiDan extends Component {
                             <td>{this.props.data.shiyebaoxian}</td>
                             <td>{this.props.data.zhufanggongjijin}</td>
                             <td>{this.props.data.tax}</td>
-                            <td>{this.props.data.buchongyiliaobaoxian}</td>
                             <td>{this.props.data.yicixingjiangjinTax}</td>
                             <td>{this.props.data.totalKouchu}</td>
+                            <td></td>
                         </tr>
                         <tr>
                             <td>实发工资</td>
