@@ -47,7 +47,7 @@ class PayrollConfig extends Component {
                 { key: 'gongliBuzhu', name: '公里补助', editable: 'true', width: 150, editor: YesNoEditor, formatter: YesNoFormatter },
                 { key: 'kaoheJiangjin', name: '考核奖金', editable: 'true', width: 150, editor: YesNoEditor, formatter: YesNoFormatter },
                 { key: 'tongxunButie', name: '通讯补贴', editable: 'true', width: 150, editor: YesNoEditor, formatter: YesNoFormatter },
-                { key: 'qitaJiangjin', name: '其他津贴', editable: 'true', width: 150, editor: YesNoEditor, formatter: YesNoFormatter },
+                { key: 'qitaJiangjin', name: '其他奖励', editable: 'true', width: 150, editor: YesNoEditor, formatter: YesNoFormatter },
                 { key: 'xiaxiangBuzhu', name: '下乡补助', editable: 'true', width: 150, editor: YesNoEditor, formatter: YesNoFormatter },
                 { key: 'yingyetingBuzhu', name: '营业厅补助', editable: 'true', width: 150, editor: YesNoEditor, formatter: YesNoFormatter },
                 { key: 'nianjin', name: '年金', editable: 'true', width: 150, editor: YesNoEditor, formatter: YesNoFormatter },

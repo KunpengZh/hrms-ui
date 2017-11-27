@@ -33,7 +33,7 @@ class EmpInfoConfig extends Component {
                 { key: 'kaoheJiangjin', name: '考核奖金', editable: false, width: 150 },
                 { key: 'gudingJiangjin', name: '固定奖金', editable: false, width: 150 },
                 { key: 'tongxunButie', name: '通讯补贴', editable: false, width: 150 },
-                { key: 'qitaJiangjin', name: '其他津贴', editable: false, width: 150 },
+                { key: 'qitaJiangjin', name: '其他奖励', editable: false, width: 150 },
                 { key: 'xiaxiangBuzhu', name: '下乡补助', editable: false, width: 150 },
                 { key: 'yingyetingBuzhu', name: '营业厅补助', editable: false, width: 150 },
                 { key: 'NormalOT', name: '夜间值班费', width: 150 },

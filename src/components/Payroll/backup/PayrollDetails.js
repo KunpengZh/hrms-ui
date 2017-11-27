@@ -51,7 +51,7 @@ class PayrollDetailsCalculation extends Component {
                     { key: 'gongliBuzhu', name: '公里补助', editable: 'true', width: 150 },
                     { key: 'kaoheJiangjin', name: '考核奖金', editable: 'true', width: 150 },
                     { key: 'tongxunButie', name: '通讯补贴', editable: 'true', width: 150 },
-                    { key: 'qitaJiangjin', name: '其他津贴', editable: 'true', width: 150 },
+                    { key: 'qitaJiangjin', name: '其他奖励', editable: 'true', width: 150 },
                     { key: 'xiaxiangBuzhu', name: '下乡补助', editable: 'true', width: 150 },
                     { key: 'yingyetingBuzhu', name: '营业厅补助', editable: 'true', width: 150 },
                     { key: 'NormalOT', name: '平时加班', width: 150 },

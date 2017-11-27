@@ -259,7 +259,7 @@ class ConfigGrid extends Component {
         if (this.state.query.department !== 'All' && this.state.query.department !== '') query.department = this.state.query.department;
         if (this.state.query.jobRole !== 'All' && this.state.query.jobRole !== '') query.jobRole = this.state.query.jobRole;
         if (this.state.query.empStatus !== 'All' && this.state.query.empStatus !== '') query.empStatus = this.state.query.empStatus;
-       
+
         this.props.handleQuery(query).then(res => {
             if (res.status === 200) {
                 let nstate = {
@@ -272,11 +272,17 @@ class ConfigGrid extends Component {
             }
         })
     }
+    handleUploadSuccess(res) {
+        console.log(res);
+        if (res.message) {
+            AppStore.showInfo(res.message);
+        }
+    }
     render() {
         let self = this;
         return (
             <div className="EmpDataGrid">
-                <div style={{ 'display': this.props.showActionBar, 'marginBottom':'5px' }}>
+                <div style={{ 'display': this.props.showActionBar, 'marginBottom': '5px' }}>
                     <Form labelWidth="50" style={{ textAlign: 'left' }}>
                         {this.props.showFilters ? (
                             <Form.Item label="在职:" style={{ display: "inline-block", paddingLeft: "5px" }}>
@@ -333,6 +339,7 @@ class ConfigGrid extends Component {
                                     action={this.props.uploadLink}
                                     multiple={false}
                                     showFileList={false}
+                                    onSuccess={this.handleUploadSuccess.bind(this)}
                                 >
                                     <Button icon="upload" type="primary">点击上传</Button>
                                 </Upload>
