@@ -230,20 +230,6 @@ class EmpInfoConfig extends Component {
                         showActionBar={false}
                         enableCheckBox={false}
                     />
-                    {/* <Tabs activeName="Department" onTabClick={this.handTabChange.bind(this)}>
-                        <Tabs.Pane label="汇总统计" name="Department">
-                            page first
-                        </Tabs.Pane>
-                        <Tabs.Pane label="详细清单" name="JobRole">
-                            <DataGrid
-                                columns={this.state.columns}
-                                rows={this.state.rows}
-                                rowKey={this.state.rowKey}
-                                showActionBar={false}
-                                enableCheckBox={false}
-                            />
-                        </Tabs.Pane>
-                    </Tabs> */}
                 </div>
             </div>
         );
