@@ -137,14 +137,26 @@ class NonRegularSalary extends Component {
                 AppStore.showError("更新成功");
             }
         }).then(() => {
-            AppStore.updateNRSalaryData(data, this.state.curYearMonth).then((res) => {
-                if (res.status === 200) {
-                    AppStore.showSuccess("更新成功");
-                } else {
-                    AppStore.showError(res.message);
+            let updatedData = [];
+            updated.forEach(updatedEmpID => {
+                for (let i = 0; i < data.length; i++) {
+                    if (data[i].empId === updatedEmpID) {
+                        updatedData.push(data[i]);
+                        break;
+                    }
                 }
+            })
+            if (updatedData.length > 0) {
+                AppStore.updateNRSalaryData(data, this.state.curYearMonth).then((res) => {
+                    if (res.status === 200) {
+                        AppStore.showSuccess("更新成功");
+                    } else {
+                        AppStore.showError(res.message);
+                    }
 
-            });
+                });
+            }
+
         })
     }
     handleQuery(criteria) {

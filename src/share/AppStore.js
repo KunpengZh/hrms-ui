@@ -4,8 +4,8 @@ import 'element-theme-default';
 var AppStore = (function () {
 
     var getPreHostURLLink = function () {
-        //return 'http://localhost:8080'
-        return ''
+        return 'http://localhost:8080'
+        //return ''
     }
 
     var AppUser = {
@@ -698,6 +698,47 @@ var AppStore = (function () {
         return YearMonthPeriod;
     }
 
+    var getCALYearMonthPeriod = function () {
+        return new Promise(function (rel, rej) {
+
+            doGet('/scal/getYearMonthPeriod').then((res) => {
+                if (res.status === 200) {
+                    rel({
+                        status: 200,
+                        data: res.data,
+                        message: ''
+                    })
+                } else {
+                    rel({
+                        status: res.status,
+                        message: res.message
+                    })
+                }
+            })
+        })
+
+    }
+
+    var syncSalaryCyclesData = function () {
+        return new Promise(function (rel, rej) {
+
+            doGet('/scal/reSyncData').then((res) => {
+                if (res.status === 200) {
+                    rel({
+                        status: 200,
+                        data: res.data,
+                        message: ''
+                    })
+                } else {
+                    rel({
+                        status: res.status,
+                        message: res.message
+                    })
+                }
+            })
+        })
+    }
+
     /**
      * Non Regular Salary related functions
      */
@@ -855,7 +896,7 @@ var AppStore = (function () {
     }
 
     /**
-     * Funcitons related with Salary Details
+     * Funcitons related with Salary Details and Salary Calculations
      */
     var querySDDataByCriteria = function (criteria) {
         return new Promise(function (rel, rej) {
@@ -868,6 +909,34 @@ var AppStore = (function () {
                 return;
             }
             doPost('/sdd/querybycriteria', { data: criteria }).then(res => {
+                if (res.status === 200) {
+                    rel({
+                        status: 200,
+                        data: res.data,
+                        message: res.message
+                    })
+                } else {
+                    rel({
+                        status: res.status,
+                        message: res.message,
+                        data: []
+                    })
+                }
+            })
+        })
+    }
+
+    var querySCALDataByCriteria = function (criteria) {
+        return new Promise(function (rel, rej) {
+            if (!criteria) {
+                rel({
+                    status: 200,
+                    message: '',
+                    data: []
+                })
+                return;
+            }
+            doPost('/scal/querybycriteria', { data: criteria }).then(res => {
                 if (res.status === 200) {
                     rel({
                         status: 200,
@@ -912,17 +981,17 @@ var AppStore = (function () {
         })
     }
 
-    var initialSDByCycle = function (salaryCycle) {
+    var getSCALByCycle = function (salaryCycle) {
         return new Promise(function (rel, rej) {
             if (!salaryCycle || salaryCycle === "") {
                 rel({
-                    status: 700,
+                    status: 500,
                     message: '必须指定周期',
                     data: ''
                 })
                 return;
             }
-            doGet('/sdd/initialSD?salaryCycle=' + salaryCycle).then((res) => {
+            doGet('/scal?salaryCycle=' + salaryCycle).then((res) => {
                 if (res.status === 200) {
                     rel({
                         status: 200,
@@ -939,7 +1008,7 @@ var AppStore = (function () {
         })
     }
 
-    var SyncSDEmpData = function (salaryCycle) {
+    var initialSCALByCycle = function (salaryCycle) {
         return new Promise(function (rel, rej) {
             if (!salaryCycle || salaryCycle === "") {
                 rel({
@@ -949,7 +1018,7 @@ var AppStore = (function () {
                 })
                 return;
             }
-            doGet('/sdd/syncdata?salaryCycle=' + salaryCycle).then((res) => {
+            doGet('/scal/initialSD?salaryCycle=' + salaryCycle).then((res) => {
                 if (res.status === 200) {
                     rel({
                         status: 200,
@@ -966,43 +1035,70 @@ var AppStore = (function () {
         })
     }
 
-    var updateEmpSDData = function (data, salaryCycle) {
+    var SyncSCALEmpData = function (salaryCycle) {
         return new Promise(function (rel, rej) {
-            if (!data || !(data instanceof Array) || data.length <= 0) {
-                rel({
-                    status: 700,
-                    message: '',
-                    data: ''
-                })
-                return;
-            }
             if (!salaryCycle || salaryCycle === "") {
                 rel({
-                    status: 500,
+                    status: 700,
                     message: '必须指定周期',
                     data: ''
                 })
                 return;
             }
-            doPost('/sdd/update', { data: data, salaryCycle: salaryCycle }).then(res => {
+            doGet('/scal/syncdata?salaryCycle=' + salaryCycle).then((res) => {
                 if (res.status === 200) {
                     rel({
                         status: 200,
                         data: res.data,
-                        message: res.message
+                        message: ''
                     })
                 } else {
                     rel({
                         status: res.status,
-                        message: res.message,
-                        data: []
+                        message: res.message
                     })
                 }
             })
         })
     }
 
-    var reCalculateSDData = function (salaryCycle) {
+    // var updateEmpSDData = function (data, salaryCycle) {
+    //     return new Promise(function (rel, rej) {
+    //         if (!data || !(data instanceof Array) || data.length <= 0) {
+    //             rel({
+    //                 status: 700,
+    //                 message: '',
+    //                 data: ''
+    //             })
+    //             return;
+    //         }
+    //         if (!salaryCycle || salaryCycle === "") {
+    //             rel({
+    //                 status: 500,
+    //                 message: '必须指定周期',
+    //                 data: ''
+    //             })
+    //             return;
+    //         }
+    //         doPost('/scal/update', { data: data, salaryCycle: salaryCycle }).then(res => {
+    //             if (res.status === 200) {
+    //                 rel({
+    //                     status: 200,
+    //                     data: res.data,
+    //                     message: res.message
+    //                 })
+    //             } else {
+    //                 rel({
+    //                     status: res.status,
+    //                     message: res.message,
+    //                     data: []
+    //                 })
+    //             }
+    //         })
+    //     })
+    // }
+
+    var reCalculateSCALData = function (salaryCycle) {
         return new Promise(function (rel, rej) {
             if (!salaryCycle || salaryCycle === "") {
                 rel({
@@ -1012,7 +1108,26 @@ var AppStore = (function () {
                 })
                 return;
             }
-            doGet('/sdd/recalculate?salaryCycle=' + salaryCycle).then((res) => {
+            doGet('/scal/recalculate?salaryCycle=' + salaryCycle).then((res) => {
+                if (res.status === 200) {
+                    rel({
+                        status: 200,
+                        data: res.data,
+                        message: ''
+                    })
+                } else {
+                    rel({
+                        status: res.status,
+                        message: res.message
+                    })
+                }
+            })
+        })
+    }
+
+    var finalizeSalaryCALData = function () {
+        return new Promise(function (rel, rej) {
+            doGet('/scal/finalizeSalaryCalData').then((res) => {
                 if (res.status === 200) {
                     rel({
                         status: 200,
@@ -1139,6 +1254,35 @@ var AppStore = (function () {
                         data: []
                     })
                 }
+            })
+        })
+    }
+
+    /**
+     * Emp Desk Account related functions
+     */
+
+    var getEmpDeskAccountByYear = function (calendaryear) {
+        return new Promise(function (rel, rej) {
+            if (!calendaryear || calendaryear === "") {
+                rel({
+                    status: 500,
+                    message: '必须指定台帐年份',
+                    data: ''
+                })
+                return;
+            }
+            doGet('/deskaccount/getEmpDeskAccountByYear?calendarYear=' + calendaryear).then((res) => {
+                rel(res)
+            })
+        })
+    }
+
+    var getEmpDeskAccountAvailableCalendarYear = function () {
+        return new Promise(function (rel, rej) {
+
+            doGet('/deskaccount/getAvailableCalendarYear').then((res) => {
+                rel(res)
             })
         })
     }
@@ -1408,6 +1552,60 @@ var AppStore = (function () {
             })
         })
     }
+    var queryShengyubaoxian = function (criteria) {
+        return new Promise(function (rel, rej) {
+            if (!criteria) {
+                rel({
+                    status: 500,
+                    message: '必须指定查询条件',
+                    data: []
+                })
+                return;
+            }
+            doGet('/danweijiti/shengyubaoxian?criteria=' + JSON.stringify(criteria)).then(res => {
+                if (res.status === 200) {
+                    rel({
+                        status: 200,
+                        data: res.data,
+                        message: res.message
+                    })
+                } else {
+                    rel({
+                        status: res.status,
+                        message: res.message,
+                        data: []
+                    })
+                }
+            })
+        })
+    }
+    var queryGongshangbaoxian = function (criteria) {
+        return new Promise(function (rel, rej) {
+            if (!criteria) {
+                rel({
+                    status: 500,
+                    message: '必须指定查询条件',
+                    data: []
+                })
+                return;
+            }
+            doGet('/danweijiti/gongshangbaoxian?criteria=' + JSON.stringify(criteria)).then(res => {
+                if (res.status === 200) {
+                    rel({
+                        status: 200,
+                        data: res.data,
+                        message: res.message
+                    })
+                } else {
+                    rel({
+                        status: res.status,
+                        message: res.message,
+                        data: []
+                    })
+                }
+            })
+        })
+    }
 
     var queryNianjin = function (criteria) {
         return new Promise(function (rel, rej) {
@@ -1467,12 +1665,326 @@ var AppStore = (function () {
             })
         })
     }
+
+    var getAllAvailableCycles = function () {
+        return new Promise(function (rel, rej) {
+            doGet('/sdd/getAllAvailableCycles').then(res => {
+                if (res.status === 200) {
+                    rel({
+                        status: 200,
+                        data: res.data,
+                        message: res.message
+                    })
+                } else {
+                    rel({
+                        status: res.status,
+                        message: res.message,
+                        data: []
+                    })
+                }
+            })
+        })
+    }
+
+    /**
+     * Emp Welfares related functions
+     */
+    var queryWelfaresByCriteria = function (criteria) {
+        return new Promise(function (rel, rej) {
+            if (!criteria) {
+                rel({
+                    status: 200,
+                    message: '',
+                    data: []
+                })
+                return;
+            }
+
+            doPost('/welfares/querybycriteria', { data: criteria }).then(res => {
+
+                if (res.status === 200) {
+                    rel({
+                        status: 200,
+                        data: res.data,
+                        message: res.message
+                    })
+                } else {
+                    rel({
+                        status: res.status,
+                        message: res.message,
+                        data: []
+                    })
+                }
+            })
+        })
+    }
+
+    var getWelfaresByCycle = function (salaryCycle) {
+        return new Promise(function (rel, rej) {
+            if (!salaryCycle || salaryCycle === "") {
+                rel({
+                    status: 500,
+                    message: '必须指定加班周期',
+                    data: ''
+                })
+                return;
+            }
+            doGet('/welfares?salaryCycle=' + salaryCycle).then((res) => {
+                if (res.status === 200) {
+                    rel({
+                        status: 200,
+                        data: res.data,
+                        message: ''
+                    })
+                } else {
+                    rel({
+                        status: res.status,
+                        message: res.message
+                    })
+                }
+            })
+        })
+    }
+
+    var initialWelfaresByCycle = function (salaryCycle) {
+        return new Promise(function (rel, rej) {
+            if (!salaryCycle || salaryCycle === "") {
+                rel({
+                    status: 700,
+                    message: '必须指定加班周期',
+                    data: ''
+                })
+                return;
+            }
+            doGet('/welfares/initialwe?salaryCycle=' + salaryCycle).then((res) => {
+                if (res.status === 200) {
+                    rel({
+                        status: 200,
+                        data: res.data.data,
+                        message: ''
+                    })
+                } else {
+                    rel({
+                        status: res.status,
+                        message: res.message
+                    })
+                }
+            })
+        })
+    }
+
+    var deleteWelfaresData = function (keys, salaryCycle) {
+        return new Promise(function (rel, rej) {
+            if (!keys || !(keys instanceof Array) || keys.length <= 0) {
+                rel({
+                    status: 700,
+                    message: '',
+                    data: ''
+                })
+                return;
+            }
+            if (!salaryCycle || salaryCycle === "") {
+                rel({
+                    status: 500,
+                    message: '必须指定加班周期',
+                    data: ''
+                })
+                return;
+            }
+            doPost('/welfares/delete', { data: keys, salaryCycle: salaryCycle }).then(res => {
+                if (res.status === 200) {
+                    rel({
+                        status: 200,
+                        data: res.data,
+                        message: "删除成功"
+                    })
+                } else {
+                    rel({
+                        status: res.status,
+                        message: res.message
+                    })
+                }
+            })
+        })
+    }
+
+    var updateWelfaresData = function (data, salaryCycle) {
+        return new Promise(function (rel, rej) {
+            if (!data || !(data instanceof Array) || data.length <= 0) {
+                rel({
+                    status: 700,
+                    message: '',
+                    data: ''
+                })
+                return;
+            }
+            if (!salaryCycle || salaryCycle === "") {
+                rel({
+                    status: 500,
+                    message: '必须指定加班周期',
+                    data: ''
+                })
+                return;
+            }
+            doPost('/welfares/update', { data: data, salaryCycle: salaryCycle }).then(res => {
+                if (res.status === 200) {
+                    rel({
+                        status: 200,
+                        data: res.data,
+                        message: res.message
+                    })
+                } else {
+                    rel({
+                        status: res.status,
+                        message: res.message,
+                        data: []
+                    })
+                }
+            })
+        })
+    }
+
+    var WelfaresTongJiDetails = function (criteria) {
+        return new Promise(function (rel, rej) {
+            if (!criteria) {
+                rel({
+                    status: 200,
+                    message: '',
+                    data: []
+                })
+                return;
+            }
+
+            doGet('/welfares/tongjidetails?criteria=' + JSON.stringify(criteria)).then(res => {
+
+                if (res.status === 200) {
+                    rel({
+                        status: 200,
+                        data: res.data,
+                        message: res.message
+                    })
+                } else {
+                    rel({
+                        status: res.status,
+                        message: res.message,
+                        data: []
+                    })
+                }
+            })
+        })
+    }
+    var WelfaresTongJiByEmp = function (criteria) {
+        return new Promise(function (rel, rej) {
+            if (!criteria) {
+                rel({
+                    status: 200,
+                    message: '',
+                    data: []
+                })
+                return;
+            }
+
+            doGet('/welfares/byemp?criteria=' + JSON.stringify(criteria)).then(res => {
+
+                if (res.status === 200) {
+                    rel({
+                        status: 200,
+                        data: res.data,
+                        message: res.message
+                    })
+                } else {
+                    rel({
+                        status: res.status,
+                        message: res.message,
+                        data: []
+                    })
+                }
+            })
+        })
+    }
+    var WelfaresTongJiByDepartment = function (criteria) {
+        return new Promise(function (rel, rej) {
+            if (!criteria) {
+                rel({
+                    status: 200,
+                    message: '',
+                    data: []
+                })
+                return;
+            }
+
+            doGet('/welfares/bydepartment?criteria=' + JSON.stringify(criteria)).then(res => {
+
+                if (res.status === 200) {
+                    rel({
+                        status: 200,
+                        data: res.data,
+                        message: res.message
+                    })
+                } else {
+                    rel({
+                        status: res.status,
+                        message: res.message,
+                        data: []
+                    })
+                }
+            })
+        })
+    }
+    var WelfaresTongJiByWorkerCategory = function (criteria) {
+        return new Promise(function (rel, rej) {
+            if (!criteria) {
+                rel({
+                    status: 200,
+                    message: '',
+                    data: []
+                })
+                return;
+            }
+
+            doGet('/welfares/byworkercategory?criteria=' + JSON.stringify(criteria)).then(res => {
+
+                if (res.status === 200) {
+                    rel({
+                        status: 200,
+                        data: res.data,
+                        message: res.message
+                    })
+                } else {
+                    rel({
+                        status: res.status,
+                        message: res.message,
+                        data: []
+                    })
+                }
+            })
+        })
+    }
+
     /**
      * Return the object will be export from App Utils
+     * updateEmpSDData: updateEmpSDData,
      */
     return {
-        payrollFullQuery:payrollFullQuery,
+        WelfaresTongJiDetails: WelfaresTongJiDetails,
+        WelfaresTongJiByEmp: WelfaresTongJiByEmp,
+        WelfaresTongJiByDepartment: WelfaresTongJiByDepartment,
+        WelfaresTongJiByWorkerCategory: WelfaresTongJiByWorkerCategory,
+        queryWelfaresByCriteria: queryWelfaresByCriteria,
+        getWelfaresByCycle: getWelfaresByCycle,
+        initialWelfaresByCycle: initialWelfaresByCycle,
+        deleteWelfaresData: deleteWelfaresData,
+        updateWelfaresData: updateWelfaresData,
+        getEmpDeskAccountAvailableCalendarYear: getEmpDeskAccountAvailableCalendarYear,
+        getEmpDeskAccountByYear: getEmpDeskAccountByYear,
+        getAllAvailableCycles: getAllAvailableCycles,
+        getAllAvailableSalaryCycle: getAllAvailableSalaryCycle,
+        syncSalaryCyclesData: syncSalaryCyclesData,
+        getCALYearMonthPeriod: getCALYearMonthPeriod,
+        payrollFullQuery: payrollFullQuery,
         queryShiyebaoxian: queryShiyebaoxian,
+        queryGongshangbaoxian: queryGongshangbaoxian,
+        queryShengyubaoxian: queryShengyubaoxian,
         queryNianjin: queryNianjin,
         queryYanglaobaoxian: queryYanglaobaoxian,
         queryYiliaobaoxian: queryYiliaobaoxian,
@@ -1482,7 +1994,6 @@ var AppStore = (function () {
         updateApplicationUser: updateApplicationUser,
         getAllApplicationUsers: getAllApplicationUsers,
         getPreHostURLLink: getPreHostURLLink,
-        getAllAvailableSalaryCycle: getAllAvailableSalaryCycle,
         setRouter: setRouter,
         getRouter: getRouter,
         queryGongZiDataByCriteria: queryGongZiDataByCriteria,
@@ -1491,12 +2002,14 @@ var AppStore = (function () {
         GongZiDanByWorkerCategory: GongZiDanByWorkerCategory,
         GongZiDanByDepartment: GongZiDanByDepartment,
         getGongZiDanByCycle: getGongZiDanByCycle,
-        reCalculateSDData: reCalculateSDData,
-        SyncSDEmpData: SyncSDEmpData,
+        reCalculateSCALData: reCalculateSCALData,
+        SyncSCALEmpData: SyncSCALEmpData,
+        finalizeSalaryCALData: finalizeSalaryCALData,
         getSDByCycle: getSDByCycle,
+        getSCALByCycle: getSCALByCycle,
         querySDDataByCriteria: querySDDataByCriteria,
-        initialSDByCycle: initialSDByCycle,
-        updateEmpSDData: updateEmpSDData,
+        querySCALDataByCriteria: querySCALDataByCriteria,
+        initialSCALByCycle: initialSCALByCycle,
         updateEmpOTData: updateEmpOTData,
         getYearMonthPeriod: getYearMonthPeriod,
         getOTByCycle: getOTByCycle,

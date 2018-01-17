@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import './Reports.css';
-import { Tabs, Loading, Select, Form, Input, Button } from 'element-react';
+import { Loading, Select, Form, Input, Button } from 'element-react';
 import 'element-theme-default';
 import '../../font-awesome/css/font-awesome.min.css'
 
 import AppStore from '../../share/AppStore';
 import DataGrid from '../DataGrid/DataGridWithoutMenu';
 
-class EmpInfoConfig extends Component {
+class DanweiJitiNianjin extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -16,24 +16,11 @@ class EmpInfoConfig extends Component {
             columns: [
                 { key: 'empId', name: '员工号', sortable: true, width: 150 },
                 { key: 'name', name: '姓名', sortable: true, width: 150 },
-                { key: 'department', name: '部门', width: 150 },
-                { key: 'jobRole', name: '岗位', width: 150 },
-                { key: 'workerCategory', name: '类别', width: 150 },
-                { key: 'jibengongzi', name: '工资', width: 150 },
-                { key: 'totalJiangjin', name: '奖金', width: 150 },
-                { key: 'totalOT', name: '加班费', width: 150 },
-                { key: 'tongxunButie', name: '通讯补贴', width: 150 },
-                { key: 'totalKouchu', name: '扣工资', width: 150 },
-                { key: 'yingfagongzi', name: '应发工资', width: 150 },
-                { key: 'nianjin', name: '扣年金', width: 150 },
-                { key: 'yanglaobaoxian', name: '扣养老保险', width: 150 },
-                { key: 'shiyebaoxian', name: '扣失业保险', width: 150 },
-                { key: 'zhufanggongjijin', name: '扣住房公积金', width: 150 },
-                { key: 'yiliaobaoxian', name: '扣医疗保险', width: 150 },
-                { key: 'tax', name: '扣个人所得税', width: 150 },
-                { key: 'yicixingjiangjin', name: '年终奖金', width: 150 },
-                { key: 'yicixingjiangjinTax', name: '扣年终奖金税', width: 150 },
-                { key: 'netIncome', name: '实发工资', width: 150 },
+                { key: 'salaryCycle', name: '工资周期', sortable: true, width: 150 },
+                { key: 'personal', name: '个人缴纳', width: 150 },
+                { key: 'company', name: '公司缴纳', width: 150 },
+                { key: 'total', name: '合计', width: 150 },
+                { key: 'comments', name: '备注', width: 150 },
             ],
             activeKey: '',
             availableSalaryCycles: [],
@@ -67,11 +54,6 @@ class EmpInfoConfig extends Component {
                 AppStore.showError(res.message);
             }
         })
-
-    }
-
-    handTabChange(tab) {
-        this.state.activeKey = tab.props.name
     }
     handleStartSalaryCycleChange(value) {
         let query = this.state.query;
@@ -117,12 +99,12 @@ class EmpInfoConfig extends Component {
             return;
         }
         this.setState({ fullscreen: true });
-        AppStore.queryGongZiDataByCriteria(query).then(res => {
+        AppStore.queryGongshangbaoxian(query).then(res => {
             if (res.status === 200) {
                 this.setState({
                     rows: res.data,
                     fullscreen: false,
-                    downloadLink: AppStore.getPreHostURLLink() + '/gongzidan/download?criteria=' + JSON.stringify(query)
+                    downloadLink: AppStore.getPreHostURLLink() + '/danweijiti/downloadgongshangbaoxian?criteria=' + JSON.stringify(query)
                 })
             } else {
                 this.setState({ fullscreen: false });
@@ -201,20 +183,6 @@ class EmpInfoConfig extends Component {
                         showActionBar={false}
                         enableCheckBox={false}
                     />
-                    {/* <Tabs activeName="Department" onTabClick={this.handTabChange.bind(this)}>
-                        <Tabs.Pane label="汇总统计" name="Department">
-                            page first
-                        </Tabs.Pane>
-                        <Tabs.Pane label="详细清单" name="JobRole">
-                            <DataGrid
-                                columns={this.state.columns}
-                                rows={this.state.rows}
-                                rowKey={this.state.rowKey}
-                                showActionBar={false}
-                                enableCheckBox={false}
-                            />
-                        </Tabs.Pane>
-                    </Tabs> */}
                 </div>
             </div>
         );
@@ -222,9 +190,4 @@ class EmpInfoConfig extends Component {
 }
 
 
-export default EmpInfoConfig;
-
-// { key: 'gender', name: '姓别', width: 150 },
-// { key: 'idCard', name: '身份证', width: 150 },
-// { key: 'bankAccount', name: '银行帐号', width: 150 },
-// { key: 'comment', name: '备注', width: 150 },
+export default DanweiJitiNianjin;

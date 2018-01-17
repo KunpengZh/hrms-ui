@@ -22,6 +22,9 @@ class Home extends Component {
             case 'OTManagement':
                 this.props.history.push("/OTManagement");
                 break;
+            case 'EmpWelfares':
+                this.props.history.push("/EmpWelfares");
+                break;
             case 'NonRegular':
                 this.props.history.push("/NonRegularEmp");
                 break;
@@ -31,8 +34,14 @@ class Home extends Component {
             case 'PayrollDetails':
                 this.props.history.push("/PayrollDetails");
                 break;
+            case 'HistoryPayrollDetails':
+                this.props.history.push('/HistoryPayrollDetails');
+                break;
             case 'PayrollPreview':
                 this.props.history.push("/PayrollPreview");
+                break;
+            case 'EmpDeskAccount':
+                this.props.history.push("/EmpDeskAccount");
                 break;
             case 'PayrollGongZi':
                 this.props.history.push("/PayrollGongZi");
@@ -67,8 +76,26 @@ class Home extends Component {
             case 'DanweiJitiNianjin':
                 this.props.history.push("/DanweiJitiNianjin");
                 break;
+            case 'DanweiJitiShengyubaoxian':
+                this.props.history.push("/DanweiJitiShengyubaoxian");
+                break;
+            case 'DanweiJitiGongshangbaoxian':
+                this.props.history.push("/DanweiJitiGongshangbaoxian");
+                break;
             case 'PayrollFullQuery':
                 this.props.history.push('/PayrollFullQuery');
+                break;
+            case 'QueryWelfareDetails':
+                this.props.history.push('/QueryWelfareDetails');
+                break;
+            case 'QueryWelfareByEmp':
+                this.props.history.push('/QueryWelfareByEmp');
+                break;
+            case 'QueryWelfareByWorkerCategory':
+                this.props.history.push('/QueryWelfareByWorkerCategory');
+                break;
+            case 'QueryWelfareByDepartment':
+                this.props.history.push('/QueryWelfareByDepartment');
                 break;
         }
 
@@ -102,6 +129,8 @@ class Home extends Component {
                                 <Menu.Item index="PayrollDetails">当期工资计算</Menu.Item>
                                 <Menu.Item index="PayrollPreview">工资单预览</Menu.Item>
                                 <Menu.Item index="PayrollGongZi">工资发放表</Menu.Item>
+                                <Menu.Item index="HistoryPayrollDetails">历史工资记录</Menu.Item>
+                                <Menu.Item index="EmpDeskAccount">员工工资台帐</Menu.Item>
                                 {/* <Menu.Item index="PayrollConfig">工资配置管理</Menu.Item> */}
                             </Menu.SubMenu>
                         ) : (null)}
@@ -116,6 +145,17 @@ class Home extends Component {
                                 <Menu.Item index="DanweiJitiYiliaobaoxian">单位计提医疗保险</Menu.Item>
                                 <Menu.Item index="DanweiJitiZhufanggongjijin">单位计提住房公积金</Menu.Item>
                                 <Menu.Item index="DanweiJitiNianjin">单位计提年金</Menu.Item>
+                                <Menu.Item index="DanweiJitiShengyubaoxian">单位计提生育保险</Menu.Item>
+                                <Menu.Item index="DanweiJitiGongshangbaoxian">单位计提工伤保险</Menu.Item>
+                            </Menu.SubMenu>
+                        ) : (null)}
+                        {(jobRole === 'SysAdmin' || jobRole === 'PayrollAdmin') ? (
+                            <Menu.SubMenu index="Welfares" title="员工福利">
+                                <Menu.Item index="EmpWelfares">员工福利申报</Menu.Item>
+                                <Menu.Item index="QueryWelfareDetails">查询汇总详单</Menu.Item>
+                                <Menu.Item index="QueryWelfareByEmp">按员工统计</Menu.Item>
+                                <Menu.Item index="QueryWelfareByDepartment">按部门统计</Menu.Item>
+                                <Menu.Item index="QueryWelfareByWorkerCategory">按类别统计</Menu.Item>
                             </Menu.SubMenu>
                         ) : (null)}
                         {(jobRole === 'SysAdmin') ? (

@@ -12,7 +12,8 @@ import ReactDataGrid from 'react-data-grid'
 // const { DropDownEditor } = Editors;
 // const { DropDownFormatter } = Formatters;
 
-const ColumnKeysNeedValidate = ['NormalOT', 'WeekendOT', 'HolidayOT', 'kouchu', 'kaohekoukuan', 'yiliaobaoxian', 'yicixingjiangjin'];
+const ColumnKeysNeedValidate = ['NormalOT', 'WeekendOT', 'HolidayOT', 'kouchu', 'kaohekoukuan', 'yiliaobaoxian', 'yicixingjiangjin'
+    , 'shengyubaoxian', 'gongshangbaoxian'];
 const validateFailMsg = '只能填写数字';
 
 class EmpOT extends Component {
@@ -40,36 +41,36 @@ class EmpOT extends Component {
                         key: 'empId',
                         name: '员工号',
                         sortable: true,
-                        width:100
+                        width: 100
                     },
                     {
                         key: 'name',
                         name: '员工姓名',
                         filterable: true,
-                        width:100
+                        width: 100
                     },
                     {
                         key: 'department',
                         name: '部门',
                         sortable: true,
-                        width:100
+                        width: 100
                     },
                     {
                         key: 'jobRole',
                         name: '岗位',
                         sortable: true,
-                        width:100
+                        width: 100
                     },
                     {
                         key: 'workerCategory',
                         name: '员工类别',
                         sortable: true,
-                        width:150
+                        width: 150
                     },
                     {
                         key: 'OTCycle',
                         name: '工资周期',
-                        width:100
+                        width: 100
                     },
                     { key: 'gongliBuzhu', name: '公里补助', editable: 'true', width: 100 },
                     { key: 'kaoheJiangjin', name: '考核奖金', editable: 'true', width: 100 },
@@ -83,25 +84,27 @@ class EmpOT extends Component {
                         key: 'NormalOT',
                         name: '夜间值班',
                         editable: true,
-                        width:150
+                        width: 150
                     },
                     {
                         key: 'WeekendOT',
                         name: '周末值班',
                         editable: true,
-                        width:150
+                        width: 150
                     },
                     {
                         key: 'HolidayOT',
                         name: '节假日值班(天数)',
                         editable: true,
-                        width:150
+                        width: 150
                     },
                     { key: 'kouchu', name: '扣工资', width: 100, editable: 'true' },
                     { key: 'kaohekoukuan', name: '其它罚款', width: 100, editable: 'true' },
                     { key: 'yicixingjiangjin', name: '年终奖金', width: 100, editable: 'true' },
                     { key: 'yiliaobaoxian', name: '医疗保险', width: 100, editable: 'true' },
-                    { key: 'qiyeYiliaobaoxian', name: '企业部分医疗保险', width: 150, editable: 'true' }
+                    { key: 'qiyeYiliaobaoxian', name: '企业部分医疗保险', width: 150, editable: 'true' },
+                    { key: 'shengyubaoxian', name: '生育保险', width: 150, editable: 'true' },
+                    { key: 'gongshangbaoxian', name: '工伤保险', width: 150, editable: 'true' }
                 ]
                 nstate.rows = OTs.data;
                 nstate.fullscreen = false;
@@ -136,14 +139,25 @@ class EmpOT extends Component {
                 AppStore.showError(res.message);
             }
         }).then(() => {
-            AppStore.updateEmpOTData(data, this.state.curYearMonth).then((res) => {
-                AppStore.showInfo(res.message);
-            });
+            let updatedData = [];
+            updated.forEach(updatedEmpID => {
+                for (let i = 0; i < data.length; i++) {
+                    if (data[i].empId === updatedEmpID) {
+                        updatedData.push(data[i]);
+                        break;
+                    }
+                }
+            })
+            if (updatedData.length > 0) {
+                AppStore.updateEmpOTData(data, this.state.curYearMonth).then((res) => {
+                    AppStore.showInfo(res.message);
+                });
+            }
         })
     }
 
     handleQuery(criteria) {
-       
+
         this.setState({ fullscreen: true });
         AppStore.queryOTByCriteria(criteria).then((OTs) => {
 

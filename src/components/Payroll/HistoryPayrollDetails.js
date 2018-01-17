@@ -34,7 +34,8 @@ class PayrollDetailsCalculation extends Component {
         if (nstate.curYearMonth === "") {
             if (nstate.YearMonthPeriod.length === 0) {
                 this.setState({ fullscreen: true });
-                AppStore.getCALYearMonthPeriod().then(resdata => {
+                AppStore.getAllAvailableCycles().then(resdata => {
+                    
                     if (resdata.status === 200) {
                         nstate.YearMonthPeriod = resdata.data;
                         
@@ -55,7 +56,7 @@ class PayrollDetailsCalculation extends Component {
     }
 
     initialSCALTableData(nstate) {
-        AppStore.getSCALByCycle(nstate.curYearMonth).then((SDs) => {
+        AppStore.getSDByCycle(nstate.curYearMonth).then((SDs) => {
             if (SDs.status === 200) {
                 nstate.columns = [
                     { key: 'empId', name: '员工号' },
@@ -133,26 +134,26 @@ class PayrollDetailsCalculation extends Component {
     }
 
     handleSync() {
-        this.setState({ fullscreen: true });
-        AppStore.SyncSCALEmpData(this.state.curYearMonth).then((res) => {
-            this.setState({ fullscreen: false });
-            if (res.status === 200) {
-                this.setState({ rows: res.data });
-            } else {
-                AppStore.showError(res.message);
-            }
-        })
+        // this.setState({ fullscreen: true });
+        // AppStore.SyncSCALEmpData(this.state.curYearMonth).then((res) => {
+        //     this.setState({ fullscreen: false });
+        //     if (res.status === 200) {
+        //         this.setState({ rows: res.data });
+        //     } else {
+        //         AppStore.showError(res.message);
+        //     }
+        // })
     }
     handleInit() {
-        this.setState({ fullscreen: true });
-        AppStore.initialSCALByCycle(this.state.curYearMonth).then((res) => {
-            this.setState({ fullscreen: false });
-            if (res.status === 200) {
-                this.setState({ rows: res.data });
-            } else {
-                AppStore.showError(res.message);
-            }
-        })
+        // this.setState({ fullscreen: true });
+        // AppStore.initialSCALByCycle(this.state.curYearMonth).then((res) => {
+        //     this.setState({ fullscreen: false });
+        //     if (res.status === 200) {
+        //         this.setState({ rows: res.data });
+        //     } else {
+        //         AppStore.showError(res.message);
+        //     }
+        // })
     }
     saveData(data, keysObj) {
         // let { newcreated, deleted, updated } = keysObj;
@@ -165,7 +166,7 @@ class PayrollDetailsCalculation extends Component {
     }
     handleQuery(criteria) {
         this.setState({ fullscreen: true });
-        AppStore.querySCALDataByCriteria(criteria).then((SDs) => {
+        AppStore.querySDDataByCriteria(criteria).then((SDs) => {
 
             if (SDs.status === 200) {
                 this.setState({
@@ -181,38 +182,38 @@ class PayrollDetailsCalculation extends Component {
     }
 
     handleRecalculate() {
-        this.setState({ fullscreen: true });
-        AppStore.reCalculateSCALData(this.state.curYearMonth).then((SDs) => {
-            if (SDs.status === 200) {
-                this.setState({
-                    rows: SDs.data,
-                    fullscreen: false
-                })
-                AppStore.showSuccess("成功")
-            } else {
-                this.setState({ fullscreen: false });
-                AppStore.showError(SDs.message)
-            }
-        })
+        // this.setState({ fullscreen: true });
+        // AppStore.reCalculateSCALData(this.state.curYearMonth).then((SDs) => {
+        //     if (SDs.status === 200) {
+        //         this.setState({
+        //             rows: SDs.data,
+        //             fullscreen: false
+        //         })
+        //         AppStore.showSuccess("成功")
+        //     } else {
+        //         this.setState({ fullscreen: false });
+        //         AppStore.showError(SDs.message)
+        //     }
+        // })
     }
 
     handleSalaryCycleChange(value) {
         this.setState({ curYearMonth: value });
     }
     handleFinalizeSalaryCalData() {
-        this.setState({ fullscreen: true });
-        AppStore.finalizeSalaryCALData().then((res) => {
-            if (res.status === 200) {
-                this.setState({
-                    rows: [],
-                    fullscreen: false
-                })
-                AppStore.showSuccess("成功")
-            } else {
-                this.setState({ fullscreen: false });
-                AppStore.showError(res.message)
-            }
-        })
+        // this.setState({ fullscreen: true });
+        // AppStore.finalizeSalaryCALData().then((res) => {
+        //     if (res.status === 200) {
+        //         this.setState({
+        //             rows: [],
+        //             fullscreen: false
+        //         })
+        //         AppStore.showSuccess("成功")
+        //     } else {
+        //         this.setState({ fullscreen: false });
+        //         AppStore.showError(res.message)
+        //     }
+        // })
     }
     render() {
         return (
@@ -233,13 +234,13 @@ class PayrollDetailsCalculation extends Component {
                         showUploader={false}
                         uploadLink={'/sdd/uploadot'}
                         showDownload={false}
-                        downloadLink={''}
+                        downloadLink={AppStore.getPreHostURLLink() + '/scal/downloadot?salaryCycle=' + this.state.curYearMonth}
                         ColumnKeysNeedValidate={ColumnKeysNeedValidate}
                         validateFailMsg={validateFailMsg}
-                        showSync={true}
+                        showSync={false}
                         handleSync={this.handleSync.bind(this)}
                         syncButtonText={'同步'}
-                        showInit={true}
+                        showInit={false}
                         handleInit={this.handleInit.bind(this)}
                         initButtonText={'初始化'}
                         showSelectMenu={true}
@@ -249,11 +250,11 @@ class PayrollDetailsCalculation extends Component {
                         showQuery={true}
                         queryText={"显示"}
                         enableCheckBox={false}
-                        showFunc1={true}
+                        showFunc1={false}
                         Func1Text="冻结工资结算"
                         handleFunc1={this.handleFinalizeSalaryCalData.bind(this)}
                         showDownloadTable={true}
-                        downloadTableLink={AppStore.getPreHostURLLink() + '/scal/downloadtable?salaryCycle=' + this.state.curYearMonth}
+                        downloadTableLink={AppStore.getPreHostURLLink() + '/sdd/downloadtable?salaryCycle=' + this.state.curYearMonth}
                         handleSalaryCycleChange={this.handleSalaryCycleChange.bind(this)}
                     />
                 </div>
