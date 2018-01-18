@@ -234,6 +234,12 @@ class DataGrid extends Component {
     handleFunc1() {
         this.props.handleFunc1();
     }
+    handleFunc2() {
+        this.props.handleFunc2();
+    }
+    handleFunc3() {
+        this.props.handleFunc3();
+    }
     handleDepartmentChange(value) {
         let query = this.state.query;
         query.department = value;
@@ -359,14 +365,25 @@ class DataGrid extends Component {
                             ) : (null)}
                             {this.props.showFunc1 ? (
 
-                                <Button type="primary" icon="menu" onClick={this.handleFunc1.bind(this)} style={{ marginRight: "20px", marginLeft: "20px" }}>{this.props.Func1Text}</Button>
+                                <Button type="primary" icon="menu" onClick={this.handleFunc1.bind(this)} >{this.props.Func1Text}</Button>
+
+                            ) : (null)}
+                            {this.props.showFunc2 ? (
+
+                                <Button type="primary" icon="information" onClick={this.handleFunc2.bind(this)} >{this.props.Func2Text}</Button>
+
+                            ) : (null)}
+                            {this.props.showFunc3 ? (
+
+                                <Button type="primary" icon="setting" onClick={this.handleFunc3.bind(this)} >{this.props.Func3Text}</Button>
 
                             ) : (null)}
                             {this.props.showDownloadTable ? (
 
-                                <div className="aToButton"><a className="linkButton" href={this.props.downloadTableLink} target="_blank"><i className="el-icon-document"></i>下载表格</a></div>
+                                <div className="aToButton"><a className="linkButton" href={this.props.downloadTableLink} target="_blank"><i className="el-icon-document"></i>下载</a></div>
 
                             ) : (null)}
+
                         </Form.Item>
                     </Form>
 

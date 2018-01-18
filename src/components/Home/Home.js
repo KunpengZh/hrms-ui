@@ -24,6 +24,7 @@ import EmpDeskAccount from '../Payroll/EmpDeskAccount';
 import DanweiJitiYanglaobaoxian from '../Reports/DanweiJitiYanglaobaoxian';
 import DanweiJitiShiyebaoxian from '../Reports/DanweiJitiShiyebaoxian';
 import DanweiJitiYiliaobaoxian from '../Reports/DanweiJitiYiliaobaoxian';
+import DanweiJitiBuchongyiliaobaoxian from '../Reports/DanweiJitiBuchongyiliaobaoxian';
 
 import DanweiJitiZhufanggongjijin from '../Reports/DanweiJitiZhufanggongjijin';
 import DanweiJitiNianjin from '../Reports/DanweiJitiNianjin';
@@ -38,6 +39,8 @@ import QueryWelfare from '../Welfares/QueryWelfare';
 import QueryWelfareByDepartment from '../Welfares/QueryByDepartment';
 import QueryWelfareByWokerCategory from '../Welfares/QueryByCategory';
 
+import Baoxianbulv from '../Baoxianbulv/Baoxianbulv';
+
 
 import {
     BrowserRouter,
@@ -46,6 +49,7 @@ import {
     Redirect
 } from 'react-router-dom'
 import DanweiJitiShengyubaixian from '../Reports/DanweiJitiShengyubaixian';
+import { Radio } from 'element-react';
 
 class Home extends Component {
     componentDidMount() {
@@ -83,6 +87,7 @@ class Home extends Component {
                             <Route exact path="/DanweiJitiYanglaobaoxian" component={DanweiJitiYanglaobaoxian} />
                             <Route exact path="/DanweiJitiShiyebaoxian" component={DanweiJitiShiyebaoxian} />
                             <Route exact path="/DanweiJitiYiliaobaoxian" component={DanweiJitiYiliaobaoxian} />
+                            <Route exact path="/DanweiJitiBuchongyiliaobaoxian" component={DanweiJitiBuchongyiliaobaoxian} />
                             <Route exact path="/DanweiJitiZhufanggongjijin" component={DanweiJitiZhufanggongjijin} />
                             <Route exact path="/DanweiJitiNianjin" component={DanweiJitiNianjin} />
                             <Route exact path="/DanweiJitiShengyubaoxian" component={DanweiJitiShengyubaixian} />
@@ -92,6 +97,7 @@ class Home extends Component {
                             <Route exact path="/QueryWelfareByEmp" component={QueryWelfare} />
                             <Route exact path="/QueryWelfareByDepartment" component={QueryWelfareByDepartment} />
                             <Route exact path="/QueryWelfareByWorkerCategory" component={QueryWelfareByWokerCategory} />
+                            <Route exact props="/Baoxianbulv" component={Baoxianbulv} />
                         </Switch>
                     </div>
                     {/* <div className="BottomNavContainer">

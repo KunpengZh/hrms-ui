@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './OTManagemetn.css';
+import './Baoxianbulv.css';
 import { Loading } from 'element-react';
 import 'element-theme-default';
 import '../../font-awesome/css/font-awesome.min.css'
@@ -12,8 +12,20 @@ import DataGrid from '../DataGrid/DataGrid';
 // const { DropDownEditor } = Editors;
 // const { DropDownFormatter } = Formatters;
 
-const ColumnKeysNeedValidate = ['Yiliaofeiyong', 'Liaoyangfeiyong', 'Gongnuanbutie', 'Dushengzinv', 'Sangzangbuzhu', 'Fuxufei',
-    'Fangshujiangwen', 'Shitangjingfei', 'Personalqitafuli', 'CompanyQitafuli'];
+const ColumnKeysNeedValidate = [
+    'nianjin',
+    'yanglaobaoxian',
+    'shiyebaoxian',
+    'zhufanggongjijin',
+    'yiliaobaoxian',
+    'qiyeNianjin',
+    'qiyeYanglaobaoxian',
+    'qiyeShiyebaoxian',
+    'qiyeZhufanggongjijin',
+    'qiyeYiliaobaoxian',
+    'buchongyiliaobaoxian',
+    'shengyubaoxian',
+    'gongshangbaoxian'];
 const validateFailMsg = '只能填写数字';
 
 class WelFaresComponent extends Component {
@@ -34,7 +46,7 @@ class WelFaresComponent extends Component {
     componentDidMount() {
         let nstate = Object.assign({}, this.state);
         if (nstate.curYearMonth === "") nstate.curYearMonth = nstate.YearMonthPeriod[0].value;
-        AppStore.getWelfaresByCycle(nstate.curYearMonth).then((welfares) => {
+        AppStore.getBaoxianbulvByCycle(nstate.curYearMonth).then((welfares) => {
             if (welfares.status === 200) {
                 nstate.columns = [
                     {
@@ -72,18 +84,21 @@ class WelFaresComponent extends Component {
                         key: 'salaryCycle',
                         name: '福利周期',
                         width: 100,
-                        editable:'true'
+                        editable: 'true'
                     },
-                    { name: '医疗费用', key: 'Yiliaofeiyong', editable: 'true', width: 100 },
-                    { name: '疗养费用', key: 'Liaoyangfeiyong', editable: 'true', width: 100 },
-                    { name: '供暖补贴', key: 'Gongnuanbutie', editable: 'true', width: 100 },
-                    { name: '独生子女费', key: 'Dushengzinv', editable: 'true', width: 100 },
-                    { name: '丧葬补助', key: 'Sangzangbuzhu', editable: 'true', width: 100 },
-                    { name: '抚恤费', key: 'Fuxufei', editable: 'true', width: 100 },
-                    { name: '防暑降温费', key: 'Fangshujiangwen', editable: 'true', width: 100 },
-                    { name: '食堂经费', key: 'Shitangjingfei', editable: 'true', width: 100 },
-                    { name: '个人其它福利', key: 'Personalqitafuli', editable: 'true', width: 100 },
-                    { name: '单位其它福利', key: 'CompanyQitafuli', editable: 'true', width: 100 }
+                    { name: '年金', key: 'nianjin', width: 100, editable: 'true' },
+                    { name: '养老保险', key: 'yanglaobaoxian', width: 100, editable: 'true' },
+                    { name: '失业保险', key: 'shiyebaoxian', width: 100, editable: 'true' },
+                    { name: '住房公积金', key: 'zhufanggongjijin', width: 100, editable: 'true' },
+                    { name: '医疗保险', key: 'yiliaobaoxian', width: 100, editable: 'true' },
+                    { name: '企业年金', key: 'qiyeNianjin', width: 100, editable: 'true' },
+                    { name: '企业养老保险', key: 'qiyeYanglaobaoxian', width: 100, editable: 'true' },
+                    { name: '企业失业保险', key: 'qiyeShiyebaoxian', width: 100, editable: 'true' },
+                    { name: '企业住房公积金', key: 'qiyeZhufanggongjijin', width: 100, editable: 'true' },
+                    { name: '企业医疗保险', key: 'qiyeYiliaobaoxian', width: 100, editable: 'true' },
+                    { name: '补充医疗保险', key: 'buchongyiliaobaoxian', width: 100, editable: 'true' },
+                    { name: '生育保险', key: 'shengyubaoxian', width: 100, editable: 'true' },
+                    { name: '工伤保险', key: 'gongshangbaoxian', width: 100, editable: 'true' },
                 ]
                 nstate.rows = welfares.data;
                 nstate.fullscreen = false;
@@ -96,16 +111,16 @@ class WelFaresComponent extends Component {
     }
     handleSync() {
         this.setState({ fullscreen: true });
-        AppStore.initialWelfaresByCycle(this.state.curYearMonth).then((res) => {
+        AppStore.initialBaoxianbulvByCycle(this.state.curYearMonth).then((res) => {
 
             if (res.status === 200) {
-                
+
                 let newrows = [];
                 for (let i = 0; i < 10; i++) {
-                   
+
                     newrows.push(res.data[i]);
                 };
-               
+
                 this.setState({
                     rows: newrows,
                     fullscreen: false
@@ -119,7 +134,7 @@ class WelFaresComponent extends Component {
 
     saveData(data, keysObj) {
         let { newcreated, deleted, updated } = keysObj;
-        
+
         let newCreatedEmpIds = [], deletedEmpIds = [], updatedEmpIds = [];
 
         newcreated.forEach(function (empId) {
@@ -141,15 +156,15 @@ class WelFaresComponent extends Component {
         });
 
         if (changedData.length > 0) {
-            AppStore.updateWelfaresData(changedData, this.state.curYearMonth).then((res) => {
+            AppStore.updateBaoxianbulvData(changedData, this.state.curYearMonth).then((res) => {
                 AppStore.showInfo(res.message);
             });
         }
 
         if (deletedEmpIds.length > 0) {
-            AppStore.deleteWelfaresData(deletedEmpIds, this.state.curYearMonth).then(res => {
+            AppStore.deleteBaoxianbulvData(deletedEmpIds, this.state.curYearMonth).then(res => {
                 if (res.status === 700) {
-    
+
                 } else if (res.status === 200) {
                     AppStore.showSuccess(res.message);
                 } else {
@@ -157,39 +172,12 @@ class WelFaresComponent extends Component {
                 }
             })
         }
-
-
-
-        // AppStore.deleteWelfaresData(deleted, this.state.curYearMonth).then(res => {
-        //     if (res.status === 700) {
-
-        //     } else if (res.status === 200) {
-        //         AppStore.showSuccess(res.message);
-        //     } else {
-        //         AppStore.showError(res.message);
-        //     }
-        // }).then(() => {
-        //     let updatedData = [];
-        //     updated.forEach(updatedEmpID => {
-        //         for (let i = 0; i < data.length; i++) {
-        //             if (data[i].empId === updatedEmpID) {
-        //                 updatedData.push(data[i]);
-        //                 break;
-        //             }
-        //         }
-        //     })
-        //     if (updatedData.length > 0) {
-        //         AppStore.updateWelfaresData(updatedData, this.state.curYearMonth).then((res) => {
-        //             AppStore.showInfo(res.message);
-        //         });
-        //     }
-        // })
     }
 
     handleQuery(criteria) {
 
         this.setState({ fullscreen: true });
-        AppStore.queryWelfaresByCriteria(criteria).then((weldata) => {
+        AppStore.queryBaoxianbulvByCriteria(criteria).then((weldata) => {
 
             if (weldata.status === 200) {
                 this.setState({
@@ -213,16 +201,19 @@ class WelFaresComponent extends Component {
                 jobRole: '',
                 workerCategory: '',
                 salaryCycle: '',
-                Yiliaofeiyong: 0,
-                Liaoyangfeiyong: 0,
-                Gongnuanbutie: 0,
-                Dushengzinv: 0,
-                Sangzangbuzhu: 0,
-                Fuxufei: 0,
-                Fangshujiangwen: 0,
-                Shitangjingfei: 0,
-                Personalqitafuli: 0,
-                CompanyQitafuli: 0
+                nianjin: 0,
+                qiyeNianjin: 0,
+                yanglaobaoxian: 0,
+                qiyeYanglaobaoxian: 0,
+                shiyebaoxian: 0,
+                qiyeShiyebaoxian: 0,
+                zhufanggongjijin: 0,
+                qiyeZhufanggongjijin: 0,
+                yiliaobaoxian: 0,
+                qiyeYiliaobaoxian: 0,
+                buchongyiliaobaoxian: 0,
+                shengyubaoxian: 0,
+                gongshangbaoxian: 0
             })
         })
     }
@@ -249,9 +240,9 @@ class WelFaresComponent extends Component {
                         showSave={true}
                         saveData={this.saveData.bind(this)}
                         showUploader={true}
-                        uploadLink={'/welfares/uploadot'}
+                        uploadLink={'/bulv/uploadot'}
                         showDownload={true}
-                        downloadLink={AppStore.getPreHostURLLink() + '/welfares/downloadwelfares?salaryCycle=' + this.state.curYearMonth}
+                        downloadLink={AppStore.getPreHostURLLink() + '/bulv/downloadwelbulvs?salaryCycle=' + this.state.curYearMonth}
                         minWidth={1500}
                         ColumnKeysNeedValidate={ColumnKeysNeedValidate}
                         validateFailMsg={validateFailMsg}

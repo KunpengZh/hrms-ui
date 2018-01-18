@@ -1,0 +1,52 @@
+.ReportContainer{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    padding:10px;
+    width: 100%;
+    height: 100%;
+}
+.configTable{
+    width: 100%;
+    height: 500px;
+    overflow: scroll;
+    border:1px soid green;
+}
+.ReportTabContainer{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    justify-content: flex-start;
+    align-items:flex-start;
+}
+.ReportMenuContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%;
+    padding: 10px;
+}
+.el-form-item {
+    margin-bottom: 0;
+}
+.aToButton{
+    color: #fff;
+    background-color: #20a0ff;
+    display: inline-block;
+    line-height: 1;
+    white-space: nowrap;
+    cursor: pointer;
+    border: 1px solid #20a0ff;
+    margin: 0;
+    padding: 10px 15px;
+    font-size: 14px;
+    margin-right: 5px;
+    margin-left: 5px;
+    border-radius: 5px;
+}
+.linkButton{
+    color: #fff;
+}

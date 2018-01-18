@@ -4,8 +4,8 @@ import 'element-theme-default';
 var AppStore = (function () {
 
     var getPreHostURLLink = function () {
-        return 'http://localhost:8080'
-        //return ''
+        //return 'http://localhost:8080'
+        return ''
     }
 
     var AppUser = {
@@ -1635,6 +1635,34 @@ var AppStore = (function () {
         })
     }
 
+    var queryBuchongyiliaobaoxian = function (criteria) {
+        return new Promise(function (rel, rej) {
+            if (!criteria) {
+                rel({
+                    status: 500,
+                    message: '必须指定查询条件',
+                    data: []
+                })
+                return;
+            }
+            doGet('/danweijiti/buchongyiliaobaoxian?criteria=' + JSON.stringify(criteria)).then(res => {
+                if (res.status === 200) {
+                    rel({
+                        status: 200,
+                        data: res.data,
+                        message: res.message
+                    })
+                } else {
+                    rel({
+                        status: res.status,
+                        message: res.message,
+                        data: []
+                    })
+                }
+            })
+        })
+    }
+
     /**
      * Full query for Payroll part
      */
@@ -1962,10 +1990,223 @@ var AppStore = (function () {
     }
 
     /**
+     * Baoxianbulv related functions
+     */
+    var payrollFullQuery = function (criteria) {
+        return new Promise(function (rel, rej) {
+            if (!criteria) {
+                rel({
+                    status: 200,
+                    message: '',
+                    data: []
+                })
+                return;
+            }
+            doPost('/payrollquery/query', { data: criteria }).then(res => {
+                if (res.status === 200) {
+                    rel({
+                        status: 200,
+                        data: res.data,
+                        message: res.message
+                    })
+                } else {
+                    rel({
+                        status: res.status,
+                        message: res.message,
+                        data: []
+                    })
+                }
+            })
+        })
+    }
+
+    var getAllAvailableCycles = function () {
+        return new Promise(function (rel, rej) {
+            doGet('/sdd/getAllAvailableCycles').then(res => {
+                if (res.status === 200) {
+                    rel({
+                        status: 200,
+                        data: res.data,
+                        message: res.message
+                    })
+                } else {
+                    rel({
+                        status: res.status,
+                        message: res.message,
+                        data: []
+                    })
+                }
+            })
+        })
+    }
+
+    /**
+     * Emp Welfares related functions
+     */
+    var queryBaoxianbulvByCriteria = function (criteria) {
+        return new Promise(function (rel, rej) {
+            if (!criteria) {
+                rel({
+                    status: 200,
+                    message: '',
+                    data: []
+                })
+                return;
+            }
+
+            doPost('/bulv/querybycriteria', { data: criteria }).then(res => {
+
+                if (res.status === 200) {
+                    rel({
+                        status: 200,
+                        data: res.data,
+                        message: res.message
+                    })
+                } else {
+                    rel({
+                        status: res.status,
+                        message: res.message,
+                        data: []
+                    })
+                }
+            })
+        })
+    }
+
+    var getBaoxianbulvByCycle = function (salaryCycle) {
+        return new Promise(function (rel, rej) {
+            if (!salaryCycle || salaryCycle === "") {
+                rel({
+                    status: 500,
+                    message: '必须指定加班周期',
+                    data: ''
+                })
+                return;
+            }
+            doGet('/bulv?salaryCycle=' + salaryCycle).then((res) => {
+                if (res.status === 200) {
+                    rel({
+                        status: 200,
+                        data: res.data,
+                        message: ''
+                    })
+                } else {
+                    rel({
+                        status: res.status,
+                        message: res.message
+                    })
+                }
+            })
+        })
+    }
+
+    var initialBaoxianbulvByCycle = function (salaryCycle) {
+        return new Promise(function (rel, rej) {
+            if (!salaryCycle || salaryCycle === "") {
+                rel({
+                    status: 700,
+                    message: '必须指定周期',
+                    data: ''
+                })
+                return;
+            }
+            doGet('/bulv/initialbulv?salaryCycle=' + salaryCycle).then((res) => {
+                if (res.status === 200) {
+                    rel({
+                        status: 200,
+                        data: res.data.data,
+                        message: ''
+                    })
+                } else {
+                    rel({
+                        status: res.status,
+                        message: res.message
+                    })
+                }
+            })
+        })
+    }
+
+    var deleteBaoxianbulvData = function (keys, salaryCycle) {
+        return new Promise(function (rel, rej) {
+            if (!keys || !(keys instanceof Array) || keys.length <= 0) {
+                rel({
+                    status: 700,
+                    message: '',
+                    data: ''
+                })
+                return;
+            }
+            if (!salaryCycle || salaryCycle === "") {
+                rel({
+                    status: 500,
+                    message: '必须指定加班周期',
+                    data: ''
+                })
+                return;
+            }
+            doPost('/bulv/delete', { data: keys, salaryCycle: salaryCycle }).then(res => {
+                if (res.status === 200) {
+                    rel({
+                        status: 200,
+                        data: res.data,
+                        message: "删除成功"
+                    })
+                } else {
+                    rel({
+                        status: res.status,
+                        message: res.message
+                    })
+                }
+            })
+        })
+    }
+
+    var updateBaoxianbulvData = function (data, salaryCycle) {
+        return new Promise(function (rel, rej) {
+            if (!data || !(data instanceof Array) || data.length <= 0) {
+                rel({
+                    status: 700,
+                    message: '',
+                    data: ''
+                })
+                return;
+            }
+            if (!salaryCycle || salaryCycle === "") {
+                rel({
+                    status: 500,
+                    message: '必须指定加班周期',
+                    data: ''
+                })
+                return;
+            }
+            doPost('/bulv/update', { data: data, salaryCycle: salaryCycle }).then(res => {
+                if (res.status === 200) {
+                    rel({
+                        status: 200,
+                        data: res.data,
+                        message: res.message
+                    })
+                } else {
+                    rel({
+                        status: res.status,
+                        message: res.message,
+                        data: []
+                    })
+                }
+            })
+        })
+    }
+    /**
      * Return the object will be export from App Utils
      * updateEmpSDData: updateEmpSDData,
      */
     return {
+        getBaoxianbulvByCycle:getBaoxianbulvByCycle,
+        initialBaoxianbulvByCycle:initialBaoxianbulvByCycle,
+        deleteBaoxianbulvData:deleteBaoxianbulvData,
+        updateBaoxianbulvData:updateBaoxianbulvData,
+        queryBaoxianbulvByCriteria:queryBaoxianbulvByCriteria,
         WelfaresTongJiDetails: WelfaresTongJiDetails,
         WelfaresTongJiByEmp: WelfaresTongJiByEmp,
         WelfaresTongJiByDepartment: WelfaresTongJiByDepartment,
@@ -1986,6 +2227,7 @@ var AppStore = (function () {
         queryGongshangbaoxian: queryGongshangbaoxian,
         queryShengyubaoxian: queryShengyubaoxian,
         queryNianjin: queryNianjin,
+        queryBuchongyiliaobaoxian: queryBuchongyiliaobaoxian,
         queryYanglaobaoxian: queryYanglaobaoxian,
         queryYiliaobaoxian: queryYiliaobaoxian,
         queryZhufanggongjijin: queryZhufanggongjijin,

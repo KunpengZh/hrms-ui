@@ -79,6 +79,9 @@ class Home extends Component {
             case 'DanweiJitiShengyubaoxian':
                 this.props.history.push("/DanweiJitiShengyubaoxian");
                 break;
+            case 'DanweiJitiBuchongyiliaobaoxian':
+                this.props.history.push("/DanweiJitiBuchongyiliaobaoxian");
+                break;
             case 'DanweiJitiGongshangbaoxian':
                 this.props.history.push("/DanweiJitiGongshangbaoxian");
                 break;
@@ -96,6 +99,9 @@ class Home extends Component {
                 break;
             case 'QueryWelfareByDepartment':
                 this.props.history.push('/QueryWelfareByDepartment');
+                break;
+            case 'Baoxianbulv':
+                this.props.history.push('/Baoxianbulv');
                 break;
         }
 
@@ -122,6 +128,7 @@ class Home extends Component {
                             <Menu.SubMenu index="OTAndWorkTime" title="当月工资数据申报">
                                 <Menu.Item index="OTManagement">全日制人员申报</Menu.Item>
                                 <Menu.Item index="NonRegular">非全日制人员申报</Menu.Item>
+                                <Menu.Item index="Baoxianbulv">补录保险数据</Menu.Item>
                             </Menu.SubMenu>
                         ) : (null)}
                         {(jobRole === 'SysAdmin' || jobRole === 'PayrollAdmin') ? (
@@ -147,6 +154,7 @@ class Home extends Component {
                                 <Menu.Item index="DanweiJitiNianjin">单位计提年金</Menu.Item>
                                 <Menu.Item index="DanweiJitiShengyubaoxian">单位计提生育保险</Menu.Item>
                                 <Menu.Item index="DanweiJitiGongshangbaoxian">单位计提工伤保险</Menu.Item>
+                                <Menu.Item index="DanweiJitiBuchongyiliaobaoxian">单位计提补充医疗保险</Menu.Item>
                             </Menu.SubMenu>
                         ) : (null)}
                         {(jobRole === 'SysAdmin' || jobRole === 'PayrollAdmin') ? (

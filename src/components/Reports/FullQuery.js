@@ -308,7 +308,7 @@ class EmpInfoConfig extends Component {
                     <Dialog.Body>
                         {this.state.showConfigTableWindow && (
                             <Table
-                                style={{ width: '100%', height: '500px', overflow: 'scroll' }}
+                                style={{ width: '100%', height: '400px', overflow: 'scroll' }}
                                 stripe={true}
                                 columns={this.configTable.columns}
                                 data={this.configTable.data}
