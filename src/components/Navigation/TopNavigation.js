@@ -103,6 +103,9 @@ class Home extends Component {
             case 'Baoxianbulv':
                 this.props.history.push('/Baoxianbulv');
                 break;
+            case 'DanweiWelfares':
+                this.props.history.push('/DanweiWelfares');
+                break;
         }
 
     }
@@ -159,6 +162,7 @@ class Home extends Component {
                         ) : (null)}
                         {(jobRole === 'SysAdmin' || jobRole === 'PayrollAdmin') ? (
                             <Menu.SubMenu index="Welfares" title="员工福利">
+                                <Menu.Item index="DanweiWelfares">单位福利申报</Menu.Item>
                                 <Menu.Item index="EmpWelfares">员工福利申报</Menu.Item>
                                 <Menu.Item index="QueryWelfareDetails">查询汇总详单</Menu.Item>
                                 <Menu.Item index="QueryWelfareByEmp">按员工统计</Menu.Item>
@@ -171,14 +175,15 @@ class Home extends Component {
                         ) : (null)}
                     </Menu>
                 </div>
-                <div className="rightContainer">
-                    <Menu className="el-menu-demo" mode="horizontal" onSelect={((val) => { console.log(val) })}>
-                        <Menu.Item index="Logout">退出登陆</Menu.Item>
-                    </Menu>
-                </div>
             </div>
         );
     }
 }
 
 export default Home;
+
+{/* <div className="rightContainer">
+                    <Menu className="el-menu-demo" mode="horizontal" onSelect={((val) => { console.log(val) })}>
+                        <Menu.Item index="Logout">退出登陆</Menu.Item>
+                    </Menu>
+                </div> */}

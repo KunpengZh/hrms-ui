@@ -6,7 +6,7 @@ import '../../font-awesome/css/font-awesome.min.css'
 
 import AppStore from '../../share/AppStore';
 import DataGrid from '../DataGrid/DataGridWithoutMenu';
-
+// { key: 'preAnnuallyIncom', name: '上年月平均收入', width: 150, editable: false, showColumn: false },
 let columnDefine = [
     { key: 'jinengGongzi', name: '技能工资', editable: false, width: 150, showColumn: false },
     { key: 'gangweiGongzi', name: '岗位工资', editable: false, width: 150, showColumn: false },
@@ -33,7 +33,6 @@ let columnDefine = [
     { key: 'kouchu', name: '扣工资', width: 150, editable: false, showColumn: false },
     { key: 'kaohekoukuan', name: '其它罚款', width: 150, editable: false, showColumn: false },
     { key: 'yingfagongzi', name: '应发工资', width: 150, showColumn: false },
-    { key: 'preAnnuallyIncom', name: '上年月平均收入', width: 150, editable: false, showColumn: false },
     { key: 'nianjin', name: '年金', width: 150, showColumn: false },
     { key: 'yanglaobaoxian', name: '养老保险', width: 150, showColumn: false },
     { key: 'shiyebaoxian', name: '失业保险', width: 150, showColumn: false },
@@ -49,6 +48,8 @@ let columnDefine = [
     { key: 'yicixingjiangjin', name: '年终奖金', width: 150, showColumn: false },
     { key: 'yicixingjiangjinTax', name: '年终奖金税', width: 150, showColumn: false },
     { key: 'buchongyiliaobaoxian', name: '补充医疗保险', width: 150, editable: false, showColumn: false },
+    { key: 'shengyubaoxian', name: '企业生育保险', width: 150, editable: 'true' },
+    { key: 'gongshangbaoxian', name: '企业工伤保险', width: 150, editable: 'true' },
     { key: 'netIncome', name: '实发工资', width: 150, showColumn: false },
 ];
 
@@ -109,7 +110,7 @@ class EmpInfoConfig extends Component {
             data: columnDefine
         };
         this.configTableDefaultStatus = false;
-        
+
     }
     componentDidMount() {
         AppStore.getAllAvailableSalaryCycle().then(res => {
@@ -285,7 +286,7 @@ class EmpInfoConfig extends Component {
                         </Form.Item>
                         <Form.Item labelWidth="0" style={{ display: "inline-block" }}>
                             <Button type="primary" icon="search" onClick={this.handleQuery.bind(this)}>查询</Button>
-                            <div className="aToButton"><a className="linkButton" href={this.state.downloadLink+"&columns=" + JSON.stringify(this.state.columns)} target="_blank"><i className="el-icon-document"></i>下载</a></div>
+                            <div className="aToButton"><a className="linkButton" href={this.state.downloadLink + "&columns=" + JSON.stringify(this.state.columns)} target="_blank"><i className="el-icon-document"></i>下载</a></div>
                             <Button type="primary" icon="setting" onClick={this.handleConfigTable.bind(this)}>定制</Button>
                         </Form.Item>
                     </Form>

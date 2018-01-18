@@ -59,9 +59,9 @@ class EmpInfoConfig extends Component {
                 { name: '丧葬补助', key: 'Sangzangbuzhu',  width: 100 },
                 { name: '抚恤费', key: 'Fuxufei',  width: 100 },
                 { name: '防暑降温费', key: 'Fangshujiangwen',  width: 100 },
-                { name: '食堂经费', key: 'Shitangjingfei',  width: 100 },
+              
                 { name: '个人其它福利', key: 'Personalqitafuli',  width: 100 },
-                { name: '单位其它福利', key: 'CompanyQitafuli',  width: 100 }
+               
             ],
             activeKey: '',
             availableSalaryCycles: AppStore.getYearMonthPeriod(),

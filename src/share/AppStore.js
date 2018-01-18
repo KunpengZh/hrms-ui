@@ -2197,11 +2197,155 @@ var AppStore = (function () {
             })
         })
     }
+
+    /**
+     * Danwei welfares related functions
+     */
+    var queryDanweiWelfaresByCriteria = function (criteria) {
+        return new Promise(function (rel, rej) {
+            if (!criteria) {
+                rel({
+                    status: 200,
+                    message: '',
+                    data: []
+                })
+                return;
+            }
+
+            doPost('/danweiwelfares/querybycriteria', { data: criteria }).then(res => {
+
+                if (res.status === 200) {
+                    rel({
+                        status: 200,
+                        data: res.data,
+                        message: res.message
+                    })
+                } else {
+                    rel({
+                        status: res.status,
+                        message: res.message,
+                        data: []
+                    })
+                }
+            })
+        })
+    }
+
+    var getDanweiWelfaresByCycle = function (salaryCycle) {
+        return new Promise(function (rel, rej) {
+            if (!salaryCycle || salaryCycle === "") {
+                rel({
+                    status: 500,
+                    message: '必须指定加班周期',
+                    data: ''
+                })
+                return;
+            }
+            doGet('/danweiwelfares/queryByCycle?salaryCycle=' + salaryCycle).then((res) => {
+                if (res.status === 200) {
+                    rel({
+                        status: 200,
+                        data: res.data,
+                        message: ''
+                    })
+                } else {
+                    rel({
+                        status: res.status,
+                        message: res.message
+                    })
+                }
+            })
+        })
+    }
+
+    var getDanweiWelfaresAll = function () {
+        return new Promise(function (rel, rej) {
+            
+            doGet('/danweiwelfares').then((res) => {
+                if (res.status === 200) {
+                    rel({
+                        status: 200,
+                        data: res.data,
+                        message: ''
+                    })
+                } else {
+                    rel({
+                        status: res.status,
+                        message: res.message
+                    })
+                }
+            })
+        })
+    }
+
+    
+
+    var deleteDanweiWelfaresData = function (keys) {
+        return new Promise(function (rel, rej) {
+            if (!keys || !(keys instanceof Array) || keys.length <= 0) {
+                rel({
+                    status: 700,
+                    message: '',
+                    data: ''
+                })
+                return;
+            }
+            
+            doPost('/danweiwelfares/delete', { data: keys}).then(res => {
+                if (res.status === 200) {
+                    rel({
+                        status: 200,
+                        data: res.data,
+                        message: "删除成功"
+                    })
+                } else {
+                    rel({
+                        status: res.status,
+                        message: res.message
+                    })
+                }
+            })
+        })
+    }
+
+    var updateDanweiWelfaresData = function (data) {
+        return new Promise(function (rel, rej) {
+            if (!data || !(data instanceof Array) || data.length <= 0) {
+                rel({
+                    status: 700,
+                    message: '',
+                    data: ''
+                })
+                return;
+            }
+            
+            doPost('/danweiwelfares/update', { data: data }).then(res => {
+                if (res.status === 200) {
+                    rel({
+                        status: 200,
+                        data: res.data,
+                        message: res.message
+                    })
+                } else {
+                    rel({
+                        status: res.status,
+                        message: res.message,
+                        data: []
+                    })
+                }
+            })
+        })
+    }
     /**
      * Return the object will be export from App Utils
      * updateEmpSDData: updateEmpSDData,
      */
     return {
+        queryDanweiWelfaresByCriteria:queryDanweiWelfaresByCriteria,
+        getDanweiWelfaresByCycle:getDanweiWelfaresByCycle,
+        getDanweiWelfaresAll:getDanweiWelfaresAll,
+        deleteDanweiWelfaresData:deleteDanweiWelfaresData,
+        updateDanweiWelfaresData:updateDanweiWelfaresData,
         getBaoxianbulvByCycle:getBaoxianbulvByCycle,
         initialBaoxianbulvByCycle:initialBaoxianbulvByCycle,
         deleteBaoxianbulvData:deleteBaoxianbulvData,

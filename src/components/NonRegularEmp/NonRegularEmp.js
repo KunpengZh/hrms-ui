@@ -99,7 +99,9 @@ class NonRegularSalary extends Component {
                         width: 100
                     },
                     { key: 'yiliaobaoxian', name: '医疗保险', width: 100, editable: 'true' },
-                    { key: 'qiyeYiliaobaoxian', name: '企业部分医疗保险', width: 150, editable: 'true' }
+                    { key: 'qiyeYiliaobaoxian', name: '企业部分医疗保险', width: 150, editable: 'true' },
+                    { key: 'shengyubaoxian', name: '企业生育保险', width: 150, editable: 'true' },
+                    { key: 'gongshangbaoxian', name: '企业工伤保险', width: 150, editable: 'true' }
                 ]
                 nstate.rows = data.data;
                 nstate.fullscreen = false;

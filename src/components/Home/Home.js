@@ -40,6 +40,7 @@ import QueryWelfareByDepartment from '../Welfares/QueryByDepartment';
 import QueryWelfareByWokerCategory from '../Welfares/QueryByCategory';
 
 import Baoxianbulv from '../Baoxianbulv/Baoxianbulv';
+import DanweiWelfares from '../DanweiWelfares/DanweiWelfares';
 
 
 import {
@@ -95,6 +96,7 @@ class Home extends Component {
                             <Route exact path="/PayrollFullQuery" component={PayrollFullQuery} />
                             <Route exact path="/QueryWelfareDetails" component={QueryWelfareDetails} />
                             <Route exact path="/QueryWelfareByEmp" component={QueryWelfare} />
+                            <Route exact path="/DanweiWelfares" component={DanweiWelfares} />
                             <Route exact path="/QueryWelfareByDepartment" component={QueryWelfareByDepartment} />
                             <Route exact path="/QueryWelfareByWorkerCategory" component={QueryWelfareByWokerCategory} />
                             <Route exact props="/Baoxianbulv" component={Baoxianbulv} />

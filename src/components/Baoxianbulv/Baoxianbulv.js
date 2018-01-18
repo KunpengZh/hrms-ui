@@ -193,6 +193,7 @@ class WelFaresComponent extends Component {
     }
 
     handleCreateNew() {
+        let self = this;
         return new Promise(function (rel, rej) {
             rel({
                 empId: '',
@@ -200,7 +201,7 @@ class WelFaresComponent extends Component {
                 department: '',
                 jobRole: '',
                 workerCategory: '',
-                salaryCycle: '',
+                salaryCycle: self.state.curYearMonth,
                 nianjin: 0,
                 qiyeNianjin: 0,
                 yanglaobaoxian: 0,

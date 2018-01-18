@@ -318,7 +318,7 @@ class PayrollDetailsCalculation extends Component {
                         syncButtonText={'同步'}
                         showInit={true}
                         handleInit={this.handleInit.bind(this)}
-                        initButtonText={'初始'}
+                        initButtonText={'计算'}
                         showSelectMenu={true}
                         salaryCycleOptions={this.state.YearMonthPeriod}
                         handleQuery={this.handleQuery.bind(this)}

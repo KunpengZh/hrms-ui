@@ -13,7 +13,7 @@ import DataGrid from '../DataGrid/DataGrid';
 // const { DropDownFormatter } = Formatters;
 
 const ColumnKeysNeedValidate = ['Yiliaofeiyong', 'Liaoyangfeiyong', 'Gongnuanbutie', 'Dushengzinv', 'Sangzangbuzhu', 'Fuxufei',
-    'Fangshujiangwen', 'Shitangjingfei', 'Personalqitafuli', 'CompanyQitafuli'];
+    'Fangshujiangwen',  'Personalqitafuli'];
 const validateFailMsg = '只能填写数字';
 
 class WelFaresComponent extends Component {
@@ -81,9 +81,9 @@ class WelFaresComponent extends Component {
                     { name: '丧葬补助', key: 'Sangzangbuzhu', editable: 'true', width: 100 },
                     { name: '抚恤费', key: 'Fuxufei', editable: 'true', width: 100 },
                     { name: '防暑降温费', key: 'Fangshujiangwen', editable: 'true', width: 100 },
-                    { name: '食堂经费', key: 'Shitangjingfei', editable: 'true', width: 100 },
+                    
                     { name: '个人其它福利', key: 'Personalqitafuli', editable: 'true', width: 100 },
-                    { name: '单位其它福利', key: 'CompanyQitafuli', editable: 'true', width: 100 }
+                    
                 ]
                 nstate.rows = welfares.data;
                 nstate.fullscreen = false;
@@ -205,6 +205,7 @@ class WelFaresComponent extends Component {
     }
 
     handleCreateNew() {
+        let self=this;
         return new Promise(function (rel, rej) {
             rel({
                 empId: '',
@@ -212,7 +213,7 @@ class WelFaresComponent extends Component {
                 department: '',
                 jobRole: '',
                 workerCategory: '',
-                salaryCycle: '',
+                salaryCycle: self.state.curYearMonth,
                 Yiliaofeiyong: 0,
                 Liaoyangfeiyong: 0,
                 Gongnuanbutie: 0,
@@ -220,9 +221,7 @@ class WelFaresComponent extends Component {
                 Sangzangbuzhu: 0,
                 Fuxufei: 0,
                 Fangshujiangwen: 0,
-                Shitangjingfei: 0,
                 Personalqitafuli: 0,
-                CompanyQitafuli: 0
             })
         })
     }

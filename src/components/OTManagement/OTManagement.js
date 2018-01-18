@@ -103,8 +103,8 @@ class EmpOT extends Component {
                     { key: 'yicixingjiangjin', name: '年终奖金', width: 100, editable: 'true' },
                     { key: 'yiliaobaoxian', name: '医疗保险', width: 100, editable: 'true' },
                     { key: 'qiyeYiliaobaoxian', name: '企业部分医疗保险', width: 150, editable: 'true' },
-                    { key: 'shengyubaoxian', name: '生育保险', width: 150, editable: 'true' },
-                    { key: 'gongshangbaoxian', name: '工伤保险', width: 150, editable: 'true' }
+                    { key: 'shengyubaoxian', name: '企业生育保险', width: 150, editable: 'true' },
+                    { key: 'gongshangbaoxian', name: '企业工伤保险', width: 150, editable: 'true' }
                 ]
                 nstate.rows = OTs.data;
                 nstate.fullscreen = false;
