@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './Payroll.css';
-import { Loading, Dialog, Button,Table } from 'element-react';
+import { Loading, Dialog, Button, Table } from 'element-react';
 import 'element-theme-default';
 import '../../font-awesome/css/font-awesome.min.css'
 
@@ -131,8 +131,12 @@ class PayrollDetailsCalculation extends Component {
                     if (resdata.status === 200) {
                         nstate.YearMonthPeriod = resdata.data;
 
-                        nstate.curYearMonth = nstate.YearMonthPeriod[0].value;
-                        this.initialSCALTableData(nstate);
+                        if (nstate.YearMonthPeriod.length > 0) {
+                            nstate.curYearMonth = nstate.YearMonthPeriod[0].value;
+                            this.initialSCALTableData(nstate);
+                        }else{
+                            this.setState({ fullscreen: false });
+                        }
                     } else {
                         this.setState({ fullscreen: false });
                         AppStore.showError(resdata.message);

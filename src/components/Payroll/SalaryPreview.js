@@ -32,22 +32,27 @@ class EmpBasicInfo extends Component {
                 nstate.selectMenuOptions = res.data.salaryCycle.slice(1);
                 nstate.departmentSource = res.data.department;
                 nstate.workerCategorySource = res.data.workerCategory;
-                if (nstate.selectMenu === "") {
+                if (nstate.selectMenu === "" && nstate.selectMenuOptions.length > 0) {
                     nstate.selectMenu = nstate.selectMenuOptions[0].value;
                     nstate.oriSalaryCycle = nstate.selectMenu;
                 }
-                AppStore.getGongZiDanByCycle(nstate.selectMenu).then(res => {
-                    if (res.status === 200) {
-                        nstate.rows = res.data;
-                        nstate.fullrows = Object.assign([], res.data);
-                        nstate.fullscreen = false;
-                        this.setState(nstate);
-                    } else {
-                        nstate.fullscreen = false;
-                        this.setState(nstate);
-                        AppStore.showError(res.message);
-                    }
-                })
+                if (nstate.selectMenu !== "") {
+                    AppStore.getGongZiDanByCycle(nstate.selectMenu).then(res => {
+                        if (res.status === 200) {
+                            nstate.rows = res.data;
+                            nstate.fullrows = Object.assign([], res.data);
+                            nstate.fullscreen = false;
+                            this.setState(nstate);
+                        } else {
+                            nstate.fullscreen = false;
+                            this.setState(nstate);
+                            AppStore.showError(res.message);
+                        }
+                    })
+                } else {
+                    nstate.fullscreen = false;
+                    this.setState(nstate);
+                }
             } else {
                 this.setState({ fullscreen: false });
                 AppStore.showError(res.message);

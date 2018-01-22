@@ -11,7 +11,8 @@ import ReactDataGrid from 'react-data-grid'
 
 const ColumnKeysNeedValidate = ['idCard', 'bankAccount', 'jinengGongzi', 'gangweiGongzi',
     'jichuButie', 'xilifei', 'gonglingGongzi', 'zhiwuJintie', 'gongliBuzhu', 'kaoheJiangjin', 'tongxunButie',
-    'qitaJiangjin', 'xiaxiangBuzhu', 'yingyetingBuzhu', 'buchongyiliaobaoxian', 'preAnnuallyIncom'];
+    'qitaJiangjin', 'xiaxiangBuzhu', 'yingyetingBuzhu', 'buchongyiliaobaoxian', 'preAnnuallyIncom', 'nianjinJishu',
+    'yanglaobaoxianJishu', 'shiyebaoxianJishu', 'zhufanggongjijinJishu'];
 const validateFailMsg = '请检查您是否在只能接受数字的字段里输入的非数字字符';
 const ColumnKeyNeedDate = []
 const validateDateFailMsg = '您输入的出生日期字段不合法，请输入YYYY-MM-DD格式的日期';
@@ -82,6 +83,10 @@ class EmpSensitiveInfoTable extends Component {
                 { key: 'gonglingGongzi', name: '工龄工资', editable: 'true', width: 100 },
                 { key: 'zhiwuJintie', name: '职务津贴', editable: 'true', width: 100 },
                 { key: 'preAnnuallyIncom', name: '上年月平均收入', editable: 'true', width: 150 },
+                { name: '年金基数', key: 'nianjinJishu', editable: 'true', width: 100 },
+                { name: '失业保险基数', key: 'shiyebaoxianJishu', editable: 'true', width: 100 },
+                { name: '养老保险基数', key: 'yanglaobaoxianJishu', editable: 'true', width: 100 },
+                { name: '住房公积金基数', key: 'zhufanggongjijinJishu', editable: 'true', width: 100 },
             ]
         }).then(() => {
             AppStore.getAllEmpSensitiveInfo().then((employees) => {
