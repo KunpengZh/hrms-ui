@@ -120,21 +120,21 @@ class Home extends Component {
                     <Menu className="el-menu-demo" mode="horizontal" onSelect={this.handleRouteChange.bind(this)}>
                         <Menu.SubMenu index="Emp" title="员工信息管理">
                             <Menu.Item index="EmpBasicInfo">员工基本信息</Menu.Item>
-                            {(jobRole === 'SysAdmin' || jobRole === 'HRAdmin') ? (
+                            {(jobRole === 'SysAdmin' || jobRole === 'HRAdmin'|| jobRole === 'ReadOnlyUser') ? (
                                 <Menu.Item index="EmpSensitiveInfo">员工敏感信息</Menu.Item>
                             ) : (null)}
-                            {(jobRole === 'SysAdmin' || jobRole === 'HRAdmin') ? (
+                            {(jobRole === 'SysAdmin' || jobRole === 'HRAdmin'|| jobRole === 'ReadOnlyUser') ? (
                                 <Menu.Item index="EmpInfoConfig">员工信息配置</Menu.Item>
                             ) : (null)}
                         </Menu.SubMenu>
-                        {(jobRole === 'SysAdmin' || jobRole === 'HRAdmin' || jobRole === 'PayrollAdmin') ? (
+                        {(jobRole === 'SysAdmin' || jobRole === 'HRAdmin' || jobRole === 'PayrollAdmin'|| jobRole === 'ReadOnlyUser') ? (
                             <Menu.SubMenu index="OTAndWorkTime" title="当月工资数据申报">
                                 <Menu.Item index="OTManagement">全日制人员申报</Menu.Item>
                                 <Menu.Item index="NonRegular">非全日制人员申报</Menu.Item>
                                 <Menu.Item index="Baoxianbulv">补录保险数据</Menu.Item>
                             </Menu.SubMenu>
                         ) : (null)}
-                        {(jobRole === 'SysAdmin' || jobRole === 'PayrollAdmin') ? (
+                        {(jobRole === 'SysAdmin' || jobRole === 'PayrollAdmin'|| jobRole === 'ReadOnlyUser') ? (
                             <Menu.SubMenu index="Payroll" title="工资计算管理">
                                 <Menu.Item index="PayrollDetails">当期工资计算</Menu.Item>
                                 <Menu.Item index="PayrollPreview">工资单预览</Menu.Item>
@@ -144,7 +144,7 @@ class Home extends Component {
                                 {/* <Menu.Item index="PayrollConfig">工资配置管理</Menu.Item> */}
                             </Menu.SubMenu>
                         ) : (null)}
-                        {(jobRole === 'SysAdmin' || jobRole === 'PayrollAdmin') ? (
+                        {(jobRole === 'SysAdmin' || jobRole === 'PayrollAdmin'|| jobRole === 'ReadOnlyUser') ? (
                             <Menu.SubMenu index="Reporting" title="查询汇总">
                                 <Menu.Item index="QueryReporting">查询汇总</Menu.Item>
                                 <Menu.Item index="PayrollFullQuery">查询汇总详单</Menu.Item>
@@ -160,7 +160,7 @@ class Home extends Component {
                                 <Menu.Item index="DanweiJitiBuchongyiliaobaoxian">单位计提补充医疗保险</Menu.Item>
                             </Menu.SubMenu>
                         ) : (null)}
-                        {(jobRole === 'SysAdmin' || jobRole === 'PayrollAdmin') ? (
+                        {(jobRole === 'SysAdmin' || jobRole === 'PayrollAdmin'|| jobRole === 'ReadOnlyUser') ? (
                             <Menu.SubMenu index="Welfares" title="员工福利">
                                 <Menu.Item index="DanweiWelfares">单位福利申报</Menu.Item>
                                 <Menu.Item index="EmpWelfares">员工福利申报</Menu.Item>

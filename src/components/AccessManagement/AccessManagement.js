@@ -59,46 +59,7 @@ class AccessManagement extends Component {
             showEditUserDialog: false,
             showResetPassword: 'none',
             showCreateUserDialog: false,
-            showEmpTable: false,
-            empTable: {
-                rows: [],
-                rowKey: 'empId',
-                columns: [
-                    {
-                        type: 'selection'
-                    },
-                    {
-                        label: "员工号",
-                        prop: "empId",
-                        width: 100,
-                        align: 'center'
-                    },
-                    {
-                        prop: 'name',
-                        label: '员工姓名',
-                        width: 150,
-                        align: 'center'
-                    },
-                    {
-                        prop: 'department',
-                        label: '部门',
-                        width: 150,
-                        align: 'center'
-                    },
-                    {
-                        prop: 'jobRole',
-                        label: '岗位',
-                        width: 150,
-                        align: 'center'
-                    },
-                    {
-                        prop: 'workerCategory',
-                        label: '员工类别',
-                        width: 200,
-                        align: 'center'
-                    }
-                ]
-            }
+
 
         }
     }
@@ -143,17 +104,29 @@ class AccessManagement extends Component {
         })
     }
     handleCreateNew() {
-        this.setState({ fullscreen: true });
-        AppStore.getAllEmpBasicInfo().then(res => {
-            if (res.status === 200) {
-                let empTable = Object.assign({}, this.state.empTable);
-                empTable.rows = res.data;
-                this.setState({ fullscreen: false, empTable: empTable, showEmpTable: true });
-            } else {
-                this.setState({ fullscreen: false });
-                AppStore.showError(res.message);
-            }
-        })
+        let nstate = Object.assign({}, this.state);
+        nstate.newUser = {
+            empId: '',
+            empName: '',
+            username: '',
+            password: '',
+            jobRole: ''
+        };
+
+        nstate.showCreateUserDialog = true;
+
+        this.setState(nstate);
+        // this.setState({ fullscreen: true });
+        // AppStore.getAllEmpBasicInfo().then(res => {
+        //     if (res.status === 200) {
+        //         let empTable = Object.assign({}, this.state.empTable);
+        //         empTable.rows = res.data;
+        //         this.setState({ fullscreen: false, empTable: empTable, showEmpTable: true });
+        //     } else {
+        //         this.setState({ fullscreen: false });
+        //         AppStore.showError(res.message);
+        //     }
+        // })
 
     }
     handleEditSave() {
@@ -339,7 +312,8 @@ class AccessManagement extends Component {
                                     <Select.Option label="系统管理员" value="SysAdmin"></Select.Option>
                                     <Select.Option label="工资管理员" value="PayrollAdmin"></Select.Option>
                                     <Select.Option label="人力资源管理员" value="HRAdmin"></Select.Option>
-                                    <Select.Option label="一般用户" value="User"></Select.Option>
+                                    
+                                    <Select.Option label="只读用户" value="ReadOnlyUser"></Select.Option>
                                 </Select>
                             </Form.Item>
 
@@ -373,7 +347,8 @@ class AccessManagement extends Component {
                                     <Select.Option label="系统管理员" value="SysAdmin"></Select.Option>
                                     <Select.Option label="工资管理员" value="PayrollAdmin"></Select.Option>
                                     <Select.Option label="人力资源管理员" value="HRAdmin"></Select.Option>
-                                    <Select.Option label="一般用户" value="User"></Select.Option>
+                                    
+                                    <Select.Option label="只读用户" value="ReadOnlyUser"></Select.Option>
                                 </Select>
                             </Form.Item>
                         </Form>
@@ -383,7 +358,7 @@ class AccessManagement extends Component {
                         <Button type="primary" onClick={this.handleCreateSave.bind(this)}>确 定</Button>
                     </Dialog.Footer>
                 </Dialog>
-                <Dialog
+                {/* <Dialog
                     title="选到用户"
                     visible={this.state.showEmpTable}
                     onCancel={this.handleCancel.bind(this)}
@@ -397,14 +372,57 @@ class AccessManagement extends Component {
                             onSelectChange={this.handleUserSelection.bind(this)}
                         />
                     </Dialog.Body>
-                    {/* <Dialog.Footer className="dialog-footer">
+                    <Dialog.Footer className="dialog-footer">
                         <Button type="primary" onClick={this.handleCancel.bind(this)}>取 消</Button>
                         <Button type="primary" onClick={this.handleCreateSave.bind(this)}>确 定</Button>
-                    </Dialog.Footer> */}
-                </Dialog>
+                    </Dialog.Footer>
+                </Dialog> */}
             </div>
         );
     }
 }
 
 export default AccessManagement;
+
+
+// showEmpTable: false,
+//             empTable: {
+//                 rows: [],
+//                 rowKey: 'empId',
+//                 columns: [
+//                     {
+//                         type: 'selection'
+//                     },
+//                     {
+//                         label: "员工号",
+//                         prop: "empId",
+//                         width: 100,
+//                         align: 'center'
+//                     },
+//                     {
+//                         prop: 'name',
+//                         label: '员工姓名',
+//                         width: 150,
+//                         align: 'center'
+//                     },
+//                     {
+//                         prop: 'department',
+//                         label: '部门',
+//                         width: 150,
+//                         align: 'center'
+//                     },
+//                     {
+//                         prop: 'jobRole',
+//                         label: '岗位',
+//                         width: 150,
+//                         align: 'center'
+//                     },
+//                     {
+//                         prop: 'workerCategory',
+//                         label: '员工类别',
+//                         width: 200,
+//                         align: 'center'
+//                     }
+//                 ]
+//             }
+//<Select.Option label="一般用户" value="User"></Select.Option>

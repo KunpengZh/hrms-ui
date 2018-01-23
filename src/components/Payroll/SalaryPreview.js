@@ -193,7 +193,7 @@ class EmpBasicInfo extends Component {
                             </Select>
                         </Form.Item>
                         <Form.Item labelWidth="0" style={{ display: "inline-block" }}>
-                            <Button type="primary" icon="view" onClick={this.handleSelection.bind(this)}>查新</Button>
+                            <Button type="primary" icon="view" onClick={this.handleSelection.bind(this)}>查询</Button>
                             <Button type="primary" icon="view" onClick={this.handlePrint.bind(this)}>打印工资单</Button>
                         </Form.Item>
                     </Form>

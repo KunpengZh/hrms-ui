@@ -38,6 +38,7 @@ class DataGrid extends Component {
                 empStatus: 'Active',
                 salaryCycle: ''
             },
+            appUserRole: AppStore.getAppUerRole()
         };
         this.selectedKeys = [];
         this.newCreatedKey = [];
@@ -317,12 +318,12 @@ class DataGrid extends Component {
                             {this.props.showQuery ? (
                                 <Button type="primary" icon="view" onClick={this.handleQuery.bind(this)}>{this.props.queryText}</Button>
                             ) : (null)}
-                            {this.props.showInit ? (
+                            {this.props.showInit && this.state.appUserRole!=="ReadOnlyUser" ? (
 
                                 <Button type="primary" icon="circle-check" onClick={this.handleInit.bind(this)}>{this.props.initButtonText}</Button>
 
                             ) : (null)}
-                            {this.props.showSync ? (
+                            {this.props.showSync && this.state.appUserRole!=="ReadOnlyUser"? (
 
                                 <Button type="primary" icon="circle-check" onClick={this.handleSync.bind(this)}>{this.props.syncButtonText}</Button>
 
@@ -332,25 +333,25 @@ class DataGrid extends Component {
                                 <div className="aToButton"><a className="linkButton" href={this.props.downloadLink} target="_blank"><i className="el-icon-document"></i>点击下载</a></div>
 
                             ) : (null)}
-                            {this.props.showCreateNew ? (
+                            {this.props.showCreateNew && this.state.appUserRole!=="ReadOnlyUser"? (
 
                                 <Button type="primary" icon="plus" onClick={this.handleAddRow.bind(this)}>添加</Button>
 
                             ) : (null)}
-                            {this.props.showDelete ? (
+                            {this.props.showDelete && this.state.appUserRole!=="ReadOnlyUser"? (
 
                                 <Button type="primary" icon="delete" onClick={this.handleDelete.bind(this)}>删除</Button>
 
                             ) : (null)}
 
-                            {this.props.showSave ? (
+                            {this.props.showSave && this.state.appUserRole!=="ReadOnlyUser"? (
 
                                 <Button type="primary" icon="circle-check" onClick={this.handleSaveData.bind(this)}>保存</Button>
 
                             ) : (null)}
 
 
-                            {this.props.showUploader ? (
+                            {this.props.showUploader && this.state.appUserRole!=="ReadOnlyUser"? (
 
                                 <Upload
                                     className="FileUPloader"
@@ -363,12 +364,12 @@ class DataGrid extends Component {
                                 </Upload>
 
                             ) : (null)}
-                            {this.props.showFunc1 ? (
+                            {this.props.showFunc1 && this.state.appUserRole!=="ReadOnlyUser"? (
 
                                 <Button type="primary" icon="menu" onClick={this.handleFunc1.bind(this)} >{this.props.Func1Text}</Button>
 
                             ) : (null)}
-                            {this.props.showFunc2 ? (
+                            {this.props.showFunc2 && this.state.appUserRole!=="ReadOnlyUser"? (
 
                                 <Button type="primary" icon="information" onClick={this.handleFunc2.bind(this)} >{this.props.Func2Text}</Button>
 
@@ -378,7 +379,7 @@ class DataGrid extends Component {
                                 <Button type="primary" icon="setting" onClick={this.handleFunc3.bind(this)} >{this.props.Func3Text}</Button>
 
                             ) : (null)}
-                            {this.props.showDownloadTable ? (
+                            {this.props.showDownloadTable && this.state.appUserRole!=="ReadOnlyUser"? (
 
                                 <div className="aToButton"><a className="linkButton" href={this.props.downloadTableLink} target="_blank"><i className="el-icon-document"></i>下载</a></div>
 

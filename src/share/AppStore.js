@@ -19,6 +19,9 @@ var AppStore = (function () {
     let getAppUser = () => {
         return AppUser;
     }
+    let getAppUerRole = () => {
+        return AppUser.jobRole;
+    }
     let setAppUser = (user) => {
         if (user.isAuthenticated) {
             AppUser = {
@@ -2260,7 +2263,7 @@ var AppStore = (function () {
 
     var getDanweiWelfaresAll = function () {
         return new Promise(function (rel, rej) {
-            
+
             doGet('/danweiwelfares').then((res) => {
                 if (res.status === 200) {
                     rel({
@@ -2278,7 +2281,7 @@ var AppStore = (function () {
         })
     }
 
-    
+
 
     var deleteDanweiWelfaresData = function (keys) {
         return new Promise(function (rel, rej) {
@@ -2290,8 +2293,8 @@ var AppStore = (function () {
                 })
                 return;
             }
-            
-            doPost('/danweiwelfares/delete', { data: keys}).then(res => {
+
+            doPost('/danweiwelfares/delete', { data: keys }).then(res => {
                 if (res.status === 200) {
                     rel({
                         status: 200,
@@ -2318,7 +2321,7 @@ var AppStore = (function () {
                 })
                 return;
             }
-            
+
             doPost('/danweiwelfares/update', { data: data }).then(res => {
                 if (res.status === 200) {
                     rel({
@@ -2341,16 +2344,16 @@ var AppStore = (function () {
      * updateEmpSDData: updateEmpSDData,
      */
     return {
-        queryDanweiWelfaresByCriteria:queryDanweiWelfaresByCriteria,
-        getDanweiWelfaresByCycle:getDanweiWelfaresByCycle,
-        getDanweiWelfaresAll:getDanweiWelfaresAll,
-        deleteDanweiWelfaresData:deleteDanweiWelfaresData,
-        updateDanweiWelfaresData:updateDanweiWelfaresData,
-        getBaoxianbulvByCycle:getBaoxianbulvByCycle,
-        initialBaoxianbulvByCycle:initialBaoxianbulvByCycle,
-        deleteBaoxianbulvData:deleteBaoxianbulvData,
-        updateBaoxianbulvData:updateBaoxianbulvData,
-        queryBaoxianbulvByCriteria:queryBaoxianbulvByCriteria,
+        queryDanweiWelfaresByCriteria: queryDanweiWelfaresByCriteria,
+        getDanweiWelfaresByCycle: getDanweiWelfaresByCycle,
+        getDanweiWelfaresAll: getDanweiWelfaresAll,
+        deleteDanweiWelfaresData: deleteDanweiWelfaresData,
+        updateDanweiWelfaresData: updateDanweiWelfaresData,
+        getBaoxianbulvByCycle: getBaoxianbulvByCycle,
+        initialBaoxianbulvByCycle: initialBaoxianbulvByCycle,
+        deleteBaoxianbulvData: deleteBaoxianbulvData,
+        updateBaoxianbulvData: updateBaoxianbulvData,
+        queryBaoxianbulvByCriteria: queryBaoxianbulvByCriteria,
         WelfaresTongJiDetails: WelfaresTongJiDetails,
         WelfaresTongJiByEmp: WelfaresTongJiByEmp,
         WelfaresTongJiByDepartment: WelfaresTongJiByDepartment,
@@ -2422,6 +2425,7 @@ var AppStore = (function () {
         getConfigData: getConfigData,
         saveConfigData: saveConfigData,
         getAppUser: getAppUser,
+        getAppUerRole:getAppUerRole,
         isUserLoggedIn: isUserLoggedIn,
         doAppLogin: doAppLogin,
         updateNRSalaryData: updateNRSalaryData,

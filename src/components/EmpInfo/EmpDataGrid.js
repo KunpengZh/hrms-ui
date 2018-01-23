@@ -40,6 +40,7 @@ class ConfigGrid extends Component {
                 workerCategory: 'All',
                 empStatus: 'Active'
             },
+            appUserRole: AppStore.getAppUerRole()
         };
         this.selectedKeys = [];
         this.newCreatedKey = [];
@@ -329,11 +330,11 @@ class ConfigGrid extends Component {
                         <Form.Item labelWidth="0" style={{ display: "inline-block" }}>
                             <Button type="primary" icon="search" onClick={this.handleQuery.bind(this)}>查询</Button>
                             {this.props.showDownload ? (<div className="aToButton"><a className="linkButton" href={this.props.downloadLink} target="_blank"><i className="el-icon-document"></i>点击下载</a></div>) : (null)}
-                            {this.props.showCreateNew ? (<Button type="primary" icon="plus" onClick={this.handleAddRow.bind(this)}>添加</Button>) : (null)}
-                            {this.props.showDelete ? (<Button type="primary" icon="delete" onClick={this.handleDelete.bind(this)}>删除</Button>) : (null)}
-                            {this.props.showSave ? (<Button type="primary" icon="circle-check" onClick={this.handleSaveData.bind(this)}>保存</Button>) : (null)}
-                            {this.props.showSyncEmpInfo ? (<Button type="primary" icon="circle-check" onClick={this.handleSyncEmpInfo.bind(this)}>同步</Button>) : (null)}
-                            {this.props.showUploader ? (
+                            {this.props.showCreateNew && this.state.appUserRole!=="ReadOnlyUser"? (<Button type="primary" icon="plus" onClick={this.handleAddRow.bind(this)}>添加</Button>) : (null)}
+                            {this.props.showDelete && this.state.appUserRole!=="ReadOnlyUser"? (<Button type="primary" icon="delete" onClick={this.handleDelete.bind(this)}>删除</Button>) : (null)}
+                            {this.props.showSave && this.state.appUserRole!=="ReadOnlyUser"? (<Button type="primary" icon="circle-check" onClick={this.handleSaveData.bind(this)}>保存</Button>) : (null)}
+                            {this.props.showSyncEmpInfo && this.state.appUserRole!=="ReadOnlyUser"? (<Button type="primary" icon="circle-check" onClick={this.handleSyncEmpInfo.bind(this)}>同步</Button>) : (null)}
+                            {this.props.showUploader && this.state.appUserRole!=="ReadOnlyUser" ? (
                                 <Upload
                                     className="FileUPloader"
                                     action={this.props.uploadLink}
