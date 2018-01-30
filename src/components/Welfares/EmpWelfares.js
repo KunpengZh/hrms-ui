@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './OTManagemetn.css';
+import './Welfares.css';
 import { Loading } from 'element-react';
 import 'element-theme-default';
 import '../../font-awesome/css/font-awesome.min.css'
@@ -13,7 +13,7 @@ import DataGrid from '../DataGrid/DataGrid';
 // const { DropDownFormatter } = Formatters;
 
 const ColumnKeysNeedValidate = ['Yiliaofeiyong', 'Liaoyangfeiyong', 'Gongnuanbutie', 'Dushengzinv', 'Sangzangbuzhu', 'Fuxufei',
-    'Fangshujiangwen',  'Personalqitafuli'];
+    'Fangshujiangwen', 'Personalqitafuli'];
 const validateFailMsg = '只能填写数字';
 
 class WelFaresComponent extends Component {
@@ -72,7 +72,7 @@ class WelFaresComponent extends Component {
                         key: 'salaryCycle',
                         name: '福利周期',
                         width: 100,
-                        editable:'true'
+                        editable: 'true'
                     },
                     { name: '医疗费用', key: 'Yiliaofeiyong', editable: 'true', width: 100 },
                     { name: '疗养费用', key: 'Liaoyangfeiyong', editable: 'true', width: 100 },
@@ -81,9 +81,9 @@ class WelFaresComponent extends Component {
                     { name: '丧葬补助', key: 'Sangzangbuzhu', editable: 'true', width: 100 },
                     { name: '抚恤费', key: 'Fuxufei', editable: 'true', width: 100 },
                     { name: '防暑降温费', key: 'Fangshujiangwen', editable: 'true', width: 100 },
-                    
+
                     { name: '个人其它福利', key: 'Personalqitafuli', editable: 'true', width: 100 },
-                    
+
                 ]
                 nstate.rows = welfares.data;
                 nstate.fullscreen = false;
@@ -99,13 +99,13 @@ class WelFaresComponent extends Component {
         AppStore.initialWelfaresByCycle(this.state.curYearMonth).then((res) => {
 
             if (res.status === 200) {
-                
+
                 let newrows = [];
                 for (let i = 0; i < 10; i++) {
-                   
+
                     newrows.push(res.data[i]);
                 };
-               
+
                 this.setState({
                     rows: newrows,
                     fullscreen: false
@@ -119,7 +119,7 @@ class WelFaresComponent extends Component {
 
     saveData(data, keysObj) {
         let { newcreated, deleted, updated } = keysObj;
-        
+
         let newCreatedEmpIds = [], deletedEmpIds = [], updatedEmpIds = [];
 
         newcreated.forEach(function (empId) {
@@ -149,7 +149,7 @@ class WelFaresComponent extends Component {
         if (deletedEmpIds.length > 0) {
             AppStore.deleteWelfaresData(deletedEmpIds, this.state.curYearMonth).then(res => {
                 if (res.status === 700) {
-    
+
                 } else if (res.status === 200) {
                     AppStore.showSuccess(res.message);
                 } else {
@@ -205,7 +205,7 @@ class WelFaresComponent extends Component {
     }
 
     handleCreateNew() {
-        let self=this;
+        let self = this;
         return new Promise(function (rel, rej) {
             rel({
                 empId: '',

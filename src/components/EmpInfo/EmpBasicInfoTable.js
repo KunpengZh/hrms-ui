@@ -45,7 +45,7 @@ class EmpBasicInfoTable extends Component {
             const wcategoryEditor = <DropDownEditor options={wcategory} />;
             const wcategoryFormatter = <DropDownFormatter options={wcategory} value="value" />;
 
-            const EmployeementStatus = [{ id: '01', value: 'Active', text: '在职' }, { id: '02', value: 'InActive', text: '离职' }];
+            const EmployeementStatus = [{ id: '01', value: 'Active', text: '在职' }, { id: '02', value: 'InActive', text: '离职' }, { id: '03', value: 'Retire', text: '退休' }];
             const EmployeementStatusEditor = <DropDownEditor options={EmployeementStatus} />;
             const EmployeementStatusFormatter = <DropDownFormatter options={EmployeementStatus} value="value" />;
             nstate.columns = [
@@ -122,7 +122,7 @@ class EmpBasicInfoTable extends Component {
                 },
                 {
                     key: 'unEmpDate',
-                    name: '离职日期',
+                    name: '离退休日期',
                     editable: true,
                     width:100
                 },

@@ -8,7 +8,7 @@ import EmpBasicInfo from '../EmpInfo/EmpBasicInfoTable';
 import EmpSensitiveInfo from '../EmpInfo/EmpSensitiveInfo';
 import AccessManagement from '../AccessManagement/AccessManagement';
 import OTManagement from '../OTManagement/OTManagement';
-import EmpWelfares from '../OTManagement/EmpWelfares';
+
 import PayrollConfig from '../Payroll/PayrollConfig';
 import EmpInfoConfig from '../EmpInfo/EmpInfoConfig';
 import PayrollPreview from '../Payroll/SalaryPreview';
@@ -40,8 +40,8 @@ import QueryWelfareByDepartment from '../Welfares/QueryByDepartment';
 import QueryWelfareByWokerCategory from '../Welfares/QueryByCategory';
 
 import Baoxianbulv from '../Baoxianbulv/Baoxianbulv';
-import DanweiWelfares from '../DanweiWelfares/DanweiWelfares';
-
+import DanweiWelfares from '../Welfares/DanweiWelfares';
+import EmpWelfares from '../Welfares/EmpWelfares';
 
 import {
     BrowserRouter,
@@ -74,7 +74,6 @@ class Home extends Component {
                             <Route exact path="/AccessManagement" component={AccessManagement} />
                             <Route exact path="/EmpInfoConfig" component={EmpInfoConfig} />
                             <Route exact path="/OTManagement" component={OTManagement} />
-                            <Route exact path="/EmpWelfares" component={EmpWelfares} />
                             <Route exact path="/NonRegularEmp" component={NonRegularEmp} />
                             <Route exact path="/PayrollConfig" component={PayrollConfig} />
                             <Route exact path="/PayrollPreview" component={PayrollPreview} />
@@ -94,6 +93,7 @@ class Home extends Component {
                             <Route exact path="/DanweiJitiShengyubaoxian" component={DanweiJitiShengyubaixian} />
                             <Route exact path="/DanweiJitiGongshangbaoxian" component={DanweiJitiGongshangbaoxian} />
                             <Route exact path="/PayrollFullQuery" component={PayrollFullQuery} />
+                            <Route exact path="/EmpWelfares" component={EmpWelfares} />
                             <Route exact path="/QueryWelfareDetails" component={QueryWelfareDetails} />
                             <Route exact path="/QueryWelfareByEmp" component={QueryWelfare} />
                             <Route exact path="/DanweiWelfares" component={DanweiWelfares} />

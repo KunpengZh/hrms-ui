@@ -290,6 +290,7 @@ class ConfigGrid extends Component {
                                 <Select value={this.state.query.empStatus} onChange={this.handleEmpStatusChange.bind(this)} style={{ width: "120px" }}>
                                     <Select.Option key="在职员工" label="在职员工" value="Active" />
                                     <Select.Option key="离职员工" label="离职员工" value="InActive" />
+                                    <Select.Option key="退休员工" label="退休员工" value="Retire" />
                                     <Select.Option key="全部员工" label="全部员工" value="All" />
                                 </Select>
                             </Form.Item>
