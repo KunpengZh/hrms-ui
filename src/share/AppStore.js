@@ -688,7 +688,7 @@ var AppStore = (function () {
         var month = date.getMonth() + 2;
         var YearMonthPeriod = [];
 
-        for (let i = 0; i < 13; i++) {
+        for (let i = 0; i < 30; i++) {
             month = month - 1;
             if (month < 1) {
                 year = year - 1;
