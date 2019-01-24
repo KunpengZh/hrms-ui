@@ -88,9 +88,9 @@ class EmpSensitiveInfoTable extends Component {
           { key: "preAnnuallyIncom", name: "上年月平均收入", editable: "true", width: 150 },
           { name: "年金基数", key: "nianjinJishu", editable: "true", width: 100 },
           { name: "失业保险基数", key: "shiyebaoxianJishu", editable: "true", width: 100 },
-          { name: "养老保险基数", key: "yanglaobaoxianJishu", editable: "true", width: 200 },
-          { name: "住房公积金基数", key: "zhufanggongjijinJishu", editable: "true", width: 200 },
-          { name: "个人所得税专项扣除", key: "personalIncomeTaxDeduction", editable: "true", width: 200 }
+          { name: "养老保险基数", key: "yanglaobaoxianJishu", editable: "true", width: 100 },
+          { name: "住房公积金基数", key: "zhufanggongjijinJishu", editable: "true", width: 100 },
+          { name: "个人所得税专项扣除", key: "personalIncomeTaxDeduction", editable: "true", width: 100 }
         ];
       })
       .then(() => {
@@ -174,7 +174,7 @@ class EmpSensitiveInfoTable extends Component {
             showActionBar=""
             showDelete={false}
             showCreateNew={false}
-            minWidth={3000}
+            minWidth={2000}
             showSave={true}
             saveData={this.saveData.bind(this)}
             showUploader={true}
