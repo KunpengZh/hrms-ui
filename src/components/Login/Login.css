@@ -1,0 +1,84 @@
+.LoginContainer{
+    background:url('../../images/green.jpg')no-repeat;
+    width:100%;
+    height:100%;
+    background-size:100% 100%;
+    position:absolute;
+    margin: 0;
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+    align-items: center;
+}
+.formContainer{
+    width:60%;
+    /* background-color: rgba(0,0,0,0.3); */
+    background-color: rgba(255,255,255,0.3);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    border-radius: 10px;
+    margin-top: 8%;
+    box-shadow:  #2E2E2E 0px 0px 10px;
+}
+.loginHeaderContainer{
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 50px;
+    margin-top: 10px;
+}
+
+.titleContainer{
+    display: flex;
+    flex:4;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.sysTitle{
+    width: 100%;
+}
+.companyTitle {
+    width: 60%;
+}
+.loginFormInput {
+    border-bottom: 15px;
+    width: 60%;
+    margin-bottom: 10px;
+}
+.checkBoxContainer{
+    width: 60%;
+    display: flex;
+    justify-content: flex-start;
+    margin-bottom: 30px;
+}
+.checkBox {
+    color: white;
+}
+.logoContainer{
+    display: flex;
+    flex:1;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: flex-end;
+}
+.hrLoginIcon {
+    width: 120px;
+    height: 120px;
+}
+.loginButton{
+    width: 80%;
+}
+.loginButtonContainer{
+    display: flex;
+    justify-content: center;
+    padding-bottom: 30px;
+    width: 60%;
+}
+.errorDiv{
+    margin: 20px;
+}
+.errorMsg {
+    color: red;
+}

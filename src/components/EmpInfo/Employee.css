@@ -1,0 +1,76 @@
+.EmpContainer{
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    padding:10px;
+    width: 100%;
+}
+.EmpBodyContainer{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    justify-content: flex-start;
+    align-items: center;
+}
+.EmpTabContainer{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    justify-content: flex-start;
+    align-items:flex-start;
+    padding:20px;
+    
+}
+.topMenuContainer {
+    display: flex;
+    justify-content: flex-end;
+    height: 35px;
+    width: 100%;
+    margin-bottom: 15px;
+    padding-right: 15px;
+}
+.TopMenu{
+    display: flex;
+    justify-content: flex-end;
+    height: 35px;
+    width: 100%;
+}
+.EmpDataGrid{
+    /* display: flex;
+    flex-direction: column;
+    justify-content: flex-start; */
+    align-items: flex-start;
+    width: 100%;
+    height: 100%;
+}
+.EmpInfoTableContainer{
+    width: 100%;
+    overflow-x: scroll;
+}
+.FileUPloader{
+    display: inline-block;
+    margin-left: 10px;
+}
+input[type="file"] {
+    display: none!important;
+}
+.aToButton{
+    color: #fff;
+    background-color: #20a0ff;
+    display: inline-block;
+    line-height: 1;
+    white-space: nowrap;
+    cursor: pointer;
+    border: 1px solid #20a0ff;
+    margin: 0;
+    padding: 10px 15px;
+    font-size: 14px;
+    margin-right: 10px;
+    margin-left: 10px;
+    border-radius: 5px;
+}
+.linkButton{
+    color: #fff;
+}
